@@ -5,12 +5,17 @@
   </mat-toolbar>
 
   <mat-sidenav-container>
-    <mat-sidenav #sidenav [mode]="isMobile ? 'over' : 'side'"
-                 [fixedInViewport]="true" [fixedTopGap]="isMobile ? mobileToolbarHeight : desktopToolbarHeight">
+    <mat-sidenav #sidenav
+                 [mode]="isMobile ? 'over' : 'side'"
+                 [fixedInViewport]="true"
+                 [fixedTopGap]="isMobile ? mobileToolbarHeight : desktopToolbarHeight">
       <mat-nav-list>
         <mat-list-item *ngFor="let navItem of navList">
-          <a matLine [routerLink]="navItem.routerLink" (click)="sidenav.close()">{{ navItem.title }}</a>
-          <button mat-icon-button *ngIf="navItem.icon.length > 0"><mat-icon>{{ navItem.icon }}</mat-icon></button>
+          <a matLine
+             [routerLink]="navItem.routerLink"
+             (click)="sidenav.close()">{{ navItem.title }}</a>
+          <button mat-icon-button
+                  *ngIf="navItem.icon.length > 0"><mat-icon>{{ navItem.icon }}</mat-icon></button>
         </mat-list-item>
       </mat-nav-list>
     </mat-sidenav>

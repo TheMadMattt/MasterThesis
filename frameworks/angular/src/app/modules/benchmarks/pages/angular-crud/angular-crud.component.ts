@@ -1,4 +1,5 @@
 import {AfterViewChecked, ChangeDetectorRef, Component} from '@angular/core';
+import {Timer} from "@modules/benchmarks/timer";
 
 @Component({
   selector: 'app-angular-crud',
@@ -12,27 +13,22 @@ export class AngularCrudComponent implements AfterViewChecked {
   constructor(private cdr: ChangeDetectorRef) { }
 
   isCreating = false;
-  createTime = 0;
-  createRenderTime = 0;
-  createRenderTimeArr: number[] = [];
+  createRenderTime: Timer = new Timer();
+
   create1000rows(): void {
     this.isCreating = true;
-    this.createTime = performance.now();
-    this.createRenderTime = performance.now();
+    this.createRenderTime.startTimer();
     for (let i = 0; i < this.ROWS_NUMBER; i++) {
       this.array.push({
         name: 'TEST: ' + i,
         desc: 'DESC ' + i
       });
     }
-    this.createTime = performance.now() - this.createTime
   }
 
   ngAfterViewChecked(): void {
     if (this.isCreating) {
-      this.createRenderTime = performance.now() - this.createRenderTime;
-      this.createRenderTimeArr.push(this.createRenderTime);
-      this.array = [];
+      this.createRenderTime.stopTimer();
       this.isCreating = false;
       this.cdr.detectChanges();
     }
@@ -40,19 +36,15 @@ export class AngularCrudComponent implements AfterViewChecked {
 
   clear(): void {
     this.array = [];
-    this.createRenderTimeArr = [];
-    this.createTime = 0;
-    this.createRenderTime = 0;
+    this.createRenderTime = new Timer();
   }
 
   async run5Times() {
     for (let i = 0; i < 5; i++) {
       this.create1000rows();
-      await this.delay(2000);
+      await this.delay(2000).then(() => this.array = []);
     }
-    const sum = this.createRenderTimeArr.reduce((a, b) => a + b, 0);
-    const avg = (sum / this.createRenderTimeArr.length) || 0;
-    this.createRenderTime = avg;
+    this.createRenderTime.getAverageTime();
   }
 
   delay(ms: number) {

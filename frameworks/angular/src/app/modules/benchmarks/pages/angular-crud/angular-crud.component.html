@@ -2,8 +2,8 @@
 <button type="button" id="create" (click)="this.create1000rows()">CREATE {{ ROWS_NUMBER }} ROWS</button>
 <button type="button" (click)="this.run5Times()">Execute</button>
 <button type="button" (click)="clear()">CLEAR</button>
-<p>{{ 'CREATE: ' + createTime}}, {{ 'Render: ' + createRenderTime }}</p>
-<div *ngFor="let arr of createRenderTimeArr">
+<h2>Creating and rendering 1000 rows: {{  createRenderTime.averageTime > 0 ? createRenderTime.averageTime : createRenderTime.time }} ms</h2>
+<div *ngFor="let arr of createRenderTime?.times">
   <p>{{ arr }}</p>
 </div>
 <div id="list" *ngFor="let item of array">
