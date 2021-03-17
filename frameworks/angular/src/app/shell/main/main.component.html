@@ -1,15 +1,16 @@
-<div [class.example-is-mobile]="mobileQuery.matches">
-  <mat-toolbar color="primary" class="example-toolbar">
+<div class="container">
+  <mat-toolbar color="primary">
     <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
     <a href="/"><h1>Angular</h1></a>
   </mat-toolbar>
 
   <mat-sidenav-container>
-    <mat-sidenav #sidenav [mode]="mobileQuery.matches ? 'over' : 'side'"
-                 [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+    <mat-sidenav #sidenav [mode]="isMobile ? 'over' : 'side'"
+                 [fixedInViewport]="true" [fixedTopGap]="isMobile ? mobileToolbarHeight : desktopToolbarHeight">
       <mat-nav-list>
-        <mat-list-item *ngFor="let item of navigation">
-          <a matLine [routerLink]="item.routerLink" (click)="sidenav.close()">{{ item.title }}</a>
+        <mat-list-item *ngFor="let navItem of navList">
+          <a matLine [routerLink]="navItem.routerLink" (click)="sidenav.close()">{{ navItem.title }}</a>
+          <button mat-icon-button *ngIf="navItem.icon.length > 0"><mat-icon>{{ navItem.icon }}</mat-icon></button>
         </mat-list-item>
       </mat-nav-list>
     </mat-sidenav>

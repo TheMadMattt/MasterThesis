@@ -1,6 +1,12 @@
-import {ChangeDetectorRef, Component, OnDestroy} from '@angular/core';
-import {MediaMatcher} from "@angular/cdk/layout";
-import {MenuItem} from "../models/menu-item";
+import {
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+} from '@angular/core';
+import {BreakpointObserver, BreakpointState, MediaMatcher} from "@angular/cdk/layout";
+import {MenuList} from "@shell/sidenav-menu-list";
+import {map, takeUntil} from "rxjs/operators";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-main',
@@ -9,23 +15,30 @@ import {MenuItem} from "../models/menu-item";
 })
 export class MainComponent implements OnDestroy {
   mobileQuery: MediaQueryList;
+  isMobile: boolean = false;
+  mobileToolbarHeight = 56;
+  desktopToolbarHeight = 64;
 
-  navigation: MenuItem[] = [
-    {
-      routerLink: 'benchmarks/angular-crud',
-      title: 'Benchmark CRUD operations'
-    }
-  ];
+  navList = MenuList;
 
   private readonly _mobileQueryListener: () => void;
+  private destroy$ = new Subject<boolean>();
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
-    this.mobileQuery = media.matchMedia('(max-width: 600px)');
-    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+  constructor(private cdr: ChangeDetectorRef,
+              public observer: BreakpointObserver,
+              media: MediaMatcher) {
+    this.mobileQuery = media.matchMedia('(max-width: 599px)');
+    this.observer.observe('(max-width: 599px)').pipe(
+      takeUntil(this.destroy$),
+      map((result: BreakpointState) => this.isMobile = result.matches)
+    ).subscribe();
+    this._mobileQueryListener = () => cdr.detectChanges();
     this.mobileQuery.addEventListener('change', () => this._mobileQueryListener);
   }
 
   ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
     this.mobileQuery.removeEventListener('change', () => this._mobileQueryListener);
   }
 }
