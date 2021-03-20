@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { BenchmarksRoutingModule } from './benchmarks-routing.module';
-import { AngularCrudComponent } from './pages/angular-crud/angular-crud.component';
+import {SharedModule} from "@shared/shared.module";
+import {LifecycleHooksCrudComponent} from "@modules/benchmarks/pages/lifecycle-hooks-crud/lifecycle-hooks-crud.component";
 
 
 @NgModule({
-  declarations: [AngularCrudComponent],
+  declarations: [LifecycleHooksCrudComponent],
   imports: [
     CommonModule,
-    BenchmarksRoutingModule
+    BenchmarksRoutingModule,
+    SharedModule
   ]
 })
 export class BenchmarksModule { }

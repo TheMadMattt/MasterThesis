@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {AngularCrudComponent} from "@modules/benchmarks/pages/angular-crud/angular-crud.component";
+import {LifecycleHooksCrudComponent} from "@modules/benchmarks/pages/lifecycle-hooks-crud/lifecycle-hooks-crud.component";
 
 const routes: Routes = [
   {
     path: 'angular-crud',
-    component: AngularCrudComponent
+    component: LifecycleHooksCrudComponent
   }
 ];
 

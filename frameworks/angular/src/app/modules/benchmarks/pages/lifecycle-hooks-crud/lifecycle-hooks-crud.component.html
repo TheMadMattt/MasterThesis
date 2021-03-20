@@ -1,0 +1,114 @@
+<div class="crud-container" id="lifecycle-hooks-crud">
+  <div class="actions">
+    <mat-form-field appearance="outline">
+      <mat-label>Choose rows number</mat-label>
+      <mat-select [formControl]="rowsNumber">
+        <mat-option *ngFor="let rowNumber of ROWS_NUMBER" [value]="rowNumber">{{ rowNumber }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="operations">
+      <button mat-raised-button
+              id="create"
+              color="primary"
+              type="button"
+              (click)="this.createRows()">Create {{ rowsNumber.value }} rows</button>
+      <button mat-raised-button
+              id="update"
+              color="primary"
+              type="button"
+              (click)="this.updateRandomRow()"
+              [disabled]="dummyData.length <= 0">Update random row</button>
+      <button mat-raised-button
+              id="append"
+              color="primary"
+              type="button"
+              (click)="this.appendRow()"
+              [disabled]="dummyData.length <= 0">Append row</button>
+      <button mat-raised-button
+              id="delete"
+              color="primary"
+              type="button"
+              (click)="this.deleteRandomRow()"
+              [disabled]="dummyData.length <= 0">Delete random row</button>
+      <button mat-raised-button
+              id="read"
+              color="primary"
+              type="button"
+              (click)="this.readRandomRow()"
+              [disabled]="dummyData.length <= 0">Select random row (read)</button>
+    </div>
+    <div class="measurement-tests">
+      <button mat-raised-button
+              color="primary"
+              type="button"
+              matTooltip="Run 10 time measurements of creating {{ rowsNumber.value }} rows"
+              matTooltipPosition="above"
+              matTooltipHideDelay="2000"
+              (click)="this.runCreatingTest(10)">Run creating test</button>
+      <button mat-raised-button
+              color="primary"
+              type="button"
+              matTooltip="Run 10 time measurements of updating row"
+              matTooltipPosition="above"
+              matTooltipHideDelay="2000"
+              (click)="this.runUpdatingTest(10)"
+              [disabled]="dummyData.length <= 0">Run updating test</button>
+      <button mat-raised-button
+              color="primary"
+              type="button"
+              matTooltip="Run 10 time measurements of appending row"
+              matTooltipPosition="above"
+              matTooltipHideDelay="2000"
+              (click)="this.runAppendingTest(10)"
+              [disabled]="dummyData.length <= 0">Run appending test</button>
+      <button mat-raised-button
+              color="primary"
+              type="button"
+              matTooltip="Run 10 time measurements of deleting row"
+              matTooltipPosition="above"
+              matTooltipHideDelay="2000"
+              (click)="this.runDeletingTest(10)"
+              [disabled]="dummyData.length <= 0">Run deleting test</button>
+      <button mat-raised-button
+              color="primary"
+              type="button"
+              matTooltip="Run 10 time measurements of selecting (reading) row"
+              matTooltipPosition="above"
+              matTooltipHideDelay="2000"
+              (click)="this.runReadingTest(10)"
+              [disabled]="dummyData.length <= 0">Run reading test</button>
+    </div>
+    <button mat-raised-button color="primary" type="button" (click)="clear()">CLEAR</button>
+  </div>
+  <div class="selected-dummy-item" *ngIf="selectedDummyItem">
+    {{ selectedDummyItem.id }} | {{ selectedDummyItem.name }} | {{ selectedDummyItem.description }}
+  </div>
+  <h2>Creating {{ rowsNumber.value }} rows: {{  createTimer.averageTime > 0 ? createTimer.averageTime : createTimer.time }} ms</h2>
+  <h2>Updating random row: {{  updateTimer.averageTime > 0 ? updateTimer.averageTime : updateTimer.time }} ms</h2>
+  <h2>Appending row: {{  appendTimer.averageTime > 0 ? appendTimer.averageTime : appendTimer.time }} ms</h2>
+  <h2>Deleting random row: {{  deleteTimer.averageTime > 0 ? deleteTimer.averageTime : deleteTimer.time }} ms</h2>
+  <h2>Selecting (reading) random row: {{  readTimer.averageTime > 0 ? readTimer.averageTime : readTimer.time }} ms</h2>
+  <div class="data-container">
+<!--    <div class="data-list">-->
+<!--      <div id="list" *ngFor="let item of array">-->
+<!--        <div id="item">-->
+<!--          <h1>{{ item.name }}</h1>-->
+<!--          <h3>{{ item.desc }}</h3>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+    <div class="data-table">
+      <table id="table">
+        <tbody>
+        <tr *ngFor="let item of dummyData">
+          <td>{{ item.id }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.description }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

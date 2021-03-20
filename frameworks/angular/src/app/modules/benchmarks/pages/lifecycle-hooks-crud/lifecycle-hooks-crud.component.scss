@@ -1,0 +1,27 @@
+.actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 20px;
+  button {
+    margin: 10px;
+  }
+}
+
+.example-viewport {
+  height: 80vh;
+  width: 90vw;
+}
+
+.example-item {
+  height: 100%;
+}
+
+.data-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.data-list, .data-table {
+  flex: 1;
+}
