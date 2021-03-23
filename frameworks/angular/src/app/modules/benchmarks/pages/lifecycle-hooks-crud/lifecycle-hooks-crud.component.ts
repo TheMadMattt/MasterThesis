@@ -4,13 +4,14 @@ import {DummyData, DummyDataService} from '@modules/benchmarks/services/dummy-da
 import {FormControl} from '@angular/forms';
 
 @Component({
-  selector: 'app-angular-crud',
+  selector: 'app-lifecycle-hooks-crud',
   templateUrl: './lifecycle-hooks-crud.component.html',
   styleUrls: ['./lifecycle-hooks-crud.component.scss']
 })
 export class LifecycleHooksCrudComponent implements AfterViewChecked {
   dummyData: DummyData[] = [];
   ROWS_NUMBER: number[] = [1000, 5000, 10000];
+  TEST_NUMBER = 10;
   rowsNumber: FormControl = new FormControl(this.ROWS_NUMBER[0]);
   selectedDummyItem: any;
 
@@ -22,11 +23,11 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
   private isAppending = false;
   private isDeleting = false;
   private isReading = false;
-  createTimer = new Timer();
-  updateTimer = new Timer();
-  appendTimer = new Timer();
-  deleteTimer = new Timer();
-  readTimer = new Timer();
+  createTimer = new Timer('create');
+  updateTimer = new Timer('update');
+  appendTimer = new Timer('append');
+  deleteTimer = new Timer('delete');
+  readTimer = new Timer('read');
 
   createRows(): void {
     this.isCreating = true;
@@ -36,9 +37,9 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
 
   updateRandomRow(): void {
     this.isUpdating = true;
-    const id = this.dummyDataService.random(this.dummyData.length)
+    const id = this.dummyDataService.random(this.dummyData.length);
     this.updateTimer.startTimer();
-    let itemToUpdate = this.dummyData[id];
+    const itemToUpdate = this.dummyData[id];
     itemToUpdate.name += ' UPDATED';
     itemToUpdate.description += ' UPDATED';
     this.dummyData[id] = itemToUpdate;
@@ -47,21 +48,21 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
   appendRow(): void {
     this.isAppending = true;
     this.appendTimer.startTimer();
-    this.dummyData.push(this.dummyDataService.buildOneItem(this.dummyData.length))
+    this.dummyData.push(this.dummyDataService.buildOneItem(this.dummyData.length));
   }
 
   readRandomRow(): void {
     this.isReading = true;
-    const id = this.dummyDataService.random(this.dummyData.length)
+    const id = this.dummyDataService.random(this.dummyData.length);
     this.readTimer.startTimer();
     this.selectedDummyItem = this.dummyData[id];
   }
 
   deleteRandomRow(): void {
     this.isDeleting = true;
-    const id = this.dummyDataService.random(this.dummyData.length)
+    const id = this.dummyDataService.random(this.dummyData.length);
     this.deleteTimer.startTimer();
-    this.dummyData.splice(id, 1)
+    this.dummyData.splice(id, 1);
   }
 
   ngAfterViewChecked(): void {
@@ -84,16 +85,16 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
     this.cdr.detectChanges();
   }
 
-  async runCreatingTest(repeat: number) {
-    for (let i = 0; i < repeat; i++) {
+  runCreatingTest = async () => {
+    for (let i = 0; i < this.TEST_NUMBER; i++) {
       this.createRows();
       await this.delay(0);
     }
     this.createTimer.getAverageTime();
   }
 
-  async runUpdatingTest(repeat: number) {
-    for (let i = 0; i < repeat; i++) {
+  runUpdatingTest = async () => {
+    for (let i = 0; i < this.TEST_NUMBER; i++) {
       const dummyDataBeforeDelete = this.dummyData;
       this.updateRandomRow();
       await this.delay(0).then(() => {
@@ -103,8 +104,8 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
     this.updateTimer.getAverageTime();
   }
 
-  async runAppendingTest(repeat: number) {
-    for (let i = 0; i < repeat; i++) {
+  runAppendingTest = async () => {
+    for (let i = 0; i < this.TEST_NUMBER; i++) {
       const dummyDataBeforeDelete = this.dummyData;
       this.appendRow();
       await this.delay(0).then(() => {
@@ -114,8 +115,8 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
     this.appendTimer.getAverageTime();
   }
 
-  async runDeletingTest(repeat: number) {
-    for (let i = 0; i < repeat; i++) {
+  runDeletingTest = async () => {
+    for (let i = 0; i < this.TEST_NUMBER; i++) {
       const dummyDataBeforeDelete = this.dummyData;
       this.deleteRandomRow();
       await this.delay(0).then(() => {
@@ -125,25 +126,25 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
     this.deleteTimer.getAverageTime();
   }
 
-  async runReadingTest(repeat: number) {
-    for (let i = 0; i < repeat; i++) {
+  runReadingTest = async () => {
+    for (let i = 0; i < this.TEST_NUMBER; i++) {
       this.readRandomRow();
       await this.delay(0);
     }
     this.readTimer.getAverageTime();
   }
 
-  delay(ms: number) {
+  delay(ms: number): Promise<any> {
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
   clear(): void {
     this.dummyData = [];
     this.selectedDummyItem = null;
-    this.createTimer = new Timer();
-    this.appendTimer = new Timer();
-    this.updateTimer = new Timer();
-    this.deleteTimer = new Timer();
-    this.readTimer = new Timer();
+    this.createTimer = new Timer('create');
+    this.updateTimer = new Timer('update');
+    this.appendTimer = new Timer('append');
+    this.deleteTimer = new Timer('delete');
+    this.readTimer = new Timer('read');
   }
 }

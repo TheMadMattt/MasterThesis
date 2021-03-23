@@ -1,0 +1,6 @@
+<div class="display-time-container">
+  <h3><strong>{{ title }}</strong></h3>
+  <h3>{{  timer.averageTime > 0 ?
+    (timer.averageTime | number:'.5-5') :
+    (timer.time | number:'.5-5') }} ms</h3>
+</div>

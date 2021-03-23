@@ -1,11 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {LifecycleHooksCrudComponent} from "@modules/benchmarks/pages/lifecycle-hooks-crud/lifecycle-hooks-crud.component";
+import {LifecycleHooksCrudComponent} from '@modules/benchmarks/pages/lifecycle-hooks-crud/lifecycle-hooks-crud.component';
+import {RestApiCrudComponent} from '@modules/benchmarks/pages/rest-api-crud/rest-api-crud.component';
 
 const routes: Routes = [
   {
-    path: 'angular-crud',
+    path: 'lifecycle-crud',
     component: LifecycleHooksCrudComponent
+  },
+  {
+    path: 'rest-api-crud',
+    component: RestApiCrudComponent
   }
 ];
 

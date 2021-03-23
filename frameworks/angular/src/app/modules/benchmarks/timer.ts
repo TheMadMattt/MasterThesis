@@ -1,20 +1,23 @@
 export class Timer {
-  startTime: number = 0;
-  endTime: number = 0;
-  time: number = 0;
+  timerName = '';
+  startTime = 0;
+  endTime = 0;
+  time = 0;
   times: number[] = [];
-  averageTime: number = 0;
+  averageTime = 0;
 
-  constructor() { }
+  constructor(timerName: string) {
+    this.timerName = timerName;
+  }
 
-  stopTimer() {
+  startTimer(): void {
+    this.startTime = performance.now();
+  }
+
+  stopTimer(): void {
     this.endTime = performance.now();
     this.time = this.endTime - this.startTime;
     this.times.push(this.time);
-  }
-
-  startTimer() {
-    this.startTime = performance.now();
   }
 
   getAverageTime(): number {

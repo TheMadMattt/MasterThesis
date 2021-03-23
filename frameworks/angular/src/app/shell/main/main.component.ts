@@ -3,10 +3,10 @@ import {
   Component,
   OnDestroy,
 } from '@angular/core';
-import {BreakpointObserver, BreakpointState, MediaMatcher} from "@angular/cdk/layout";
-import {MenuList} from "@shell/sidenav-menu-list";
-import {map, takeUntil} from "rxjs/operators";
-import {Subject} from "rxjs";
+import {BreakpointObserver, BreakpointState, MediaMatcher} from '@angular/cdk/layout';
+import {MenuList} from '@shell/sidenav-menu-list';
+import {map, takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-main',
@@ -15,13 +15,13 @@ import {Subject} from "rxjs";
 })
 export class MainComponent implements OnDestroy {
   mobileQuery: MediaQueryList;
-  isMobile: boolean = false;
+  isMobile = false;
   mobileToolbarHeight = 56;
   desktopToolbarHeight = 64;
 
   navList = MenuList;
 
-  private readonly _mobileQueryListener: () => void;
+  private readonly mobileQueryListener: () => void;
   private destroy$ = new Subject<boolean>();
 
   constructor(private cdr: ChangeDetectorRef,
@@ -32,13 +32,13 @@ export class MainComponent implements OnDestroy {
       takeUntil(this.destroy$),
       map((result: BreakpointState) => this.isMobile = result.matches)
     ).subscribe();
-    this._mobileQueryListener = () => cdr.detectChanges();
-    this.mobileQuery.addEventListener('change', () => this._mobileQueryListener);
+    this.mobileQueryListener = () => cdr.detectChanges();
+    this.mobileQuery.addEventListener('change', () => this.mobileQueryListener);
   }
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
-    this.mobileQuery.removeEventListener('change', () => this._mobileQueryListener);
+    this.mobileQuery.removeEventListener('change', () => this.mobileQueryListener);
   }
 }

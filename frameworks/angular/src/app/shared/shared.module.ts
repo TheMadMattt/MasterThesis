@@ -8,9 +8,10 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { DisplayTimeComponent } from './display-time/display-time.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [DisplayTimeComponent],
   imports: [
     CommonModule
   ],
@@ -23,7 +24,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatListModule,
     MatIconModule,
     MatSelectModule,
-    MatTooltipModule
+    MatTooltipModule,
+    DisplayTimeComponent
   ]
 })
 export class SharedModule { }

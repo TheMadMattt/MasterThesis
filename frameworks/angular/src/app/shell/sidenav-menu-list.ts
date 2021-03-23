@@ -1,14 +1,14 @@
-import {MenuItem} from "@shell/models/menu-item";
+import {MenuItem} from '@shell/models/menu-item';
 
 export const MenuList: MenuItem[] = [
   {
-    title: 'Benchmark CRUD',
-    routerLink: 'benchmarks/angular-crud',
+    title: 'Lifecycle CRUD benchmark',
+    routerLink: 'benchmarks/lifecycle-crud',
     icon: 'speed'
   },
   {
-    title: 'Benchmark REST API CRUD',
-    routerLink: 'benchmarks/angular-crud',
+    title: 'REST API CRUD benchmark',
+    routerLink: 'benchmarks/rest-api-crud',
     icon: ''
   }
 ];

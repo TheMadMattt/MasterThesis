@@ -1,4 +1,4 @@
-<div class="container">
+<div class="main-container">
   <mat-toolbar color="primary">
     <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
     <a href="/"><h1>Angular</h1></a>
@@ -6,7 +6,7 @@
 
   <mat-sidenav-container>
     <mat-sidenav #sidenav
-                 [mode]="isMobile ? 'over' : 'side'"
+                 mode="over"
                  [fixedInViewport]="true"
                  [fixedTopGap]="isMobile ? mobileToolbarHeight : desktopToolbarHeight">
       <mat-nav-list>
