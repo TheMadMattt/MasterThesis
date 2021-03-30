@@ -13,6 +13,12 @@ export class DisplayTimeComponent {
   @Input()
   timer!: Timer;
 
+  @Input()
+  isError = false;
+
+  @Input()
+  errorMessage!: string | null;
+
   constructor() { }
 
 }
