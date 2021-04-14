@@ -1,0 +1,28 @@
+.lifecycle-crud-container {
+  height: 100%;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 20px;
+  margin: 5px;
+  border: 2px solid black;
+  button {
+    margin: 10px;
+  }
+}
+
+.result-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  > * {
+    flex: 1 0 200px;
+  }
+}
+
+.selected-dummy-item {
+  text-align: center;
+}

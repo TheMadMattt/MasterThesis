@@ -1,0 +1,20 @@
+<mat-list-item (click)="navItem.isSubMenuShowing = !navItem.isSubMenuShowing">
+  <a matLine
+     [routerLink]="navItem.link ? [navItem.link] : []"
+     (click)="navItem.children.length <= 0 && sidenavService.closeSidenav()">{{ navItem.title }}</a>
+  <mat-icon mat-list-icon>{{ navItem.icon }}</mat-icon>
+  <mat-icon class="expand-submenu"
+            *ngIf="navItem.children.length > 0"
+            [ngClass]="{'rotated' : navItem.isSubMenuShowing}">expand_more</mat-icon>
+</mat-list-item>
+<div class="submenu"
+     [ngClass]="{'expanded' : navItem.isSubMenuShowing}"
+     *ngFor="let subNavItem of navItem.children">
+  <mat-list-item>
+    <mat-icon mat-list-icon>{{ subNavItem.icon }}</mat-icon>
+    <a matLine
+       [routerLink]="[subNavItem.link]"
+       (click)="close()">{{ subNavItem.title }}</a>
+  </mat-list-item>
+</div>
+

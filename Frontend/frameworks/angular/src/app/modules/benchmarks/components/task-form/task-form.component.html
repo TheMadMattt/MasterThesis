@@ -1,0 +1,25 @@
+<div mat-dialog-title>
+  <h1>{{ isEditing ? 'Edit task' : 'Add task'}}</h1>
+</div>
+<div >
+  <form [formGroup]="taskForm" novalidate>
+    <mat-form-field appearance="outline" >
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" type="text">
+      <mat-error *ngIf="errorHandling('title', 'required')">Enter some value</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+      <mat-error *ngIf="errorHandling('description', 'required')">Enter some value</mat-error>
+    </mat-form-field>
+    <mat-checkbox formControlName="completed">Is task completed?</mat-checkbox>
+  </form>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" [mat-dialog-close]="null">Close</button>
+  <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">
+    {{ isEditing ? 'Edit post' : 'Add post'}}
+  </button>
+</div>

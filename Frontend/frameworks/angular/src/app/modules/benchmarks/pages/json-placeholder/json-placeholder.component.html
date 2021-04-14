@@ -1,0 +1,75 @@
+<div class="json-placeholder-container" id="json-placeholder">
+  <div class="actions">
+    <mat-form-field appearance="outline">
+      <mat-label>Choose post id</mat-label>
+      <mat-select [formControl]="selectedId">
+        <mat-option *ngFor="let id of arrayOfIds" [value]="id">{{ id }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button
+            id="add-post"
+            color="primary"
+            type="button"
+            (click)="addPost()">Add post</button>
+    <button mat-raised-button
+            id="update-post"
+            color="primary"
+            type="button"
+            (click)="updatePost(+selectedId.value)">Edit post</button>
+    <button mat-raised-button
+            id="get-post"
+            color="primary"
+            type="button"
+            (click)="getPost(+selectedId.value)">Get post</button>
+    <button mat-raised-button
+            color="primary"
+            type="button"
+            (click)="deletePost(+selectedId.value)">Delete post</button>
+    <button mat-raised-button
+            id="get-posts-comments"
+            color="primary"
+            type="button"
+            (click)="getPostsWithComments()">Get posts with comments</button>
+    <button mat-raised-button color="primary" type="button" (click)="clear()">CLEAR</button>
+  </div>
+  <div class="result-container">
+    <app-display-time title="Adding post" [timer]="addPostTimer"></app-display-time>
+    <app-display-time title="Getting 1 post" [timer]="getPostTimer"></app-display-time>
+    <app-display-time title="Updating post" [timer]="updatePostTimer"></app-display-time>
+    <app-display-time title="Deleting post" [timer]="deletePostTimer"></app-display-time>
+    <app-display-time title="Getting 100 posts and 500 comments" [timer]="getPostsTimer"></app-display-time>
+    <app-display-time title="Render time" [timer]="renderTimer"></app-display-time>
+  </div>
+  <div class="selected-post" *ngIf="selectedPost.title !== ''">
+    <h2><b>Selected post:</b> {{ selectedPost.id }} | {{ selectedPost.title }} | {{ selectedPost.body }}</h2>
+  </div>
+  <div class="data-table">
+    <table id="table">
+      <tbody>
+        <tr *ngFor="let post of posts">
+          <td>
+            <h2>{{ post.title }}</h2>
+            <div class="actions">
+              <button mat-raised-button
+                      type="button"
+                      color="primary"
+                      (click)="editPost(post)">Edit post</button>
+              <button mat-raised-button
+                      type="button"
+                      color="primary"
+                      (click)="deletePost(post.id)">Delete post</button>
+            </div>
+          </td>
+          <td>{{ post.body }}</td>
+          <td class="comments-container">
+            <div *ngFor="let comment of post.comments">
+              <p>{{ comment.email}}</p>
+              <h3>{{ comment.body }}</h3>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+

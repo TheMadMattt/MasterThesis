@@ -1,0 +1,14 @@
+<mat-sidenav-container autosize>
+  <mat-sidenav #sidenav
+               mode="over"
+               [fixedInViewport]="true"
+               [fixedTopGap]="isMobile ? mobileToolbarHeight : desktopToolbarHeight">
+    <mat-nav-list *ngFor="let navItem of navList">
+      <app-nav-item [navItem]="navItem"></app-nav-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

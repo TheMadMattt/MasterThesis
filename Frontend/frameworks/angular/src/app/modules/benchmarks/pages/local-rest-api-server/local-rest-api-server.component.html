@@ -1,0 +1,121 @@
+<div class="local-rest-api-container" id="local-rest-api">
+  <div class="actions">
+    <mat-error *ngIf="connectionError">{{ errorMsg }}</mat-error>
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Enter local rest api url</mat-label>
+        <input matInput type="url" [formControl]="localApiUrl">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Choose task count</mat-label>
+        <mat-select [formControl]="taskCount">
+          <mat-option *ngFor="let taskCount of TASK_COUNT" [value]="taskCount">{{ taskCount }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button class="green-btn"
+              (click)="connectToLocalApi()" [disabled]="isConnected">Connect</button>
+      <button mat-raised-button class="red-btn"
+              (click)="disconnectFromLocalApi()" [disabled]="!isConnected">Disconnect</button>
+      <button mat-raised-button
+              color="primary"
+              (click)="informationOpen = !informationOpen"
+              type="button"
+              cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+        <mat-icon>information</mat-icon>
+      </button>
+    </div>
+    <div *ngIf="isConnected">
+      <mat-form-field appearance="outline">
+        <mat-label>Enter task id</mat-label>
+        <input matInput [formControl]="selectedId">
+        <mat-hint>Enter task id from 1 to {{ taskCount.value }}</mat-hint>
+      </mat-form-field>
+      <button mat-raised-button
+              id="add-task"
+              color="primary"
+              type="button"
+              (click)="addTask()">Add task</button>
+      <button mat-raised-button
+              id="update-task"
+              color="primary"
+              type="button"
+              (click)="updateTask(+selectedId.value)">Update task</button>
+      <button mat-raised-button
+              id="delete-task"
+              color="primary"
+              type="button"
+              (click)="deleteTask(+selectedId.value)">Delete task</button>
+      <button mat-raised-button
+              id="get-task"
+              color="primary"
+              type="button"
+              (click)="getTask(+selectedId.value)">Get task</button>
+      <button mat-raised-button
+              id="get-tasks"
+              color="primary"
+              type="button" (click)="getTasks()">Get {{ taskCount.value }} tasks</button>
+      <button mat-raised-button color="primary" type="button" (click)="clear()">CLEAR</button>
+    </div>
+  </div>
+  <div class="result-container">
+    <app-display-time title="Adding task" [timer]="addTaskTimer"></app-display-time>
+    <app-display-time title="Getting 1 task" [timer]="getTaskTimer"></app-display-time>
+    <app-display-time title="Updating task" [timer]="updateTaskTimer"></app-display-time>
+    <app-display-time title="Deleting task" [timer]="deleteTaskTimer"></app-display-time>
+    <app-display-time title="Getting tasks" [timer]="getTasksTimer"></app-display-time>
+    <app-display-time title="Render time" [timer]="renderTimer"></app-display-time>
+  </div>
+  <div class="selected-post" *ngIf="selectedTask.title !== ''">
+    <h2><b>Selected task:</b> {{ selectedTask.id }} | {{ selectedTask.title }} | {{ selectedTask.description }} |
+      {{ selectedTask.completed ? 'done' : 'clear'}}</h2>
+  </div>
+  <div class="data-table">
+    <table id="table">
+      <tbody>
+      <tr *ngFor="let task of tasks">
+        <td>{{ task.title }}</td>
+        <td>{{ task.description }}</td>
+        <td><mat-icon>{{ task.completed ? 'done' : 'clear'}}</mat-icon></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="informationOpen"
+>
+  <div class="information">
+    <div class="row-display">
+      <mat-icon>task</mat-icon><p>Class: <b>Task</b></p>
+    </div>
+    <ul>
+      <li>id</li>
+      <li>title</li>
+      <li>description</li>
+      <li>completed</li>
+    </ul>
+    <p>Endpoints:</p>
+    <ul>
+      <li><b>GET</b> Connect(count: number) <br> path: connect/[count]</li>
+      <li><b>GET</b> GetAll() <br> path: task/</li>
+      <li><b>GET</b> Get(id: number) <br> path: task/[id]</li>
+      <li><b>POST</b> Post(task: Task) <br> path: task/[task]</li>
+      <li><b>PUT</b> Put(task: Task) <br> path: task/[task]</li>
+      <li><b>DELETE</b> Delete(id: number) <br> path: task/[id]</li>
+    </ul>
+  </div>
+</ng-template>
+
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="square-spin"
+  [fullScreen]="true"
+  name="local-rest-api-benchmark"
+>
+  <p style="font-size: 20px; color: white">Connecting to local rest api...</p>
+</ngx-spinner>

@@ -1,0 +1,57 @@
+.local-rest-api-container {
+  height: 100%;
+}
+
+mat-form-field {
+  margin-right: 10px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 20px;
+  button {
+    margin: 10px;
+  }
+  mat-error {
+    margin-bottom: 10px;
+  }
+}
+
+.result-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  > * {
+    flex: 1 0 200px;
+  }
+}
+
+
+.selected-post {
+  text-align: center;
+}
+
+.red-btn {
+  background-color: red;
+  color: white;
+}
+
+.green-btn {
+  background-color: green;
+  color: white;
+}
+
+.information {
+  border: solid 1px #ccc;
+  border-radius: 5px;
+  background: #fff;
+  padding: 10px;
+  margin: 0;
+  .row-display {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
