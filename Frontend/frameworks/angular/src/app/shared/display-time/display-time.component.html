@@ -5,7 +5,29 @@
       (timer.averageTime | number:'.5-5') :
       (timer.totalTime | number:'.5-5') }} ms</h3>
   </div>
+  <button mat-flat-button type="button"
+          [matBadge]="timer.times.length" matBadgePosition="after" matBadgeColor="accent"
+          cdkOverlayOrigin #allTimesOverlay="cdkOverlayOrigin">
+    <mat-icon (click)="showAllTimes = !showAllTimes">expand_more</mat-icon>
+  </button>
 </div>
 <ng-template #noError>
   <p class="error">{{errorMessage}}</p>
+</ng-template>
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="allTimesOverlay"
+  [cdkConnectedOverlayOpen]="showAllTimes"
+>
+  <div *ngIf="timer.times.length > 0; else noTimesAvailable">
+    <ul class="all-times">
+      <li *ngFor="let time of timer.times">{{ time }}</li>
+    </ul>
+  </div>
+  <ng-template #noTimesAvailable>
+    <div class="all-times">
+      No times to show.
+    </div>
+  </ng-template>
+
 </ng-template>

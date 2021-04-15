@@ -12,7 +12,7 @@ import {NgxSpinnerService} from 'ngx-spinner';
 export class LifecycleHooksCrudComponent implements AfterViewChecked {
   dummyData: DummyData[] = [];
   ROWS_NUMBER: number[] = [1000, 5000, 10000];
-  TEST_NUMBER = 10;
+  BENCHMARKS_NUMBER = 10;
   rowsNumber: FormControl = new FormControl(this.ROWS_NUMBER[0]);
   selectedDummyItem: any;
 
@@ -87,55 +87,58 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
     this.cdr.detectChanges();
   }
 
-  runCreatingTest = async () => {
-    this.spinner.show('lifecycle-benchmark');
-    for (let i = 0; i < this.TEST_NUMBER; i++) {
+  runCreatingBenchmark = async () => {
+    await this.spinner.show('lifecycle-benchmark');
+    for (let i = 0; i < this.BENCHMARKS_NUMBER; i++) {
       this.createRows();
       await this.delay(0);
     }
-    this.createTimer.getAverageTime();
-    this.spinner.hide('lifecycle-benchmark');
+    await this.spinner.hide('lifecycle-benchmark');
   }
 
-  runUpdatingTest = async () => {
-    for (let i = 0; i < this.TEST_NUMBER; i++) {
+  runUpdatingBenchmark = async () => {
+    await this.spinner.show('lifecycle-benchmark');
+    for (let i = 0; i < this.BENCHMARKS_NUMBER; i++) {
       const dummyDataBeforeDelete = this.dummyData;
       this.updateRandomRow();
       await this.delay(0).then(() => {
         this.dummyData = [...dummyDataBeforeDelete];
       });
     }
-    this.updateTimer.getAverageTime();
+    await this.spinner.hide('lifecycle-benchmark');
   }
 
-  runAppendingTest = async () => {
-    for (let i = 0; i < this.TEST_NUMBER; i++) {
+  runAppendingBenchmark = async () => {
+    await this.spinner.show('lifecycle-benchmark');
+    for (let i = 0; i < this.BENCHMARKS_NUMBER; i++) {
       const dummyDataBeforeDelete = this.dummyData;
       this.appendRow();
       await this.delay(0).then(() => {
         this.dummyData = [...dummyDataBeforeDelete];
       });
     }
-    this.appendTimer.getAverageTime();
+    await this.spinner.hide('lifecycle-benchmark');
   }
 
-  runDeletingTest = async () => {
-    for (let i = 0; i < this.TEST_NUMBER; i++) {
+  runDeletingBenchmark = async () => {
+    await this.spinner.show('lifecycle-benchmark');
+    for (let i = 0; i < this.BENCHMARKS_NUMBER; i++) {
       const dummyDataBeforeDelete = this.dummyData;
       this.deleteRandomRow();
       await this.delay(0).then(() => {
         this.dummyData = [...dummyDataBeforeDelete];
       });
     }
-    this.deleteTimer.getAverageTime();
+    await this.spinner.hide('lifecycle-benchmark');
   }
 
-  runReadingTest = async () => {
-    for (let i = 0; i < this.TEST_NUMBER; i++) {
+  runReadingBenchmark = async () => {
+    await this.spinner.show('lifecycle-benchmark');
+    for (let i = 0; i < this.BENCHMARKS_NUMBER; i++) {
       this.readRandomRow();
       await this.delay(0);
     }
-    this.readTimer.getAverageTime();
+    await this.spinner.hide('lifecycle-benchmark');
   }
 
   delay(ms: number): Promise<any> {
@@ -143,12 +146,6 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
   }
 
   clear(): void {
-    this.dummyData = [];
-    this.selectedDummyItem = null;
-    this.createTimer.clear();
-    this.updateTimer.clear();
-    this.appendTimer.clear();
-    this.deleteTimer.clear();
-    this.readTimer.clear();
+    window.location.reload();
   }
 }

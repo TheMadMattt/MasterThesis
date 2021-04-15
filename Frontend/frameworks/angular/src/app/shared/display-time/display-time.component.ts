@@ -19,6 +19,7 @@ export class DisplayTimeComponent {
   @Input()
   errorMessage!: string | null;
 
-  constructor() { }
+  showAllTimes = false;
 
+  constructor() { }
 }

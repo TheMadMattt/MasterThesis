@@ -41,41 +41,41 @@
       <button mat-raised-button
               color="primary"
               type="button"
-              matTooltip="Run {{TEST_NUMBER}} time measurements of creating {{ rowsNumber.value }} rows"
+              matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of creating {{ rowsNumber.value }} rows"
               matTooltipPosition="above"
               matTooltipHideDelay="2000"
-              (click)="this.runCreatingTest()">Run creating test</button>
+              (click)="this.runCreatingBenchmark()">Run creating test</button>
       <button mat-raised-button
               color="primary"
               type="button"
-              matTooltip="Run {{TEST_NUMBER}} time measurements of updating row"
+              matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of updating row"
               matTooltipPosition="above"
               matTooltipHideDelay="2000"
-              (click)="this.runUpdatingTest()"
+              (click)="this.runUpdatingBenchmark()"
               [disabled]="dummyData.length <= 0">Run updating test</button>
       <button mat-raised-button
               color="primary"
               type="button"
-              matTooltip="Run {{TEST_NUMBER}} time measurements of appending row"
+              matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of appending row"
               matTooltipPosition="above"
               matTooltipHideDelay="2000"
-              (click)="this.runAppendingTest()"
+              (click)="this.runAppendingBenchmark()"
               [disabled]="dummyData.length <= 0">Run appending test</button>
       <button mat-raised-button
               color="primary"
               type="button"
-              matTooltip="Run {{TEST_NUMBER}} time measurements of deleting row"
+              matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of deleting row"
               matTooltipPosition="above"
               matTooltipHideDelay="2000"
-              (click)="this.runDeletingTest()"
+              (click)="this.runDeletingBenchmark()"
               [disabled]="dummyData.length <= 0">Run deleting test</button>
       <button mat-raised-button
               color="primary"
               type="button"
-              matTooltip="Run {{TEST_NUMBER}} time measurements of selecting (reading) row"
+              matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of selecting (reading) row"
               matTooltipPosition="above"
               matTooltipHideDelay="2000"
-              (click)="this.runReadingTest()"
+              (click)="this.runReadingBenchmark()"
               [disabled]="dummyData.length <= 0">Run reading test</button>
     </div>
     <button mat-raised-button color="primary" type="button" (click)="clear()">CLEAR</button>

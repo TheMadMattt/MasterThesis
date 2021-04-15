@@ -19,15 +19,17 @@ export class Timer {
       this.endTime = performance.now();
       this.totalTime = this.endTime - this.startTime;
       this.times.push(this.totalTime);
+      if (this.times.length > 4) {
+        this.getAverageTime();
+      }
     }
   }
 
-  getAverageTime(): number {
+  getAverageTime(): void {
     if (this.times.length > 0) {
       const sum = this.times.reduce((a, b) => a + b);
-      return this.averageTime = (sum / this.times.length);
+      this.averageTime = (sum / this.times.length);
     }
-    return 0;
   }
 
   clear(): void {

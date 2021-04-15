@@ -7,9 +7,12 @@
   flex-direction: row;
   flex-wrap: wrap;
   padding: 20px;
-  button {
-    margin: 10px;
-  }
+  border: 2px solid black;
+  margin: 5px;
+}
+
+button {
+  margin: 10px;
 }
 
 .result-container {

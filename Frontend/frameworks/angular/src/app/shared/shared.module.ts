@@ -14,11 +14,16 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {OverlayModule} from '@angular/cdk/overlay';
+import {MatBadgeModule} from '@angular/material/badge';
 
 @NgModule({
   declarations: [DisplayTimeComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    MatIconModule,
+    MatButtonModule,
+    OverlayModule,
+    MatBadgeModule
   ],
   exports: [
     ReactiveFormsModule,

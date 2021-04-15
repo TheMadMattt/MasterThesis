@@ -6,30 +6,69 @@
         <mat-option *ngFor="let id of arrayOfIds" [value]="id">{{ id }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <button mat-raised-button
-            id="add-post"
-            color="primary"
-            type="button"
-            (click)="addPost()">Add post</button>
-    <button mat-raised-button
-            id="update-post"
-            color="primary"
-            type="button"
-            (click)="updatePost(+selectedId.value)">Edit post</button>
-    <button mat-raised-button
-            id="get-post"
-            color="primary"
-            type="button"
-            (click)="getPost(+selectedId.value)">Get post</button>
-    <button mat-raised-button
-            color="primary"
-            type="button"
-            (click)="deletePost(+selectedId.value)">Delete post</button>
-    <button mat-raised-button
-            id="get-posts-comments"
-            color="primary"
-            type="button"
-            (click)="getPostsWithComments()">Get posts with comments</button>
+    <div class="operations">
+      <button mat-raised-button
+              id="add-post"
+              color="primary"
+              type="button"
+              (click)="addPost()">Add post</button>
+      <button mat-raised-button
+              id="update-post"
+              color="primary"
+              type="button"
+              (click)="openEditPostForm(+selectedId.value)">Edit post</button>
+      <button mat-raised-button
+              id="get-post"
+              color="primary"
+              type="button"
+              (click)="getPost(+selectedId.value)">Get post</button>
+      <button mat-raised-button
+              color="primary"
+              type="button"
+              (click)="deletePost(+selectedId.value)">Delete post</button>
+      <button mat-raised-button
+              id="get-posts-comments"
+              color="primary"
+              type="button"
+              (click)="getPostsWithComments()">Get 100 posts with 500 comments</button>
+    </div>
+    <div class="measurement-tests">
+      <button mat-raised-button
+              color="primary"
+              type="button"
+              matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of creating post"
+              matTooltipPosition="above"
+              matTooltipHideDelay="2000"
+              (click)="this.runAddPostBenchmark()">Run creating benchmark</button>
+      <button mat-raised-button
+              color="primary"
+              type="button"
+              matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of updating post"
+              matTooltipPosition="above"
+              matTooltipHideDelay="2000"
+              (click)="this.runUpdatePostBenchmark()">Run updating post benchmark</button>
+      <button mat-raised-button
+              color="primary"
+              type="button"
+              matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of getting post"
+              matTooltipPosition="above"
+              matTooltipHideDelay="2000"
+              (click)="this.runGetPostBenchmark()">Run getting post benchmark</button>
+      <button mat-raised-button
+              color="primary"
+              type="button"
+              matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of getting 100 posts"
+              matTooltipPosition="above"
+              matTooltipHideDelay="2000"
+              (click)="this.runGetPostsBenchmark()">Run getting posts benchmark</button>
+      <button mat-raised-button
+              color="primary"
+              type="button"
+              matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of deleting post"
+              matTooltipPosition="above"
+              matTooltipHideDelay="2000"
+              (click)="this.runDeletePostBenchmark()">Run deleting post benchmark</button>
+    </div>
     <button mat-raised-button color="primary" type="button" (click)="clear()">CLEAR</button>
   </div>
   <div class="result-container">
@@ -37,7 +76,7 @@
     <app-display-time title="Getting 1 post" [timer]="getPostTimer"></app-display-time>
     <app-display-time title="Updating post" [timer]="updatePostTimer"></app-display-time>
     <app-display-time title="Deleting post" [timer]="deletePostTimer"></app-display-time>
-    <app-display-time title="Getting 100 posts and 500 comments" [timer]="getPostsTimer"></app-display-time>
+    <app-display-time title="Getting 100 posts" [timer]="getPostsTimer"></app-display-time>
     <app-display-time title="Render time" [timer]="renderTimer"></app-display-time>
   </div>
   <div class="selected-post" *ngIf="selectedPost.title !== ''">
@@ -49,11 +88,11 @@
         <tr *ngFor="let post of posts">
           <td>
             <h2>{{ post.title }}</h2>
-            <div class="actions">
+            <div>
               <button mat-raised-button
                       type="button"
                       color="primary"
-                      (click)="editPost(post)">Edit post</button>
+                      (click)="editSelectedPost(post)">Edit post</button>
               <button mat-raised-button
                       type="button"
                       color="primary"
@@ -72,4 +111,14 @@
     </table>
   </div>
 </div>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="square-spin"
+  [fullScreen]="true"
+  name="json-placeholder-benchmark"
+>
+  <p style="font-size: 20px; color: white">Running benchmark...</p>
+</ngx-spinner>
 

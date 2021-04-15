@@ -80,18 +80,18 @@ export class LocalRestApiServerComponent implements AfterViewChecked {
     ).subscribe();
   }
 
-  deleteTask(TaskId: number): void {
+  deleteTask(taskId: number): void {
     this.deleteTaskTimer.startTimer();
-    this.localRestApiService.deleteTask(TaskId).pipe(
+    this.localRestApiService.deleteTask(taskId).pipe(
       take(1),
       finalize(() => this.deleteTaskTimer.stopTimer())
     ).subscribe();
   }
 
-  getTask(TaskId: number): void {
-    if (TaskId > 0 && TaskId <= 100) {
+  getTask(taskId: number): void {
+    if (taskId > 0 && taskId <= +this.taskCount.value) {
       this.getTaskTimer.startTimer();
-      this.localRestApiService.getTask(TaskId).pipe(
+      this.localRestApiService.getTask(taskId).pipe(
         take(1),
         finalize(() => this.getTaskTimer.stopTimer())
       ).subscribe((task: Task) => {

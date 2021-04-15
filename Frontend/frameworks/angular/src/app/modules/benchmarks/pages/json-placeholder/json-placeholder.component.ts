@@ -1,12 +1,13 @@
 import {AfterViewChecked, ChangeDetectorRef, Component} from '@angular/core';
 import {Timer} from '@modules/benchmarks/timer';
 import {JsonPlaceholderService} from '@modules/benchmarks/services/api/json-placeholder.service';
-import {finalize, map, switchMap, take} from 'rxjs/operators';
+import {delay, finalize, map, repeat, switchMap, take} from 'rxjs/operators';
 import {Post} from '@modules/benchmarks/models/Post';
 import {DialogService} from '@modules/benchmarks/services/dialog.service';
 import {PostDTO} from '@modules/benchmarks/models/DTOs/PostDTO';
 import {FormControl} from '@angular/forms';
-import {EMPTY} from 'rxjs';
+import {defer, EMPTY, Observable} from 'rxjs';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-json-placeholder',
@@ -18,6 +19,7 @@ export class JsonPlaceholderComponent implements AfterViewChecked {
   selectedPost: Post = new Post();
   selectedId = new FormControl(1);
   arrayOfIds: number[] = Array.from({length: 100}, (_, i) => i + 1);
+  BENCHMARKS_NUMBER = 10;
 
   getPostsTimer = new Timer('getPosts');
   addPostTimer = new Timer('addPost');
@@ -28,7 +30,8 @@ export class JsonPlaceholderComponent implements AfterViewChecked {
   isRendering = false;
   constructor(private jsonPlaceholderApi: JsonPlaceholderService,
               private cdr: ChangeDetectorRef,
-              private dialogService: DialogService) { }
+              private dialogService: DialogService,
+              private spinner: NgxSpinnerService) { }
 
   ngAfterViewChecked(): void {
     if (this.isRendering) {
@@ -39,25 +42,19 @@ export class JsonPlaceholderComponent implements AfterViewChecked {
   }
 
   getPostsWithComments(): void {
-    this.getPostsTimer.startTimer();
-    this.jsonPlaceholderApi.getPostsWithComments().pipe(
-      take(1),
-      finalize(() => this.getPostsTimer.stopTimer())
-    ).subscribe(data => {
+    this.getPosts().subscribe(data => {
       this.isRendering = true;
       this.renderTimer.startTimer();
-      this.posts = data;
+      this.posts = [...data];
     });
   }
 
   addPost(): void {
     this.dialogService.openPostForm(new Post()).pipe(
       map((result: any) => result?.post),
-      take(1),
       switchMap((post: PostDTO) => {
         if (post) {
-          this.addPostTimer.startTimer();
-          return this.jsonPlaceholderApi.createNewPost(post);
+          return this.createPost(post);
         } else {
           return EMPTY;
         }
@@ -66,14 +63,12 @@ export class JsonPlaceholderComponent implements AfterViewChecked {
     ).subscribe();
   }
 
-  editPost(post: Post): void {
+  editSelectedPost(post: Post): void {
     this.dialogService.openPostForm(post).pipe(
       map((result: any) => result?.post),
-      take(1),
       switchMap((updatedPost: Post) => {
         if (updatedPost) {
-          this.updatePostTimer.startTimer();
-          return this.jsonPlaceholderApi.updatePost(updatedPost);
+          return this.updatePost(updatedPost);
         } else {
           return EMPTY;
         }
@@ -82,21 +77,13 @@ export class JsonPlaceholderComponent implements AfterViewChecked {
     ).subscribe();
   }
 
-  deletePost(postId: number): void {
-    this.deletePostTimer.startTimer();
-    this.jsonPlaceholderApi.deletePost(postId).pipe(
-      take(1),
-      finalize(() => this.deletePostTimer.stopTimer())
-    ).subscribe();
+  deleteSelectedPost(postId: number): void {
+    this.deletePost(postId).subscribe();
   }
 
-  getPost(postId: number): void {
+  getSelectedPost(postId: number): void {
     if (postId > 0 && postId <= 100) {
-      this.getPostTimer.startTimer();
-      this.jsonPlaceholderApi.getPost(postId).pipe(
-        take(1),
-        finalize(() => this.getPostTimer.stopTimer())
-      ).subscribe((post: Post) => {
+      this.getPost(postId).subscribe((post: Post) => {
         this.renderTimer.startTimer();
         this.isRendering = true;
         this.selectedPost = post;
@@ -104,23 +91,121 @@ export class JsonPlaceholderComponent implements AfterViewChecked {
     }
   }
 
-  updatePost(postId: number): void {
+  openEditPostForm(postId: number): void {
     this.jsonPlaceholderApi.getPost(postId).pipe(
-      take(1)
     ).subscribe(post => {
-      this.editPost(post);
+      this.editSelectedPost(post);
     });
   }
 
+  createPost(post: PostDTO): Observable<Post> {
+    return defer(() => {
+      this.addPostTimer.startTimer();
+      return this.jsonPlaceholderApi.createNewPost(post).pipe(
+        finalize(() => this.addPostTimer.stopTimer())
+      );
+    });
+  }
+
+  getPost(postId: number): Observable<Post> {
+    return defer(() => {
+      this.getPostTimer.startTimer();
+      if (postId === -1) {
+        postId = Math.floor(Math.random() * 100) + 1;
+      }
+      return this.jsonPlaceholderApi.getPost(postId).pipe(
+        finalize(() => this.getPostTimer.stopTimer())
+      );
+    });
+  }
+
+  getPosts(): Observable<Post[]> {
+    return defer(() => {
+      this.getPostsTimer.startTimer();
+      return this.jsonPlaceholderApi.getPostsWithComments().pipe(
+        finalize(() => this.getPostsTimer.stopTimer())
+      );
+    });
+  }
+
+  updatePost(post: Post): Observable<Post> {
+    return defer(() => {
+      this.updatePostTimer.startTimer();
+      return this.jsonPlaceholderApi.updatePost(post).pipe(
+        finalize(() => this.updatePostTimer.stopTimer())
+      );
+    });
+  }
+
+  deletePost(postId: number): Observable<Post> {
+    return defer(() => {
+      this.deletePostTimer.startTimer();
+      return this.jsonPlaceholderApi.deletePost(postId).pipe(
+        finalize(() => this.deletePostTimer.stopTimer())
+      );
+    });
+  }
+
+  runAddPostBenchmark = async () => {
+    await this.spinner.show('json-placeholder-benchmark');
+    this.createPost(
+      {
+        title: 'Benchmark CREATE',
+        body: `Running ${this.BENCHMARKS_NUMBER} benchmarks`,
+      }).pipe(
+      repeat(this.BENCHMARKS_NUMBER),
+      finalize(() => this.spinner.hide('json-placeholder-benchmark'))
+    ).subscribe();
+  }
+
+  runUpdatePostBenchmark = async () => {
+    await this.spinner.show('json-placeholder-benchmark');
+    const post = new Post();
+    post.setPost(
+      Math.floor(Math.random() * 100) + 1,
+      'Benchmark UPDATE',
+      `Running ${this.BENCHMARKS_NUMBER} benchmarks`);
+    this.updatePost(post).pipe(
+      repeat(this.BENCHMARKS_NUMBER),
+      finalize(() => this.spinner.hide('json-placeholder-benchmark'))
+    ).subscribe();
+  }
+
+  runGetPostBenchmark = async () => {
+    await this.spinner.show('json-placeholder-benchmark');
+    const postId = Math.floor(Math.random() * 100) + 1;
+    this.getPost(postId).pipe(
+      repeat(this.BENCHMARKS_NUMBER),
+      finalize(() => this.spinner.hide('json-placeholder-benchmark'))
+    ).subscribe(data => {
+      this.renderTimer.startTimer();
+      this.isRendering = true;
+      this.selectedPost = data;
+    });
+  }
+
+  runGetPostsBenchmark = async () => {
+    await this.spinner.show('json-placeholder-benchmark');
+    this.getPosts().pipe(
+      repeat(this.BENCHMARKS_NUMBER),
+      finalize(() => this.spinner.hide('json-placeholder-benchmark'))
+    ).subscribe(data => {
+      this.renderTimer.startTimer();
+      this.isRendering = true;
+      this.posts = data;
+    });
+  }
+
+  runDeletePostBenchmark = async () => {
+    await this.spinner.show('json-placeholder-benchmark');
+    const postId = Math.floor(Math.random() * 100) + 1;
+    this.deletePost(postId).pipe(
+      repeat(this.BENCHMARKS_NUMBER),
+      finalize(() => this.spinner.hide('json-placeholder-benchmark'))
+    ).subscribe();
+  }
+
   clear(): void {
-    this.posts = [];
-    this.renderTimer.clear();
-    this.getPostsTimer.clear();
-    this.addPostTimer.clear();
-    this.updatePostTimer.clear();
-    this.deletePostTimer.clear();
-    this.getPostTimer.clear();
-    this.isRendering = false;
-    this.selectedPost = new Post();
+    window.location.reload();
   }
 }

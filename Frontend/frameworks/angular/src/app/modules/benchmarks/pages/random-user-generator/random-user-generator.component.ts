@@ -52,9 +52,6 @@ export class RandomUserGeneratorComponent implements AfterViewChecked, OnDestroy
   }
 
   clear(): void {
-    this.users = [];
-    this.renderTimer.clear();
-    this.getUsersTimer.clear();
-    this.isRendering = false;
+    window.location.reload();
   }
 }

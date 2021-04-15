@@ -62,7 +62,7 @@
     <app-display-time title="Getting 1 task" [timer]="getTaskTimer"></app-display-time>
     <app-display-time title="Updating task" [timer]="updateTaskTimer"></app-display-time>
     <app-display-time title="Deleting task" [timer]="deleteTaskTimer"></app-display-time>
-    <app-display-time title="Getting tasks" [timer]="getTasksTimer"></app-display-time>
+    <app-display-time title="Getting {{ taskCount.value }} tasks" [timer]="getTasksTimer"></app-display-time>
     <app-display-time title="Render time" [timer]="renderTimer"></app-display-time>
   </div>
   <div class="selected-post" *ngIf="selectedTask.title !== ''">

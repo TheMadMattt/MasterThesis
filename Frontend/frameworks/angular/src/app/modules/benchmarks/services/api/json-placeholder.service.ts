@@ -22,18 +22,6 @@ export class JsonPlaceholderService {
     return this.httpClient.get<Photo[]>(this.API_URL + 'photos');
   }
 
-  getAlbumsWithPhotos(): Observable<Album[]> {
-    return forkJoin({albums: this.getAlbums(), photos: this.getPhotos()}).pipe(
-      map(data => {
-        data.albums.map(album => {
-          album.photos = data.photos.filter(photo => photo.albumId === album.id);
-          return album;
-        });
-        return data.albums;
-      })
-    );
-  }
-
   createNewPost(post: PostDTO): Observable<Post> {
     return this.httpClient.post<Post>(this.API_URL + 'posts', post);
   }
