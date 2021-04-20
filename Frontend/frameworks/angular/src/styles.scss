@@ -11,3 +11,25 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
     width: 100%
   }
 }
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 20px;
+  border: 2px solid black;
+  margin: 5px;
+  @media (max-width: 599px) {
+    flex-direction: column;
+  }
+}
+
+.flex-row-layout {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column-layout {
+  display: flex;
+  flex-direction: column;
+}

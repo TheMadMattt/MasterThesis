@@ -21,11 +21,11 @@
               id="get-post"
               color="primary"
               type="button"
-              (click)="getPost(+selectedId.value)">Get post</button>
+              (click)="getSelectedPost(+selectedId.value)">Get post</button>
       <button mat-raised-button
               color="primary"
               type="button"
-              (click)="deletePost(+selectedId.value)">Delete post</button>
+              (click)="deleteSelectedPost(+selectedId.value)">Delete post</button>
       <button mat-raised-button
               id="get-posts-comments"
               color="primary"
@@ -39,7 +39,7 @@
               matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of creating post"
               matTooltipPosition="above"
               matTooltipHideDelay="2000"
-              (click)="this.runAddPostBenchmark()">Run creating benchmark</button>
+              (click)="this.runAddPostBenchmark()">Run creating post benchmark</button>
       <button mat-raised-button
               color="primary"
               type="button"
@@ -70,6 +70,9 @@
               (click)="this.runDeletePostBenchmark()">Run deleting post benchmark</button>
     </div>
     <button mat-raised-button color="primary" type="button" (click)="clear()">CLEAR</button>
+    <button mat-raised-button
+            type="button"
+            (click)="saveExcel()"><mat-icon>file_download</mat-icon>Save times to excel</button>
   </div>
   <div class="result-container">
     <app-display-time title="Adding post" [timer]="addPostTimer"></app-display-time>
@@ -111,14 +114,4 @@
     </table>
   </div>
 </div>
-<ngx-spinner
-  bdColor="rgba(51,51,51,0.8)"
-  size="medium"
-  color="#fff"
-  type="square-spin"
-  [fullScreen]="true"
-  name="json-placeholder-benchmark"
->
-  <p style="font-size: 20px; color: white">Running benchmark...</p>
-</ngx-spinner>
 

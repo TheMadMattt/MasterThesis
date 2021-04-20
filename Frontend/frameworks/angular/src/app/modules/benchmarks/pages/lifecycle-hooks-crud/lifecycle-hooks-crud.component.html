@@ -79,6 +79,9 @@
               [disabled]="dummyData.length <= 0">Run reading test</button>
     </div>
     <button mat-raised-button color="primary" type="button" (click)="clear()">CLEAR</button>
+    <button mat-raised-button
+            type="button"
+            (click)="saveExcel()"><mat-icon>file_download</mat-icon>Save times to excel</button>
   </div>
   <div class="result-container">
     <app-display-time title="Creating {{ rowsNumber.value }} rows" [timer]="createTimer"></app-display-time>
@@ -95,21 +98,12 @@
       <tbody>
         <tr *ngFor="let item of dummyData">
           <td>{{ item.id }}</td>
-          <td>{{ item.name }}</td>
+          <td>{{ item.title }}</td>
           <td>{{ item.description }}</td>
+          <td><mat-icon>{{ item.completed ? 'done' : 'clear'}}</mat-icon></td>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
-<ngx-spinner
-  bdColor="rgba(51,51,51,0.8)"
-  size="medium"
-  color="#fff"
-  type="square-spin"
-  [fullScreen]="true"
-  name="lifecycle-benchmark"
->
-  <p style="font-size: 20px; color: white">Running benchmark...</p>
-</ngx-spinner>
 

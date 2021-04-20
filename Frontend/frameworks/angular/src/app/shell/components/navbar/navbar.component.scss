@@ -4,3 +4,15 @@ mat-toolbar {
     color: white;
   }
 }
+
+mat-form-field {
+  font-size: 13px;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  margin-bottom: -1.25em;
+}
+
+span {
+  flex: 1 1 auto;
+}

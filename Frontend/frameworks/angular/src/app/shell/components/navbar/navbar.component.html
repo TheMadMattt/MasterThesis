@@ -1,4 +1,13 @@
 <mat-toolbar color="primary">
   <button mat-icon-button (click)="sidenavService.toggleSidenav()"><mat-icon>menu</mat-icon></button>
   <a href="/"><h1>Angular</h1></a>
+  <span></span>
+  <mat-form-field>
+    <mat-label>Number of benchmarks</mat-label>
+    <mat-select [formControl]="numberOfBenchmarks">
+      <mat-option *ngFor="let benchmarksNumber of NUMBER_OF_BENCHMARKS" [value]="benchmarksNumber">
+        {{ benchmarksNumber }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </mat-toolbar>

@@ -7,12 +7,6 @@ mat-form-field {
 }
 
 .actions {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  padding: 20px;
-  border: 2px solid black;
-  margin: 5px;
   button {
     margin: 10px;
   }
@@ -29,7 +23,6 @@ mat-form-field {
     flex: 1 0 200px;
   }
 }
-
 
 .selected-post {
   text-align: center;
@@ -51,9 +44,5 @@ mat-form-field {
   background: #fff;
   padding: 10px;
   margin: 0;
-  .row-display {
-    display: flex;
-    flex-direction: row;
-  }
 }
 

@@ -25,11 +25,12 @@ export class Timer {
     }
   }
 
-  getAverageTime(): void {
+  getAverageTime(): number {
     if (this.times.length > 0) {
       const sum = this.times.reduce((a, b) => a + b);
       this.averageTime = (sum / this.times.length);
     }
+    return this.averageTime;
   }
 
   clear(): void {

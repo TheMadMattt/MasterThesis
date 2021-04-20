@@ -2,7 +2,7 @@ import {MenuItem} from '@shell/models/menu-item';
 
 export const MenuList: MenuItem[] = [
   {
-    title: 'Component lifecycle benchmark',
+    title: 'Lifecycle hooks benchmark',
     link: 'benchmarks/lifecycle-crud',
     icon: 'speed',
     showSubMenu: false,

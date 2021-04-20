@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-
-export interface DummyData {
-  id: number;
-  name: string;
-  description: string;
-}
+import {Task} from '@modules/benchmarks/models/Task';
 
 @Injectable({
   providedIn: 'root'
@@ -33,23 +28,22 @@ export class DummyDataService {
     return Math.round(Math.random() * 1000) % max;
   }
 
-  buildData(count: number): DummyData[] {
-    const data: DummyData[] = [];
+  buildData(count: number): Task[] {
+    const data: Task[] = [];
     for (let i = 0; i < count; i++) {
-      data.push({
-        id: i,
-        name: this.nouns[this.random(this.nouns.length)],
-        description: `${this.adjectives[this.random(this.adjectives.length)]} ${this.colors[this.random(this.colors.length)]} ${this.nouns[this.random(this.nouns.length)]}`
-      });
+      const task = this.buildOneItem(i);
+      data.push(task);
     }
     return data;
   }
 
-  buildOneItem(id: number): DummyData {
-    return {
-      id,
-      name: this.nouns[this.random(this.nouns.length)],
-      description: `${this.adjectives[this.random(this.adjectives.length)]} ${this.colors[this.random(this.colors.length)]} ${this.nouns[this.random(this.nouns.length)]}`
-    };
+  buildOneItem(id: number): Task {
+    const task = new Task();
+    task.setTask(id, this.nouns[this.random(this.nouns.length)],
+      `${this.adjectives[this.random(this.adjectives.length)]}
+      ${this.colors[this.random(this.colors.length)]}
+      ${this.nouns[this.random(this.nouns.length)]}`,
+      false);
+    return task;
   }
 }

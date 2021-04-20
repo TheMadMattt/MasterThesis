@@ -1,13 +1,15 @@
 import {AfterViewChecked, ChangeDetectorRef, Component} from '@angular/core';
 import {Timer} from '@modules/benchmarks/timer';
 import {JsonPlaceholderService} from '@modules/benchmarks/services/api/json-placeholder.service';
-import {delay, finalize, map, repeat, switchMap, take} from 'rxjs/operators';
+import {finalize, map, repeat, switchMap } from 'rxjs/operators';
 import {Post} from '@modules/benchmarks/models/Post';
 import {DialogService} from '@modules/benchmarks/services/dialog.service';
 import {PostDTO} from '@modules/benchmarks/models/DTOs/PostDTO';
 import {FormControl} from '@angular/forms';
 import {defer, EMPTY, Observable} from 'rxjs';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {BenchmarkService} from '@shared/services/benchmark.service';
+import {ExcelService} from '@shared/services/excel.service';
 
 @Component({
   selector: 'app-json-placeholder',
@@ -19,19 +21,25 @@ export class JsonPlaceholderComponent implements AfterViewChecked {
   selectedPost: Post = new Post();
   selectedId = new FormControl(1);
   arrayOfIds: number[] = Array.from({length: 100}, (_, i) => i + 1);
-  BENCHMARKS_NUMBER = 10;
+  BENCHMARKS_NUMBER = 0;
 
   getPostsTimer = new Timer('getPosts');
   addPostTimer = new Timer('addPost');
   getPostTimer = new Timer('getPost');
   updatePostTimer = new Timer('updatePost');
   deletePostTimer = new Timer('deletePost');
-  renderTimer = new Timer('render');
+  renderTimer = new Timer('renderPosts');
   isRendering = false;
   constructor(private jsonPlaceholderApi: JsonPlaceholderService,
               private cdr: ChangeDetectorRef,
               private dialogService: DialogService,
-              private spinner: NgxSpinnerService) { }
+              private spinner: NgxSpinnerService,
+              private benchmarkService: BenchmarkService,
+              private excelService: ExcelService) {
+    this.benchmarkService.getNumberOfBenchmarks().subscribe(value => {
+      this.BENCHMARKS_NUMBER = value;
+    });
+  }
 
   ngAfterViewChecked(): void {
     if (this.isRendering) {
@@ -147,19 +155,19 @@ export class JsonPlaceholderComponent implements AfterViewChecked {
   }
 
   runAddPostBenchmark = async () => {
-    await this.spinner.show('json-placeholder-benchmark');
+    await this.spinner.show('benchmark');
     this.createPost(
       {
         title: 'Benchmark CREATE',
         body: `Running ${this.BENCHMARKS_NUMBER} benchmarks`,
       }).pipe(
       repeat(this.BENCHMARKS_NUMBER),
-      finalize(() => this.spinner.hide('json-placeholder-benchmark'))
+      finalize(() => this.spinner.hide('benchmark'))
     ).subscribe();
   }
 
   runUpdatePostBenchmark = async () => {
-    await this.spinner.show('json-placeholder-benchmark');
+    await this.spinner.show('benchmark');
     const post = new Post();
     post.setPost(
       Math.floor(Math.random() * 100) + 1,
@@ -167,16 +175,16 @@ export class JsonPlaceholderComponent implements AfterViewChecked {
       `Running ${this.BENCHMARKS_NUMBER} benchmarks`);
     this.updatePost(post).pipe(
       repeat(this.BENCHMARKS_NUMBER),
-      finalize(() => this.spinner.hide('json-placeholder-benchmark'))
+      finalize(() => this.spinner.hide('benchmark'))
     ).subscribe();
   }
 
   runGetPostBenchmark = async () => {
-    await this.spinner.show('json-placeholder-benchmark');
+    await this.spinner.show('benchmark');
     const postId = Math.floor(Math.random() * 100) + 1;
     this.getPost(postId).pipe(
       repeat(this.BENCHMARKS_NUMBER),
-      finalize(() => this.spinner.hide('json-placeholder-benchmark'))
+      finalize(() => this.spinner.hide('benchmark'))
     ).subscribe(data => {
       this.renderTimer.startTimer();
       this.isRendering = true;
@@ -185,10 +193,10 @@ export class JsonPlaceholderComponent implements AfterViewChecked {
   }
 
   runGetPostsBenchmark = async () => {
-    await this.spinner.show('json-placeholder-benchmark');
+    await this.spinner.show('benchmark');
     this.getPosts().pipe(
       repeat(this.BENCHMARKS_NUMBER),
-      finalize(() => this.spinner.hide('json-placeholder-benchmark'))
+      finalize(() => this.spinner.hide('benchmark'))
     ).subscribe(data => {
       this.renderTimer.startTimer();
       this.isRendering = true;
@@ -203,6 +211,13 @@ export class JsonPlaceholderComponent implements AfterViewChecked {
       repeat(this.BENCHMARKS_NUMBER),
       finalize(() => this.spinner.hide('json-placeholder-benchmark'))
     ).subscribe();
+  }
+
+  saveExcel(): void {
+    const timers: Timer[] = [this.addPostTimer, this.getPostTimer, this.getPostsTimer,
+      this.updatePostTimer, this.deletePostTimer, this.renderTimer];
+
+    this.excelService.saveToExcel(timers, 'JSON-PLACEHOLDER');
   }
 
   clear(): void {

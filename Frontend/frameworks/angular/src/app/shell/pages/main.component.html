@@ -1,4 +1,14 @@
 <div class="main-container">
   <app-navbar></app-navbar>
   <app-sidenav></app-sidenav>
+  <ngx-spinner
+    bdColor="rgba(51,51,51,0.8)"
+    size="medium"
+    color="#fff"
+    type="square-spin"
+    [fullScreen]="true"
+    name="benchmark"
+  >
+    <p style="font-size: 20px; color: white">Running benchmark...</p>
+  </ngx-spinner>
 </div>

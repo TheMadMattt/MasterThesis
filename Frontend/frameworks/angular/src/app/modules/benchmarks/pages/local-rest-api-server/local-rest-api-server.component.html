@@ -1,6 +1,6 @@
 <div class="local-rest-api-container" id="local-rest-api">
   <div class="actions">
-    <mat-error *ngIf="connectionError">{{ errorMsg }}</mat-error>
+    <mat-error *ngIf="connectionError">{{ connectionErrorMsg }}</mat-error>
     <div>
       <mat-form-field appearance="outline">
         <mat-label>Enter local rest api url</mat-label>
@@ -23,38 +23,83 @@
               cdkOverlayOrigin #trigger="cdkOverlayOrigin">
         <mat-icon>information</mat-icon>
       </button>
+      <button mat-raised-button color="primary" type="button" (click)="clear()">CLEAR</button>
     </div>
     <div *ngIf="isConnected">
-      <mat-form-field appearance="outline">
-        <mat-label>Enter task id</mat-label>
-        <input matInput [formControl]="selectedId">
-        <mat-hint>Enter task id from 1 to {{ taskCount.value }}</mat-hint>
-      </mat-form-field>
-      <button mat-raised-button
-              id="add-task"
-              color="primary"
-              type="button"
-              (click)="addTask()">Add task</button>
-      <button mat-raised-button
-              id="update-task"
-              color="primary"
-              type="button"
-              (click)="updateTask(+selectedId.value)">Update task</button>
-      <button mat-raised-button
-              id="delete-task"
-              color="primary"
-              type="button"
-              (click)="deleteTask(+selectedId.value)">Delete task</button>
-      <button mat-raised-button
-              id="get-task"
-              color="primary"
-              type="button"
-              (click)="getTask(+selectedId.value)">Get task</button>
-      <button mat-raised-button
-              id="get-tasks"
-              color="primary"
-              type="button" (click)="getTasks()">Get {{ taskCount.value }} tasks</button>
-      <button mat-raised-button color="primary" type="button" (click)="clear()">CLEAR</button>
+      <div class="flex-row-layout">
+        <mat-form-field appearance="outline">
+          <mat-label>Enter task id</mat-label>
+          <input matInput [formControl]="selectedId">
+          <mat-hint>Enter task id from 1 to {{ taskCount.value }}</mat-hint>
+        </mat-form-field>
+        <mat-error *ngIf="!isIdCorrect"><p>{{ idErrorMsg }}</p></mat-error>
+      </div>
+      <div class="operations">
+        <button mat-raised-button
+                id="add-task"
+                color="primary"
+                type="button"
+                (click)="addTask()">Add task</button>
+        <button mat-raised-button
+                id="update-task"
+                color="primary"
+                type="button"
+                (click)="openEditTaskForm(+selectedId.value)">Update task</button>
+        <button mat-raised-button
+                id="delete-task"
+                color="primary"
+                type="button"
+                (click)="deleteSelectedTask(+selectedId.value)">Delete task</button>
+        <button mat-raised-button
+                id="get-task"
+                color="primary"
+                type="button"
+                (click)="getSelectedTask(+selectedId.value)">Get task</button>
+        <button mat-raised-button
+                id="get-tasks"
+                color="primary"
+                type="button" (click)="getTaskList()">Get {{ taskCount.value }} tasks</button>
+      </div>
+      <div class="measurement-tests">
+        <button mat-raised-button
+                color="primary"
+                type="button"
+                matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of creating task"
+                matTooltipPosition="above"
+                matTooltipHideDelay="2000"
+                (click)="this.runAddTaskBenchmark()">Run creating task benchmark</button>
+        <button mat-raised-button
+                color="primary"
+                type="button"
+                matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of updating task"
+                matTooltipPosition="above"
+                matTooltipHideDelay="2000"
+                (click)="this.runUpdateTaskBenchmark()">Run updating task benchmark</button>
+        <button mat-raised-button
+                color="primary"
+                type="button"
+                matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of getting task"
+                matTooltipPosition="above"
+                matTooltipHideDelay="2000"
+                (click)="this.runGetTaskBenchmark()">Run getting task benchmark</button>
+        <button mat-raised-button
+                color="primary"
+                type="button"
+                matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of getting 100 tasks"
+                matTooltipPosition="above"
+                matTooltipHideDelay="2000"
+                (click)="this.runGetTasksBenchmark()">Run getting tasks benchmark</button>
+        <button mat-raised-button
+                color="primary"
+                type="button"
+                matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of deleting task"
+                matTooltipPosition="above"
+                matTooltipHideDelay="2000"
+                (click)="this.runDeleteTaskBenchmark()">Run deleting task benchmark</button>
+        <button mat-raised-button
+                type="button"
+                (click)="saveExcel()"><mat-icon>file_download</mat-icon>Save times to excel</button>
+      </div>
     </div>
   </div>
   <div class="result-container">
@@ -73,6 +118,7 @@
     <table id="table">
       <tbody>
       <tr *ngFor="let task of tasks">
+        <td>{{ task.id }}</td>
         <td>{{ task.title }}</td>
         <td>{{ task.description }}</td>
         <td><mat-icon>{{ task.completed ? 'done' : 'clear'}}</mat-icon></td>
@@ -88,7 +134,7 @@
   [cdkConnectedOverlayOpen]="informationOpen"
 >
   <div class="information">
-    <div class="row-display">
+    <div class="flex-row-layout">
       <mat-icon>task</mat-icon><p>Class: <b>Task</b></p>
     </div>
     <ul>
@@ -108,14 +154,13 @@
     </ul>
   </div>
 </ng-template>
-
 <ngx-spinner
   bdColor="rgba(51,51,51,0.8)"
   size="medium"
   color="#fff"
   type="square-spin"
   [fullScreen]="true"
-  name="local-rest-api-benchmark"
+  name="local-rest-api-benchmark-connection"
 >
   <p style="font-size: 20px; color: white">Connecting to local rest api...</p>
 </ngx-spinner>

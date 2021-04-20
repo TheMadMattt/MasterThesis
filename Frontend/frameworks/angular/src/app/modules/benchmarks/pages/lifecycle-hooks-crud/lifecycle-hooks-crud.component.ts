@@ -1,8 +1,11 @@
 import {AfterViewChecked, ChangeDetectorRef, Component} from '@angular/core';
 import {Timer} from '@modules/benchmarks/timer';
-import {DummyData, DummyDataService} from '@modules/benchmarks/services/dummy-data.service';
+import {DummyDataService} from '@modules/benchmarks/services/dummy-data.service';
 import {FormControl} from '@angular/forms';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {BenchmarkService} from '@shared/services/benchmark.service';
+import {Task} from '@modules/benchmarks/models/Task';
+import {ExcelService} from '@shared/services/excel.service';
 
 @Component({
   selector: 'app-lifecycle-hooks-crud',
@@ -10,26 +13,32 @@ import {NgxSpinnerService} from 'ngx-spinner';
   styleUrls: ['./lifecycle-hooks-crud.component.scss']
 })
 export class LifecycleHooksCrudComponent implements AfterViewChecked {
-  dummyData: DummyData[] = [];
-  ROWS_NUMBER: number[] = [1000, 5000, 10000];
-  BENCHMARKS_NUMBER = 10;
+  dummyData: Task[] = [];
+  ROWS_NUMBER: number[] = [1000, 2000, 5000, 10000];
+  BENCHMARKS_NUMBER = 0;
   rowsNumber: FormControl = new FormControl(this.ROWS_NUMBER[0]);
   selectedDummyItem: any;
 
   constructor(private dummyDataService: DummyDataService,
               private spinner: NgxSpinnerService,
-              private cdr: ChangeDetectorRef) { }
+              private cdr: ChangeDetectorRef,
+              private benchmarkService: BenchmarkService,
+              private excelService: ExcelService) {
+    this.benchmarkService.getNumberOfBenchmarks().subscribe(value => {
+      this.BENCHMARKS_NUMBER = value;
+    });
+  }
 
   private isCreating = false;
   private isUpdating = false;
   private isAppending = false;
   private isDeleting = false;
   private isReading = false;
-  createTimer = new Timer('create');
-  updateTimer = new Timer('update');
-  appendTimer = new Timer('append');
-  deleteTimer = new Timer('delete');
-  readTimer = new Timer('read');
+  createTimer = new Timer('createDummyData');
+  updateTimer = new Timer('updateDummyData');
+  appendTimer = new Timer('appendDummyData');
+  deleteTimer = new Timer('deleteDummyData');
+  readTimer = new Timer('readDummyData');
 
   createRows(): void {
     this.isCreating = true;
@@ -42,7 +51,7 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
     const id = this.dummyDataService.random(this.dummyData.length);
     this.updateTimer.startTimer();
     const itemToUpdate = this.dummyData[id];
-    itemToUpdate.name += ' UPDATED';
+    itemToUpdate.title += ' UPDATED';
     itemToUpdate.description += ' UPDATED';
     this.dummyData[id] = itemToUpdate;
   }
@@ -88,16 +97,16 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
   }
 
   runCreatingBenchmark = async () => {
-    await this.spinner.show('lifecycle-benchmark');
+    await this.spinner.show('benchmark');
     for (let i = 0; i < this.BENCHMARKS_NUMBER; i++) {
       this.createRows();
       await this.delay(0);
     }
-    await this.spinner.hide('lifecycle-benchmark');
+    await this.spinner.hide('benchmark');
   }
 
   runUpdatingBenchmark = async () => {
-    await this.spinner.show('lifecycle-benchmark');
+    await this.spinner.show('benchmark');
     for (let i = 0; i < this.BENCHMARKS_NUMBER; i++) {
       const dummyDataBeforeDelete = this.dummyData;
       this.updateRandomRow();
@@ -105,11 +114,11 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
         this.dummyData = [...dummyDataBeforeDelete];
       });
     }
-    await this.spinner.hide('lifecycle-benchmark');
+    await this.spinner.hide('benchmark');
   }
 
   runAppendingBenchmark = async () => {
-    await this.spinner.show('lifecycle-benchmark');
+    await this.spinner.show('benchmark');
     for (let i = 0; i < this.BENCHMARKS_NUMBER; i++) {
       const dummyDataBeforeDelete = this.dummyData;
       this.appendRow();
@@ -117,11 +126,11 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
         this.dummyData = [...dummyDataBeforeDelete];
       });
     }
-    await this.spinner.hide('lifecycle-benchmark');
+    await this.spinner.hide('benchmark');
   }
 
   runDeletingBenchmark = async () => {
-    await this.spinner.show('lifecycle-benchmark');
+    await this.spinner.show('benchmark');
     for (let i = 0; i < this.BENCHMARKS_NUMBER; i++) {
       const dummyDataBeforeDelete = this.dummyData;
       this.deleteRandomRow();
@@ -129,16 +138,16 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
         this.dummyData = [...dummyDataBeforeDelete];
       });
     }
-    await this.spinner.hide('lifecycle-benchmark');
+    await this.spinner.hide('benchmark');
   }
 
   runReadingBenchmark = async () => {
-    await this.spinner.show('lifecycle-benchmark');
+    await this.spinner.show('benchmark');
     for (let i = 0; i < this.BENCHMARKS_NUMBER; i++) {
       this.readRandomRow();
       await this.delay(0);
     }
-    await this.spinner.hide('lifecycle-benchmark');
+    await this.spinner.hide('benchmark');
   }
 
   delay(ms: number): Promise<any> {
@@ -147,5 +156,12 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
 
   clear(): void {
     window.location.reload();
+  }
+
+  saveExcel(): void {
+    const timers: Timer[] = [this.createTimer, this.readTimer, this.appendTimer,
+      this.updateTimer, this.deleteTimer];
+
+    this.excelService.saveToExcel(timers, 'LIFECYCLE-HOOKS');
   }
 }
