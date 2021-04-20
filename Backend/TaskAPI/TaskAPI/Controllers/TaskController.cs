@@ -38,12 +38,12 @@ namespace TaskAPI.Controllers
         [Route("{id}")]
         public IActionResult Get(int id)
         {
-            if (id >= Data.Tasks.Count || id < 0)
+            var response = Data.Tasks.SingleOrDefault(item => item.Id == id);
+            if (response == null)
             {
                 return NotFound();
             }
-            
-            var response = Data.Tasks.SingleOrDefault(item => item.Id == id);
+
             return Ok(response);
         }
 
@@ -65,9 +65,10 @@ namespace TaskAPI.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, TaskDto taskDto)
         {
-            if (id >= Data.Tasks.Count || id < 0)
+            var index = Data.Tasks.FindIndex(item => item.Id == id);
+            if (index == -1)
             {
-                return NotFound();
+                NotFound();
             }
 
             var task = new Task()
@@ -78,27 +79,19 @@ namespace TaskAPI.Controllers
                 Completed = taskDto.Completed
             };
 
-            Data.Tasks[id] = task;
-            return Ok();
+            
+            Data.Tasks[index] = task;
+            return Ok(task);
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            if (id >= Data.Tasks.Count || id < 0)
-            {
-                return NotFound();
-            }
-
             var task = Data.Tasks.SingleOrDefault(item => item.Id == id);
-            if (task != null)
-            {
-                Data.Tasks.Remove(task);
-                return Ok();
-            } else
-            {
-                return NotFound();
-            }
+            if (task == null) return NotFound();
+            Data.Tasks.Remove(task);
+            return Ok();
+
         }
     }
 }
