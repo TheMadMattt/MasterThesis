@@ -24,12 +24,41 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
   }
 }
 
-.flex-row-layout {
+.flex-row {
   display: flex;
   flex-direction: row;
 }
 
-.flex-column-layout {
+.flex-column {
   display: flex;
   flex-direction: column;
+}
+
+.flex-space_around-center {
+  justify-content: space-around;
+  align-items: center;
+}
+
+.flex-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.dropdown-overlay {
+  border: solid 1px #ccc;
+  border-radius: 5px;
+  background: #fff;
+  text-align: center;
+  padding: 10px;
+  margin: 0;
+}
+
+.dropdown-overlay > li {
+  list-style-type: none;
+  border-bottom: solid 1px #8b8b8b;
+  padding: 8px 0;
+}
+
+.dropdown-overlay > li:last-child {
+  border-bottom: none;
 }

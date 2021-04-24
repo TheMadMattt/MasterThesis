@@ -3,7 +3,7 @@ import {MenuItem} from '@shell/models/menu-item';
 export const MenuList: MenuItem[] = [
   {
     title: 'Lifecycle hooks benchmark',
-    link: 'benchmarks/lifecycle-crud',
+    link: '/benchmarks/lifecycle-crud',
     icon: 'speed',
     showSubMenu: false,
     isSubMenuShowing: false,
@@ -18,7 +18,7 @@ export const MenuList: MenuItem[] = [
     children: [
       {
         title: 'Random User Generator',
-        link: 'benchmarks/random-user-generator',
+        link: '/benchmarks/random-user-generator',
         icon: 'person',
         showSubMenu: false,
         isSubMenuShowing: false,
@@ -26,7 +26,7 @@ export const MenuList: MenuItem[] = [
       },
       {
         title: '{JSON} Placeholder',
-        link: 'benchmarks/json-placeholder',
+        link: '/benchmarks/json-placeholder',
         icon: 'public',
         showSubMenu: false,
         isSubMenuShowing: false,
@@ -34,7 +34,7 @@ export const MenuList: MenuItem[] = [
       },
       {
         title: 'Local API server',
-        link: 'benchmarks/local-rest-api',
+        link: '/benchmarks/local-rest-api',
         icon: 'public',
         showSubMenu: false,
         isSubMenuShowing: false,

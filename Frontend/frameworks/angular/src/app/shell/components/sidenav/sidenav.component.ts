@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, ViewChild} from '@angular/core';
 import {MatSidenav} from '@angular/material/sidenav';
 import {MenuList} from '@shell/nav-menu-list';
 import {Subject} from 'rxjs';

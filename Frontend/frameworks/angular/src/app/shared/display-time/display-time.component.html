@@ -20,12 +20,12 @@
   [cdkConnectedOverlayOpen]="showAllTimes"
 >
   <div *ngIf="timer.times.length > 0; else noTimesAvailable">
-    <ul class="all-times">
+    <ul class="dropdown-overlay">
       <li *ngFor="let time of timer.times">{{ time }}</li>
     </ul>
   </div>
   <ng-template #noTimesAvailable>
-    <div class="all-times">
+    <div class="dropdown-overlay">
       No times to show.
     </div>
   </ng-template>

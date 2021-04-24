@@ -6,13 +6,15 @@ import {RouterModule} from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { NavItemComponent } from './components/nav-item/nav-item.component';
+import {HomeComponent} from '../home/home.component';
 
 @NgModule({
   declarations: [
     MainComponent,
     NavbarComponent,
     SidenavComponent,
-    NavItemComponent
+    NavItemComponent,
+    HomeComponent
   ],
   exports: [
     MainComponent

@@ -26,7 +26,7 @@
       <button mat-raised-button color="primary" type="button" (click)="clear()">CLEAR</button>
     </div>
     <div *ngIf="isConnected">
-      <div class="flex-row-layout">
+      <div class="flex-row">
         <mat-form-field appearance="outline">
           <mat-label>Enter task id</mat-label>
           <input matInput [formControl]="selectedId">
@@ -134,7 +134,7 @@
   [cdkConnectedOverlayOpen]="informationOpen"
 >
   <div class="information">
-    <div class="flex-row-layout">
+    <div class="flex-row">
       <mat-icon>task</mat-icon><p>Class: <b>Task</b></p>
     </div>
     <ul>

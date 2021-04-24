@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {MatDrawerToggleResult, MatSidenav} from '@angular/material/sidenav';
+import {from, Observable, of} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,15 +14,15 @@ export class SidenavService {
     this.sidenav = sidenav;
   }
 
-  openSidenav(): Promise<MatDrawerToggleResult> {
-    return this.sidenav.open();
+  openSidenav(): Observable<MatDrawerToggleResult> {
+    return from(this.sidenav.open());
   }
 
-  closeSidenav(): Promise<MatDrawerToggleResult> {
-    return this.sidenav.close();
+  closeSidenav(): Observable<MatDrawerToggleResult> {
+    return from(this.sidenav.close());
   }
 
   toggleSidenav(): void {
-    this.sidenav.toggle();
+    from(this.sidenav.toggle());
   }
 }

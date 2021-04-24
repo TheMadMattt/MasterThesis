@@ -4,7 +4,7 @@
                [fixedInViewport]="true"
                [fixedTopGap]="isMobile ? mobileToolbarHeight : desktopToolbarHeight">
     <mat-nav-list *ngFor="let navItem of navList">
-      <app-nav-item [navItem]="navItem"></app-nav-item>
+      <app-nav-item [navItem]="navItem" [isSidenavOpen]="sidenav.openedChange"></app-nav-item>
     </mat-nav-list>
   </mat-sidenav>
 

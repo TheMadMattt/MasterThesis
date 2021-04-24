@@ -1,3 +1,107 @@
 <div class="home-container">
-  <h1>Hello!</h1>
+  <div class="main-box gradient-right flex-column flex-center">
+    <h1><b>search</b> for local stores<br>that will deliver <b>your purchases</b></h1>
+    <button mat-flat-button type="button"
+            cdkOverlayOrigin #webVitals="cdkOverlayOrigin">
+      <mat-icon (click)="showAllTimes = !showAllTimes">expand_more</mat-icon>
+    </button>
+    <div class="search-form">
+      <label>
+        <input type="text" placeholder="search your address" />
+      </label>
+      <button type="button" mat-button>search</button>
+    </div>
+  </div>
+  <div class="about-box flex-row flex-space_around-center">
+    <div class="img-box flex-center">
+      <img src="assets/images/png/hand.png" alt="hand image">
+      <p><b>we support</b><br> local stores,<br>by adding new stores</p>
+    </div>
+    <div class="img-box flex-center">
+      <img src="assets/images/png/bag.png" alt="bag image">
+      <p><b>you also help</b>,<br> by buying locally instead of <br>in chain stores</p>
+    </div>
+    <div class="img-box flex-center">
+      <img src="assets/images/png/open.png" alt="open sign image">
+      <p><b>enter the address and check</b>,<br> which stores in the area<br> will supply you with shopping</p>
+    </div>
+    <div class="img-box flex-center">
+      <img src="assets/images/png/telephone.png" alt="telephone image">
+      <p><b>at this point</b><br> you can place an order<br>by calling the store</p>
+    </div>
+    <div class="img-box flex-center">
+      <img src="assets/images/png/laptop.png" alt="laptop image">
+      <p><b>soon</b><br> online ordering system<br>will be available</p>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="add-shop-box flex-row flex-center">
+    <img src="assets/images/png/arrow_right.png" class="margin-right" alt="arrow right image">
+    <div class="flex-column flex-center">
+      <h1>if you <b>run your store</b>,<br> you can <b>add it</b> for free to our catalog</h1>
+      <button mat-raised-button>add shop</button>
+    </div>
+    <img src="assets/images/png/arrow_left.png" class="margin-left" alt="arrow left image">
+  </div>
+  <div class="soon-ordering-box gradient-left flex-row flex-center">
+    <div class="ordering-text flex-column">
+      <h1><b>soon</b><br> you will make and pay<br> for your purchases<br> completely <b>online</b></h1>
+      <h2>in four simple steps</h2>
+    </div>
+    <div class="smartphone-img">
+      <img src="assets/images/png/smartphone.png" alt="smartphone image">
+    </div>
+  </div>
+  <div class="steps-to-order flex-row flex-space_around-center">
+    <div class="flex-row flex-center step-img-box">
+      <img src="assets/images/svg/first.svg" alt="first">
+      <p><b>enter the address and search</b><br> for local shops in your area</p>
+    </div>
+    <div class="flex-row flex-center step-img-box">
+      <img src="assets/images/svg/second.svg" alt="second">
+      <p><b>select the store you are<br> interested in</b> that has made available<br> the online shopping option</p>
+    </div>
+    <div class="flex-row flex-center step-img-box">
+      <img src="assets/images/svg/third.svg" alt="third">
+      <p><b>add products to the cart,</b><br> place the order and wait<br> for confirmation from the store</p>
+    </div>
+    <div class="flex-row flex-center step-img-box">
+      <img src="assets/images/svg/fourth.svg" alt="fourth">
+      <p><b>when the store confirms</b><br>the availability of all<br> products, pay for the order<br> and wait for delivery</p>
+    </div>
+  </div>
+  <div class="soon-ordering-box gradient-right flex-row flex-center">
+    <div class="smartphone-img">
+      <img src="assets/images/png/shoppingBag.png">
+    </div>
+    <div class="flex-column flex-center">
+      <h1><b>why</b> is it worth buying<br> locally with <b>wamtu.pl</b></h1>
+      <ol>
+        <li>you support local stores instead of global networks</li>
+        <li>everything is free, you only pay for purchases</li>
+        <li>on wamtu.pl, just enter the address, we will search for stores in the area for you</li>
+        <li>clear and readable system - you will definitely not get lost</li>
+        <li>safe and comfortable - why stand in line at the checkout when shopping can come to you</li>
+      </ol>
+    </div>
+  </div>
 </div>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="webVitals"
+  [cdkConnectedOverlayOpen]="showAllTimes"
+>
+  <div>
+    <ul class="dropdown-overlay">
+      <li *ngIf="cls">{{ cls.name }} | {{ cls.value }} ms</li>
+      <li *ngIf="lcp">{{ lcp.name }} | {{ lcp.value }} ms</li>
+      <li *ngIf="fcp">{{ fcp.name }} | {{ fcp.value }} ms</li>
+      <li *ngIf="fp">{{ fp.name }} | {{ fp.value }} ms</li>
+      <li *ngIf="ttfb">{{ ttfb.name }} | {{ ttfb.value }} ms</li>
+      <li *ngIf="totalPageLoadTime">{{ totalPageLoadTime.name }} | {{ totalPageLoadTime.value }} ms</li>
+      <li *ngIf="pageRenderTime">{{ pageRenderTime.name }} | {{ pageRenderTime.value }} ms</li>
+    </ul>
+  </div>
+
+</ng-template>
