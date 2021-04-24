@@ -2,6 +2,7 @@
   "name": "reactjs",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://themadmattt.github.io/frameworks/React/",
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
@@ -16,7 +17,7 @@
   },
   "scripts": {
     "start": "react-scripts start -o",
-    "build": "react-scripts build --base-href /frameworks/React/",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
