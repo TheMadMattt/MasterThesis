@@ -14,7 +14,7 @@ export class ExcelService {
 
   constructor() { }
 
-  saveToExcel(timers: Timer[], workBookTitle: string): void {
+  saveTimersToExcel(timers: Timer[], workBookTitle: string): void {
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     timers.forEach(timer => {
       const timerExcel: ExcelItem[] = timer.times.map((item, index) => {

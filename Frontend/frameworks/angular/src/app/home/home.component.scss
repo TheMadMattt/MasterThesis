@@ -145,6 +145,7 @@ $green: #7fc553;
   }
   .smartphone-img {
     img {
+      width: 100%;
       margin-top: -48px;
       @media (max-width: 1099px) {
         margin-top: 0;

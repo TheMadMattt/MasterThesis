@@ -217,7 +217,7 @@ export class JsonPlaceholderComponent implements AfterViewChecked {
     const timers: Timer[] = [this.addPostTimer, this.getPostTimer, this.getPostsTimer,
       this.updatePostTimer, this.deletePostTimer, this.renderTimer];
 
-    this.excelService.saveToExcel(timers, 'JSON-PLACEHOLDER');
+    this.excelService.saveTimersToExcel(timers, 'JSON-PLACEHOLDER');
   }
 
   clear(): void {

@@ -6,10 +6,12 @@ import {BehaviorSubject, Observable} from 'rxjs';
 })
 export class BenchmarkService {
   numberOfBenchmarksSubject = new BehaviorSubject<number>(5);
+  selectedNumberOfBenchmarks = 5;
 
   constructor() { }
 
   setNumberOfBenchmarks(count: number): void {
+    this.selectedNumberOfBenchmarks = count;
     this.numberOfBenchmarksSubject.next(count);
   }
 

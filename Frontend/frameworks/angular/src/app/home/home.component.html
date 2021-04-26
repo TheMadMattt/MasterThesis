@@ -1,10 +1,13 @@
 <div class="home-container">
   <div class="main-box gradient-right flex-column flex-center">
     <h1><b>search</b> for local stores<br>that will deliver <b>your purchases</b></h1>
-    <button mat-flat-button type="button"
-            cdkOverlayOrigin #webVitals="cdkOverlayOrigin">
-      <mat-icon (click)="showAllTimes = !showAllTimes">expand_more</mat-icon>
-    </button>
+    <div>
+      <button mat-flat-button type="button" style="margin-right: 10px"
+              cdkOverlayOrigin #webVitals="cdkOverlayOrigin">
+        <mat-icon (click)="showAllTimes = !showAllTimes">expand_more</mat-icon>
+      </button>
+      <button mat-flat-button type="button" (click)="runBenchmark()">Run benchmark</button>
+    </div>
     <div class="search-form">
       <label>
         <input type="text" placeholder="search your address" />
@@ -72,7 +75,7 @@
   </div>
   <div class="soon-ordering-box gradient-right flex-row flex-center">
     <div class="smartphone-img">
-      <img src="assets/images/png/shoppingBag.png">
+      <img src="assets/images/png/shoppingBag.png" alt="shopping bag">
     </div>
     <div class="flex-column flex-center">
       <h1><b>why</b> is it worth buying<br> locally with <b>wamtu.pl</b></h1>
@@ -95,12 +98,13 @@
   <div>
     <ul class="dropdown-overlay">
       <li *ngIf="cls">{{ cls.name }} | {{ cls.value }} ms</li>
+      <ul *ngIf="clsList.length > 0">
+        <li *ngFor="let clsItem of clsList">{{ clsItem }}</li>
+      </ul>
       <li *ngIf="lcp">{{ lcp.name }} | {{ lcp.value }} ms</li>
       <li *ngIf="fcp">{{ fcp.name }} | {{ fcp.value }} ms</li>
-      <li *ngIf="fp">{{ fp.name }} | {{ fp.value }} ms</li>
       <li *ngIf="ttfb">{{ ttfb.name }} | {{ ttfb.value }} ms</li>
-      <li *ngIf="totalPageLoadTime">{{ totalPageLoadTime.name }} | {{ totalPageLoadTime.value }} ms</li>
-      <li *ngIf="pageRenderTime">{{ pageRenderTime.name }} | {{ pageRenderTime.value }} ms</li>
+      <li *ngIf="pageLoaded">Page loading time | {{ pageLoaded }}</li>
     </ul>
   </div>
 

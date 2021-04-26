@@ -298,6 +298,6 @@ export class LocalRestApiServerComponent implements AfterViewChecked {
     const timers: Timer[] = [this.addTaskTimer, this.getTaskTimer, this.getTasksTimer,
       this.updateTaskTimer, this.deleteTaskTimer, this.renderTimer];
 
-    this.excelService.saveToExcel(timers, 'JSON-PLACEHOLDER');
+    this.excelService.saveTimersToExcel(timers, 'JSON-PLACEHOLDER');
   }
 }
