@@ -1,22 +1,15 @@
 import React from 'react';
+import DoneIcon from '@material-ui/icons/Done';
+import ClearIcon from '@material-ui/icons/Clear';
 
-export const Functional = ({ name, age, hobby }) => (
-    <tr>
-        <td>{name}</td>
-        <td>{age}</td>
-        <td>{hobby}</td>
-    </tr>
-);
+export const Functional = ({ id, title, description, completed }) => {
 
-export class Component extends React.Component {
-    render() {
-        const { name, age, hobby } = this.props;
-        return (
-            <div>
-                <span>{name}</span>
-                <span>{age}</span>
-                <span>{hobby}</span>
-            </div>
-        );
-    }
+    return (
+        <tr>
+            <td>{ id }</td>
+            <td>{ title }</td>
+            <td>{ description }</td>
+            <td>{ completed ? <DoneIcon/> : <ClearIcon/> }</td>
+        </tr>
+    );
 }
