@@ -96,60 +96,6 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
     this.cdr.detectChanges();
   }
 
-  runCreatingBenchmark = async () => {
-    await this.spinner.show('benchmark');
-    for (let i = 0; i < this.BENCHMARKS_NUMBER; i++) {
-      this.createRows();
-      await this.delay(0);
-    }
-    await this.spinner.hide('benchmark');
-  }
-
-  runUpdatingBenchmark = async () => {
-    await this.spinner.show('benchmark');
-    for (let i = 0; i < this.BENCHMARKS_NUMBER; i++) {
-      const dummyDataBeforeDelete = this.dummyData;
-      this.updateRandomRow();
-      await this.delay(0).then(() => {
-        this.dummyData = [...dummyDataBeforeDelete];
-      });
-    }
-    await this.spinner.hide('benchmark');
-  }
-
-  runAppendingBenchmark = async () => {
-    await this.spinner.show('benchmark');
-    for (let i = 0; i < this.BENCHMARKS_NUMBER; i++) {
-      const dummyDataBeforeDelete = this.dummyData;
-      this.appendRow();
-      await this.delay(0).then(() => {
-        this.dummyData = [...dummyDataBeforeDelete];
-      });
-    }
-    await this.spinner.hide('benchmark');
-  }
-
-  runDeletingBenchmark = async () => {
-    await this.spinner.show('benchmark');
-    for (let i = 0; i < this.BENCHMARKS_NUMBER; i++) {
-      const dummyDataBeforeDelete = this.dummyData;
-      this.deleteRandomRow();
-      await this.delay(0).then(() => {
-        this.dummyData = [...dummyDataBeforeDelete];
-      });
-    }
-    await this.spinner.hide('benchmark');
-  }
-
-  runReadingBenchmark = async () => {
-    await this.spinner.show('benchmark');
-    for (let i = 0; i < this.BENCHMARKS_NUMBER; i++) {
-      this.readRandomRow();
-      await this.delay(0);
-    }
-    await this.spinner.hide('benchmark');
-  }
-
   delay(ms: number): Promise<any> {
     return new Promise( resolve => setTimeout(resolve, ms) );
   }

@@ -39,7 +39,7 @@ export class TaskFormComponent implements OnInit {
     this.task.title = taskRaw.title;
     this.task.description = taskRaw.description;
 
-    this.dialogRef.close({ task: this.task});
+    this.dialogRef.close(this.task);
   }
 
   errorHandling = (control: string, error: string) => {
