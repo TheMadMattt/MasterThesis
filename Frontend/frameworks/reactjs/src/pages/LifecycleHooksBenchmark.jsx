@@ -2,8 +2,7 @@ import React, {Component} from "react";
 import {Functional} from "../components/User";
 import {Button} from "@material-ui/core";
 
-const repeats = 400;
-const arraySize = 100;
+const arraySize = 1000;
 
 const Profiler = React.Profiler;
 
@@ -20,16 +19,23 @@ export default class LifecycleHooksBenchmark extends Component {
     dts = [];
     isCreating = false;
     isUpdating = false;
+    isRemoving = false;
     update = [];
+    remove = [];
+    BENCHMARK_NUMBER = 10;
 
     state = {
         users: [],
         dts: [],
-        update: []
+        update: [],
+        remove: [],
+        avgUpdate: 0,
+        avgCreate: 0,
+        avgRemove: 0
     };
 
     componentDidMount() {
-        this.setState({ users: getUsers() });
+        // this.setState({ users: getUsers() });
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -45,6 +51,12 @@ export default class LifecycleHooksBenchmark extends Component {
             this.updateTime = 0;
             this.isUpdating = false;
         }
+        if(this.isRemoving) {
+            this.removeTime = performance.now() - this.startTime;
+            this.remove.push(this.removeTime);
+            this.removeTime = 0;
+            this.isUpdating = false;
+        }
     }
 
     delay(ms) {
@@ -57,51 +69,64 @@ export default class LifecycleHooksBenchmark extends Component {
         return Math.floor(Math.random() * (max - min)) + min;
     }
 
-    startUpdatingBenchmark = async() => {
+    startAppendingBenchmark = async() => {
         this.update = [];
-        for (let i=0; i < 10; i++){
+        for (let i=0; i < this.BENCHMARK_NUMBER; i++){
             this.isUpdating = true;
-            const index = this.getRandomInt(0, arraySize);
             this.startTime = performance.now();
-            const users = [...this.state.users];
-            users[index] = {
-                ...users[index],
-                hobby: users[index].hobby += " UPDATED"
-            };
-            this.setState({ users: users });
+            this.setState(prevState => ({ users: prevState.users.concat(getUsers()) }));
             await this.delay(0);
         }
-        let sum = 0;
-        for(let i = 0; i < this.dts.length; i++ ){
-            sum += this.update[i]
+        if(this.update.length === this.BENCHMARK_NUMBER) {
+            let sum = 0;
+            for(let i = 0; i < this.dts.length; i++ ){
+                sum += this.update[i]
+            }
+            const avg = sum/this.update.length;
+            this.setState({update: this.update, avgUpdate: avg });
         }
-        const avg = sum/this.update.length;
-        alert(`
-        Render Performance ArraySize: ${arraySize} Repeats: ${repeats}
-        PureComponent: ${avg} ms
-      `);
-        this.setState({update: this.update});
     }
 
-    startBenchmark = async() => {
+    startRemovingBenchmark = async() => {
+        this.remove = [];
+        for (let i=0; i < this.BENCHMARK_NUMBER; i++){
+            this.isRemoving = true;
+            this.startTime = performance.now();
+            this.setState({ users: [] });
+            await this.delay(0);
+            this.setState({ users: getUsers() }, () => {
+                this.isRemoving = true;
+            })
+            await this.delay(0);
+        }
+        if(this.remove.length === this.BENCHMARK_NUMBER) {
+            let sum = 0;
+            for(let i = 0; i < this.remove.length; i++ ){
+                sum += this.remove[i]
+            }
+
+            const avg = sum/this.remove.length;
+            this.setState({remove: this.remove, avgRemove: avg});
+        }
+    }
+
+    startCreatingBenchmark = async() => {
         this.dts = [];
-        for (let i=0; i < 10; i++){
+        for (let i=0; i < this.BENCHMARK_NUMBER; i++){
             this.isCreating = true;
             this.startTime = performance.now();
             this.setState({ users: getUsers() });
             await this.delay(0);
         }
-        let sum = 0;
-        for(let i = 0; i < this.dts.length; i++ ){
-            sum += this.dts[i]
-        }
+        if(this.dts.length === this.BENCHMARK_NUMBER) {
+            let sum = 0;
+            for(let i = 0; i < this.dts.length; i++ ){
+                sum += this.dts[i]
+            }
 
-        const avg = sum/this.dts.length;
-        alert(`
-        Render Performance ArraySize: ${arraySize} Repeats: ${repeats}
-        PureComponent: ${avg} ms
-      `);
-        this.setState({dts: this.dts});
+            const avg = sum/this.dts.length;
+            this.setState({dts: this.dts, avgCreate: avg});
+        }
     }
 
     callback(id, phase, actualTime, baseTime, startTime, commitTime, interactions) {
@@ -120,8 +145,9 @@ export default class LifecycleHooksBenchmark extends Component {
         return (
             <div>
                 <div>
-                    <Button variant="contained" color="primary" onClick={() => this.startBenchmark()}>Run benchmark</Button>
-                    <Button variant="contained" color="primary" onClick={() => this.startUpdatingBenchmark()}>Run update benchmark</Button>
+                    <Button variant="contained" color="primary" onClick={() => this.startCreatingBenchmark()}>Run creating benchmark</Button>
+                    <Button variant="contained" color="primary" onClick={() => this.startAppendingBenchmark()}>Run update benchmark</Button>
+                    <Button variant="contained" color="primary" onClick={() => this.startRemovingBenchmark()}>Run remove benchmark</Button>
                 </div>
                 <div>
                     <h1>Create</h1>
@@ -130,6 +156,10 @@ export default class LifecycleHooksBenchmark extends Component {
                 <div>
                     <h1>Update</h1>
                     {this.state.update.map((dt, index) => <li key={index}>{dt}</li>)}
+                </div>
+                <div>
+                    <h1>Remove</h1>
+                    {this.state.remove.map((dt, index) => <li key={index}>{dt}</li>)}
                 </div>
                 <Profiler id="lifecycle" onRender={this.callback}>
                     <table>
