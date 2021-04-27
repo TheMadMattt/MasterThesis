@@ -3,7 +3,6 @@ import {Timer} from '@modules/benchmarks/timer';
 import {DummyDataService} from '@modules/benchmarks/services/dummy-data.service';
 import {FormControl} from '@angular/forms';
 import {NgxSpinnerService} from 'ngx-spinner';
-import {BenchmarkService} from '@shared/services/benchmark.service';
 import {Task} from '@modules/benchmarks/models/Task';
 import {ExcelService} from '@shared/services/excel.service';
 
@@ -15,18 +14,13 @@ import {ExcelService} from '@shared/services/excel.service';
 export class LifecycleHooksCrudComponent implements AfterViewChecked {
   dummyData: Task[] = [];
   ROWS_NUMBER: number[] = [1000, 2000, 5000, 10000];
-  BENCHMARKS_NUMBER = 0;
   rowsNumber: FormControl = new FormControl(this.ROWS_NUMBER[0]);
   selectedDummyItem: any;
 
   constructor(private dummyDataService: DummyDataService,
               private spinner: NgxSpinnerService,
               private cdr: ChangeDetectorRef,
-              private benchmarkService: BenchmarkService,
               private excelService: ExcelService) {
-    this.benchmarkService.getNumberOfBenchmarks().subscribe(value => {
-      this.BENCHMARKS_NUMBER = value;
-    });
   }
 
   private isCreating = false;
