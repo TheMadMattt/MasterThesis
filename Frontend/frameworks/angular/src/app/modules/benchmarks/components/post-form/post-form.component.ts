@@ -37,7 +37,7 @@ export class PostFormComponent implements OnInit {
     this.post.title = postRaw.title;
     this.post.body = postRaw.body;
 
-    this.dialogRef.close({ post: this.post});
+    this.dialogRef.close(this.post);
   }
 
   errorHandling = (control: string, error: string) => {

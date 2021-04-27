@@ -11,12 +11,12 @@
               id="add-post"
               color="primary"
               type="button"
-              (click)="addPost()">Add post</button>
+              (click)="openAddPostForm()">Add post</button>
       <button mat-raised-button
               id="update-post"
               color="primary"
               type="button"
-              (click)="openEditPostForm(+selectedId.value)">Edit post</button>
+              (click)="editSelectedPost(+selectedId.value)">Edit post</button>
       <button mat-raised-button
               id="get-post"
               color="primary"
@@ -32,53 +32,16 @@
               type="button"
               (click)="getPostsWithComments()">Get 100 posts with 500 comments</button>
     </div>
-    <div class="measurement-tests">
-      <button mat-raised-button
-              color="primary"
-              type="button"
-              matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of creating post"
-              matTooltipPosition="above"
-              matTooltipHideDelay="2000"
-              (click)="this.runAddPostBenchmark()">Run creating post benchmark</button>
-      <button mat-raised-button
-              color="primary"
-              type="button"
-              matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of updating post"
-              matTooltipPosition="above"
-              matTooltipHideDelay="2000"
-              (click)="this.runUpdatePostBenchmark()">Run updating post benchmark</button>
-      <button mat-raised-button
-              color="primary"
-              type="button"
-              matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of getting post"
-              matTooltipPosition="above"
-              matTooltipHideDelay="2000"
-              (click)="this.runGetPostBenchmark()">Run getting post benchmark</button>
-      <button mat-raised-button
-              color="primary"
-              type="button"
-              matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of getting 100 posts"
-              matTooltipPosition="above"
-              matTooltipHideDelay="2000"
-              (click)="this.runGetPostsBenchmark()">Run getting posts benchmark</button>
-      <button mat-raised-button
-              color="primary"
-              type="button"
-              matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of deleting post"
-              matTooltipPosition="above"
-              matTooltipHideDelay="2000"
-              (click)="this.runDeletePostBenchmark()">Run deleting post benchmark</button>
-    </div>
     <button mat-raised-button color="primary" type="button" (click)="clear()">CLEAR</button>
     <button mat-raised-button
             type="button"
             (click)="saveExcel()"><mat-icon>file_download</mat-icon>Save times to excel</button>
   </div>
   <div class="result-container">
-    <app-display-time title="Adding post" [timer]="addPostTimer"></app-display-time>
+    <app-display-time title="Adding 1 post" [timer]="addPostTimer"></app-display-time>
     <app-display-time title="Getting 1 post" [timer]="getPostTimer"></app-display-time>
-    <app-display-time title="Updating post" [timer]="updatePostTimer"></app-display-time>
-    <app-display-time title="Deleting post" [timer]="deletePostTimer"></app-display-time>
+    <app-display-time title="Updating 1 post" [timer]="updatePostTimer"></app-display-time>
+    <app-display-time title="Deleting 1 post" [timer]="deletePostTimer"></app-display-time>
     <app-display-time title="Getting 100 posts" [timer]="getPostsTimer"></app-display-time>
     <app-display-time title="Render time" [timer]="renderTimer"></app-display-time>
   </div>
@@ -95,11 +58,11 @@
               <button mat-raised-button
                       type="button"
                       color="primary"
-                      (click)="editSelectedPost(post)">Edit post</button>
+                      (click)="openEditPostForm(post)">Edit post</button>
               <button mat-raised-button
                       type="button"
                       color="primary"
-                      (click)="deletePost(post.id)">Delete post</button>
+                      (click)="runDeletePostBenchmark(post.id)">Delete post</button>
             </div>
           </td>
           <td>{{ post.body }}</td>

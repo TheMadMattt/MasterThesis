@@ -1,5 +1,5 @@
 <div class="local-rest-api-container" id="local-rest-api">
-  <div class="actions">
+  <div class="actions flex-column">
     <mat-error *ngIf="connectionError">{{ connectionErrorMsg }}</mat-error>
     <div>
       <mat-form-field appearance="outline">
@@ -60,46 +60,9 @@
                 color="primary"
                 type="button" (click)="getTaskList()">Get {{ taskCount.value }} tasks</button>
       </div>
-      <div class="measurement-tests">
-        <button mat-raised-button
-                color="primary"
-                type="button"
-                matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of creating task"
-                matTooltipPosition="above"
-                matTooltipHideDelay="2000"
-                (click)="this.runAddTaskBenchmark()">Run creating task benchmark</button>
-        <button mat-raised-button
-                color="primary"
-                type="button"
-                matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of updating task"
-                matTooltipPosition="above"
-                matTooltipHideDelay="2000"
-                (click)="this.runUpdateTaskBenchmark()">Run updating task benchmark</button>
-        <button mat-raised-button
-                color="primary"
-                type="button"
-                matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of getting task"
-                matTooltipPosition="above"
-                matTooltipHideDelay="2000"
-                (click)="this.runGetTaskBenchmark()">Run getting task benchmark</button>
-        <button mat-raised-button
-                color="primary"
-                type="button"
-                matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of getting 100 tasks"
-                matTooltipPosition="above"
-                matTooltipHideDelay="2000"
-                (click)="this.runGetTasksBenchmark()">Run getting tasks benchmark</button>
-        <button mat-raised-button
-                color="primary"
-                type="button"
-                matTooltip="Run {{BENCHMARKS_NUMBER}} time measurements of deleting task"
-                matTooltipPosition="above"
-                matTooltipHideDelay="2000"
-                (click)="this.runDeleteTaskBenchmark()">Run deleting task benchmark</button>
-        <button mat-raised-button
-                type="button"
-                (click)="saveExcel()"><mat-icon>file_download</mat-icon>Save times to excel</button>
-      </div>
+      <button mat-raised-button
+              type="button"
+              (click)="saveExcel()"><mat-icon>file_download</mat-icon>Save times to excel</button>
     </div>
   </div>
   <div class="result-container">

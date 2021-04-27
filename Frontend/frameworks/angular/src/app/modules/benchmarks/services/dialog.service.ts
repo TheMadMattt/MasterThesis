@@ -16,15 +16,15 @@ export class DialogService {
 
   constructor(private dialog: MatDialog) { }
 
-  openPostForm(post: Post | null): Observable<PostDTO> {
+  openPostForm(post: Post | null): Observable<PostDTO | Post | null> {
     return this.dialog.open(PostFormComponent, {
       data: post,
-    }).afterClosed().pipe(take(1));
+    }).afterClosed();
   }
 
-  openTaskForm(task: Task | null): Observable<TaskDTO> {
+  openTaskForm(task: Task | null): Observable<TaskDTO | Task | null> {
     return this.dialog.open(TaskFormComponent, {
       data: task,
-    }).afterClosed().pipe(take(1));
+    }).afterClosed();
   }
 }
