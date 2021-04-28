@@ -57,7 +57,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
       }
       this.lcpList.push(this.lcp.value);
       localStorage.setItem('lcp', JSON.stringify(this.lcpList));
-    });
+    }, true);
     getCLS(cls => {
       this.cls = cls;
       const clsLocalStorage = localStorage.getItem('cls');

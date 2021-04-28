@@ -1,183 +1,183 @@
-$color-accent: #5AC18E;
-$color-primary: #1e2438;
-$light-green: #8CC63F;
-$green: #7fc553;
-
-.gradient-left {
-  background-color: $color-accent; /* For browsers that do not support gradients */
-  background-image: linear-gradient(to left, #5AC18E , #8CC63F); /* Standard syntax (must be last) */
-}
-
-.gradient-right {
-  background-color: $color-accent; /* For browsers that do not support gradients */
-  background-image: linear-gradient(to right, #5AC18E , #8CC63F); /* Standard syntax (must be last) */
-}
-
-.divider {
-  width: 100%;
-  height: 32px;
-  background-color: $light-green;
-}
-
-.home-container {
-  width: 100%;
-  height: 100%;
-}
-
-.main-box {
-  width: 100%;
-  padding: 50px 0;
-  @media (max-width: 1000px) {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  h1 {
-    color: white;
-    line-height: normal;
-    padding: 0 8px;
-    text-align: center;
-  }
-}
-
-.search-form {
-  margin-top: 40px;
-  display: flex;
-  flex: auto;
-  input, button {
-    border: 0;
-    font-weight: bold;
-  }
-  input {
-    padding: 10px 10px 10px 25px;
-    height: 40px;
-  }
-
-  button {
-    background: $color-primary;
-    padding: 0 32px;
-    color: white;
-    border: 0;
-    border-radius: 0;
-  }
-}
-
-.about-box {
-  flex-wrap: wrap;
-}
-
-
-.img-box {
-  display: flex;
-  flex-direction: column;
-  margin: 40px;
-  gap: 10px;
-}
-
-.add-shop-box {
-  width: 100%;
-  background-color: white;
-  padding: 64px 0;
-
-  h1 {
-    text-align: center;
-    margin-bottom: 32px;
-  }
-
-  button {
-    font-weight: bold;
-    background-color: $color-primary;
-    color: white;
-    border-radius: 0;
-    box-shadow: none;
-    height: 50px;
-    padding: 0 32px;
-  }
-
-  img {
-    width: 160px;
-  }
-
-  .margin-right {
-    margin-right: 64px;
-  }
-  .margin-left {
-    margin-left: 64px;
-  }
-
-  @media (max-width: 1069px) {
-    .margin-right {
-      display: none;
-      margin: 0;
-    }
-    .margin-left {
-      display: none;
-      margin: 0;
-    }
-  }
-}
-
-.soon-ordering-box {
-  width: 100%;
-  color: white;
-  h1 {
-    color: white;
-    line-height: normal;
-    font-size: 3.5vw;
-    @media (max-width: 1050px) {
-      font-size: 4.5vw;
-    }
-    @media (max-width: 470px) {
-      font-size: 6.5vw;
-    }
-  }
-  h2 {
-    line-height: normal;
-  }
-  @media (max-width: 1099px) {
-    flex-direction: column !important;
-  }
-
-  .ordering-text {
-    text-align: right;
-    @media (max-width: 1099px) {
-      text-align: left;
-    }
-  }
-  .smartphone-img {
-    img {
-      width: 100%;
-      margin-top: -48px;
-      @media (max-width: 1099px) {
-        margin-top: 0;
-      }
-    }
-  }
-}
-
-.steps-to-order {
-  background-color: white;
-  width: 100%;
-  flex-wrap: wrap;
-  padding: 64px 0;
-  p {
-    margin-top: 16px;
-    font-size: 16px;
-    text-align: center;
-  }
-  img {
-    width: 64px;
-    height: 64px;
-    margin-right: 10px;
-  }
-  @media (max-width: 1099px) {
-    gap: 20px;
-    flex-wrap: nowrap;
-    flex-direction: column;
-  }
-}
-
-.step-img-box {
-  @media (max-width: 1099px) {
-    flex-direction: column !important;
-  }
-}
+//$color-accent: #5AC18E;
+//$color-primary: #1e2438;
+//$light-green: #8CC63F;
+//$green: #7fc553;
+//
+//.gradient-left {
+//  background-color: $color-accent; /* For browsers that do not support gradients */
+//  background-image: linear-gradient(to left, #5AC18E , #8CC63F); /* Standard syntax (must be last) */
+//}
+//
+//.gradient-right {
+//  background-color: $color-accent; /* For browsers that do not support gradients */
+//  background-image: linear-gradient(to right, #5AC18E , #8CC63F); /* Standard syntax (must be last) */
+//}
+//
+//.divider {
+//  width: 100%;
+//  height: 32px;
+//  background-color: $light-green;
+//}
+//
+//.home-container {
+//  width: 100%;
+//  height: 100%;
+//}
+//
+//.main-box {
+//  width: 100%;
+//  padding: 50px 0;
+//  @media (max-width: 1000px) {
+//    padding-left: 0;
+//    padding-right: 0;
+//  }
+//  h1 {
+//    color: white;
+//    line-height: normal;
+//    padding: 0 8px;
+//    text-align: center;
+//  }
+//}
+//
+//.search-form {
+//  margin-top: 40px;
+//  display: flex;
+//  flex: auto;
+//  input, button {
+//    border: 0;
+//    font-weight: bold;
+//  }
+//  input {
+//    padding: 10px 10px 10px 25px;
+//    height: 40px;
+//  }
+//
+//  button {
+//    background: $color-primary;
+//    padding: 0 32px;
+//    color: white;
+//    border: 0;
+//    border-radius: 0;
+//  }
+//}
+//
+//.about-box {
+//  flex-wrap: wrap;
+//}
+//
+//
+//.img-box {
+//  display: flex;
+//  flex-direction: column;
+//  margin: 40px;
+//  gap: 10px;
+//}
+//
+//.add-shop-box {
+//  width: 100%;
+//  background-color: white;
+//  padding: 64px 0;
+//
+//  h1 {
+//    text-align: center;
+//    margin-bottom: 32px;
+//  }
+//
+//  button {
+//    font-weight: bold;
+//    background-color: $color-primary;
+//    color: white;
+//    border-radius: 0;
+//    box-shadow: none;
+//    height: 50px;
+//    padding: 0 32px;
+//  }
+//
+//  img {
+//    width: 160px;
+//  }
+//
+//  .margin-right {
+//    margin-right: 64px;
+//  }
+//  .margin-left {
+//    margin-left: 64px;
+//  }
+//
+//  @media (max-width: 1069px) {
+//    .margin-right {
+//      display: none;
+//      margin: 0;
+//    }
+//    .margin-left {
+//      display: none;
+//      margin: 0;
+//    }
+//  }
+//}
+//
+//.soon-ordering-box {
+//  width: 100%;
+//  color: white;
+//  h1 {
+//    color: white;
+//    line-height: normal;
+//    font-size: 3.5vw;
+//    @media (max-width: 1050px) {
+//      font-size: 4.5vw;
+//    }
+//    @media (max-width: 470px) {
+//      font-size: 6.5vw;
+//    }
+//  }
+//  h2 {
+//    line-height: normal;
+//  }
+//  @media (max-width: 1099px) {
+//    flex-direction: column !important;
+//  }
+//
+//  .ordering-text {
+//    text-align: right;
+//    @media (max-width: 1099px) {
+//      text-align: left;
+//    }
+//  }
+//  .smartphone-img {
+//    img {
+//      width: 100%;
+//      margin-top: -48px;
+//      @media (max-width: 1099px) {
+//        margin-top: 0;
+//      }
+//    }
+//  }
+//}
+//
+//.steps-to-order {
+//  background-color: white;
+//  width: 100%;
+//  flex-wrap: wrap;
+//  padding: 64px 0;
+//  p {
+//    margin-top: 16px;
+//    font-size: 16px;
+//    text-align: center;
+//  }
+//  img {
+//    width: 64px;
+//    height: 64px;
+//    margin-right: 10px;
+//  }
+//  @media (max-width: 1099px) {
+//    gap: 20px;
+//    flex-wrap: nowrap;
+//    flex-direction: column;
+//  }
+//}
+//
+//.step-img-box {
+//  @media (max-width: 1099px) {
+//    flex-direction: column !important;
+//  }
+//}

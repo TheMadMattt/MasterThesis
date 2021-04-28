@@ -25,18 +25,24 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
 
   private isCreating = false;
   private isUpdating = false;
+  private isUpdatingAllRows = false;
   private isAppending = false;
   private isDeleting = false;
+  private isDeletingAllRows = false;
   private isReading = false;
   createTimer = new Timer('createDummyData');
   updateTimer = new Timer('updateDummyData');
+  updateAllRowsTimer = new Timer('updateAllRowsDummyData');
   appendTimer = new Timer('appendDummyData');
   deleteTimer = new Timer('deleteDummyData');
+  deleteAllRowsTimer = new Timer('deleteAllDummyData');
   readTimer = new Timer('readDummyData');
 
-  createRows(): void {
-    this.isCreating = true;
+  createRows = async () => {
+    this.dummyData = [];
+    await this.delay(0);
     this.createTimer.startTimer();
+    this.isCreating = true;
     this.dummyData = this.dummyDataService.buildData(this.rowsNumber.value);
   }
 
@@ -50,10 +56,24 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
     this.dummyData[id] = itemToUpdate;
   }
 
-  appendRow(): void {
-    this.isAppending = true;
+  updateAllRows = async () => {
+    this.dummyData = this.dummyDataService.buildData(this.rowsNumber.value);
+    await this.delay(0);
+    this.isUpdatingAllRows = true;
+    this.updateAllRowsTimer.startTimer();
+    for (const data of this.dummyData) {
+      data.title += ' UPDATED';
+      data.description += ' UPDATED';
+    }
+  }
+
+  appendRows = async () => {
+    this.dummyData = this.dummyDataService.buildData(this.rowsNumber.value);
+    await this.delay(0);
     this.appendTimer.startTimer();
-    this.dummyData.push(this.dummyDataService.buildOneItem(this.dummyData.length));
+    this.isAppending = true;
+    this.dummyData = this.dummyData.concat(this.dummyDataService.buildData(this.rowsNumber.value));
+
   }
 
   readRandomRow(): void {
@@ -70,6 +90,14 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
     this.dummyData.splice(id, 1);
   }
 
+  deleteAllRows = async () => {
+    this.dummyData = this.dummyDataService.buildData(this.rowsNumber.value);
+    await this.delay(0);
+    this.isDeletingAllRows = true;
+    this.deleteAllRowsTimer.startTimer();
+    this.dummyData = [];
+  }
+
   ngAfterViewChecked(): void {
     if (this.isCreating) {
       this.createTimer.stopTimer();
@@ -77,12 +105,18 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
     } else if (this.isUpdating) {
       this.updateTimer.stopTimer();
       this.isUpdating = false;
+    } else if (this.isUpdatingAllRows) {
+      this.updateAllRowsTimer.stopTimer();
+      this.isUpdatingAllRows = false;
     } else if (this.isAppending) {
       this.appendTimer.stopTimer();
       this.isAppending = false;
     } else if (this.isDeleting) {
       this.deleteTimer.stopTimer();
       this.isDeleting = false;
+    } else if (this.isDeletingAllRows) {
+      this.deleteAllRowsTimer.stopTimer();
+      this.isDeletingAllRows = false;
     } else if (this.isReading) {
       this.readTimer.stopTimer();
       this.isReading = false;
