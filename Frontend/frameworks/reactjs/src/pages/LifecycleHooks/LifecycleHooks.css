@@ -1,0 +1,17 @@
+.lifecycle-crud-container {
+    height: 100%;
+}
+
+.ButtonMargin {
+    margin-right: 20px !important;
+}
+
+.result-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.selected-dummy-item {
+    text-align: center;
+}

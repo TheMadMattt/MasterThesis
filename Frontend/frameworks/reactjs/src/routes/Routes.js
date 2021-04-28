@@ -1,6 +1,6 @@
 import HomeIcon from '@material-ui/icons/Home';
 import Home from "../pages/Home";
-import LifecycleHooksBenchmark from "../pages/LifecycleHooksBenchmark";
+import LifecycleHooksBenchmark from "../pages/LifecycleHooks/LifecycleHooksBenchmark";
 import RandomUserGeneratorBenchmark from "../pages/RandomUserGeneratorBenchmark";
 import JSONPlaceholderBenchmark from "../pages/JSONPlaceholderBenchmark";
 import LocalApiBenchmark from "../pages/LocalApiBenchmark";

@@ -2,7 +2,7 @@ import React from 'react';
 import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
 
-export const Functional = ({ id, title, description, completed }) => {
+export const DummyDataDisplay = ({ id, title, description, completed }) => {
 
     return (
         <tr>

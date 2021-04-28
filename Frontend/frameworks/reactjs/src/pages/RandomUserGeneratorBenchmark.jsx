@@ -4,7 +4,7 @@ let operationStartTime = null
 let operationEndTime = null
 
 const repeats = 1;
-const arraySize = 100;
+const arraySize = 1000;
 
 const componentsToTest = [
     'Component',

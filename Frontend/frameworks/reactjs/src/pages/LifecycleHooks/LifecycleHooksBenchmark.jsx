@@ -1,8 +1,10 @@
 import React, {Component} from "react";
-import {Functional} from "../components/User";
-import Timer from "../utils/Timer";
+import Timer from "../../utils/Timer";
 import {Button} from "@material-ui/core";
-import {buildData} from "../utils/DummyDataService";
+import {buildData} from "../../utils/DummyDataService";
+import {DummyDataDisplay} from "../../components/DummyDataDisplay";
+import "./LifecycleHooks.css";
+import {MatSelect} from "./components/MatSelect";
 
 const Profiler = React.Profiler;
 
@@ -20,6 +22,7 @@ export default class LifecycleHooksBenchmark extends Component {
 
     state = {
         dummyData: [],
+        rowsNumber: 1000
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -60,17 +63,29 @@ export default class LifecycleHooksBenchmark extends Component {
         }
     }
 
+    handleRowsNumberChange(rowsNumber) {
+        this.setState({rowsNumber});
+    }
+
     render() {
         return (
             <div>
-                <div>
+                <div className="actions">
+                    <div>
+                        <MatSelect rowsNumber={this.state.rowsNumber}
+                                   handleChange={(e) => this.handleRowsNumberChange(e.target.value)}/>
+                    </div>
+                    <Button variant="contained" color="primary" className="ButtonMargin"
+                            onClick={() => this.createRows()}>Create {this.state.rowsNumber} rows</Button>
+                    <Button variant="contained" color="primary" className="ButtonMargin"
+                            onClick={() => this.createRows()}>Create rows</Button>
                     <Button variant="contained" color="primary"
                             onClick={() => this.createRows()}>Create rows</Button>
                 </div>
                 <Profiler id="lifecycle" onRender={this.callback}>
                     <table>
                         <tbody>
-                            {this.state.dummyData.map((data) => <Functional {...data} key={data.id} />)}
+                            {this.state.dummyData.map((data) => <DummyDataDisplay {...data} key={data.id} />)}
                         </tbody>
                     </table>
                 </Profiler>
