@@ -1,11 +1,12 @@
-  <div>
-    <ul class="dropdown-overlay">
+  <div class="flex-column flex-center">
+    <ul class="loading-metrics-box">
       <li *ngIf="cls">{{ cls.name }} | {{ cls.value }} ms</li>
       <li *ngIf="lcp">{{ lcp.name }} | {{ lcp.value }} ms</li>
       <li *ngIf="fcp">{{ fcp.name }} | {{ fcp.value }} ms</li>
       <li *ngIf="ttfb">{{ ttfb.name }} | {{ ttfb.value }} ms</li>
-      <li *ngIf="pageLoaded">Page loading time | {{ pageLoaded }}</li>
+      <li *ngIf="pageLoaded">Page loading time | {{ pageLoaded }} ms</li>
     </ul>
+    <button mat-raised-button color="primary" type="button" (click)="runBenchmark()">Run benchmark</button>
   </div>
 
 <!--<div class="home-container">-->

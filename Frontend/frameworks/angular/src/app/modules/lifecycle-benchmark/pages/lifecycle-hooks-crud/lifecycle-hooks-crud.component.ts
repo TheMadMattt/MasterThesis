@@ -1,10 +1,10 @@
 import {AfterViewChecked, ChangeDetectorRef, Component} from '@angular/core';
-import {Timer} from '@modules/benchmarks/timer';
-import {DummyDataService} from '@modules/benchmarks/services/dummy-data.service';
 import {FormControl} from '@angular/forms';
 import {NgxSpinnerService} from 'ngx-spinner';
-import {Task} from '@modules/benchmarks/models/Task';
 import {ExcelService} from '@shared/services/excel.service';
+import {DummyDataService} from '@modules/lifecycle-benchmark/services/dummy-data.service';
+import {Timer} from '@shared/utils/timer';
+import { Task } from '@shared/models/Task';
 
 @Component({
   selector: 'app-lifecycle-hooks-crud',

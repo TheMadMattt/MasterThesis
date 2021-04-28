@@ -1,10 +1,10 @@
 import {AfterViewChecked, ChangeDetectorRef, Component, OnDestroy} from '@angular/core';
 import {Subject} from 'rxjs';
-import {User} from '@modules/benchmarks/models/User';
-import {Timer} from '@modules/benchmarks/timer';
 import {finalize, takeUntil} from 'rxjs/operators';
 import {FormControl} from '@angular/forms';
-import {RandomUserService} from '@modules/benchmarks/services/api/random-user.service';
+import {User} from '@modules/api-benchmark/models/User';
+import {Timer} from '@shared/utils/timer';
+import {RandomUserService} from '@modules/api-benchmark/services/api/random-user.service';
 
 @Component({
   selector: 'app-random-user-generator',

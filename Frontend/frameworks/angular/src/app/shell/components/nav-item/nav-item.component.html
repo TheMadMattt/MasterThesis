@@ -1,7 +1,7 @@
 <mat-list-item (click)="navItem.isSubMenuShowing = !navItem.isSubMenuShowing"
-               [routerLinkActive]="navItem.link ? 'is-active' : ''">
+               [routerLinkActive]="navItem.route ? 'is-active' : ''">
   <a matLine
-     [routerLink]="navItem.link ? [navItem.link] : []"
+     [routerLink]="navItem.route ? [navItem.route] : []"
      (click)="navItem.children.length <= 0 && sidenavService.closeSidenav()">{{ navItem.title }}</a>
   <mat-icon mat-list-icon>{{ navItem.icon }}</mat-icon>
   <mat-icon class="expand-submenu"
@@ -12,10 +12,10 @@
      [ngClass]="{'expanded' : navItem.isSubMenuShowing}"
      *ngFor="let subNavItem of navItem.children">
   <mat-list-item
-    [routerLinkActive]="subNavItem.link ? 'is-active' : ''">
+    [routerLinkActive]="subNavItem.route ? 'is-active' : ''">
     <mat-icon mat-list-icon>{{ subNavItem.icon }}</mat-icon>
     <a matLine
-       [routerLink]="[subNavItem.link]"
+       [routerLink]="[subNavItem.route]"
        (click)="close()">{{ subNavItem.title }}</a>
   </mat-list-item>
 </div>

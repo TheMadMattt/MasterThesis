@@ -1,3 +1,17 @@
+.loading-metrics-box {
+  text-align: center;
+}
+
+.loading-metrics-box  > li {
+  list-style-type: none;
+  border-bottom: solid 1px #8b8b8b;
+  padding: 8px 0;
+}
+
+.loading-metrics-box  > li:last-child {
+  border-bottom: none;
+}
+
 //$color-accent: #5AC18E;
 //$color-primary: #1e2438;
 //$light-green: #8CC63F;

@@ -1,6 +1,6 @@
 export interface MenuItem {
   title: string;
-  link: string;
+  route: string;
   icon: string;
   showSubMenu: boolean;
   isSubMenuShowing: boolean;

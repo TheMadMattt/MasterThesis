@@ -3,7 +3,7 @@ import {MenuItem} from '@shell/models/menu-item';
 export const MenuList: MenuItem[] = [
   {
     title: 'Lifecycle hooks benchmark',
-    link: '/benchmarks/lifecycle-crud',
+    route: '/lifecycle-benchmark/lifecycle-hooks',
     icon: 'speed',
     showSubMenu: false,
     isSubMenuShowing: false,
@@ -11,14 +11,14 @@ export const MenuList: MenuItem[] = [
   },
   {
     title: 'REST API benchmark',
-    link: '',
+    route: '',
     icon: 'speed',
     showSubMenu: true,
     isSubMenuShowing: false,
     children: [
       {
         title: 'Random User Generator',
-        link: '/benchmarks/random-user-generator',
+        route: '/api-benchmark/random-user-generator',
         icon: 'person',
         showSubMenu: false,
         isSubMenuShowing: false,
@@ -26,7 +26,7 @@ export const MenuList: MenuItem[] = [
       },
       {
         title: '{JSON} Placeholder',
-        link: '/benchmarks/json-placeholder',
+        route: '/api-benchmark/json-placeholder',
         icon: 'public',
         showSubMenu: false,
         isSubMenuShowing: false,
@@ -34,7 +34,7 @@ export const MenuList: MenuItem[] = [
       },
       {
         title: 'Local API server',
-        link: '/benchmarks/local-rest-api',
+        route: '/api-benchmark/local-rest-api',
         icon: 'public',
         showSubMenu: false,
         isSubMenuShowing: false,

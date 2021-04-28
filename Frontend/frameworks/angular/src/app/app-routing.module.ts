@@ -13,8 +13,13 @@ const routes: Routes = [
         component: HomeComponent
       },
       {
-        path: 'benchmarks',
-        loadChildren: () => import('./modules/benchmarks/benchmarks.module').then(m => m.BenchmarksModule) },
+        path: 'api-benchmark',
+        loadChildren: () => import('./modules/api-benchmark/api-benchmark.module').then(m => m.ApiBenchmarkModule)
+      },
+      {
+        path: 'lifecycle-benchmark',
+        loadChildren: () => import('./modules/lifecycle-benchmark/lifecycle-benchmarks.module').then(m => m.LifecycleBenchmarksModule)
+      },
     ]
   },
   { path: '**', redirectTo: '', pathMatch: 'full' }

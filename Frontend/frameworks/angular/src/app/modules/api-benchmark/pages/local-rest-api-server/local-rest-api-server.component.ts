@@ -1,16 +1,15 @@
 import {AfterViewChecked, ChangeDetectorRef, Component} from '@angular/core';
-import {Timer} from '@modules/benchmarks/timer';
-import {DialogService} from '@modules/benchmarks/services/dialog.service';
-import {Task} from '@modules/benchmarks/models/Task';
-import {LocalRestApiService} from '@modules/benchmarks/services/api/local-rest-api.service';
 import {FormControl} from '@angular/forms';
-import {finalize, map, repeat, switchMap} from 'rxjs/operators';
+import {finalize, map, switchMap} from 'rxjs/operators';
 import {HttpResponse} from '@angular/common/http';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {defer, EMPTY, Observable} from 'rxjs';
-import {TaskDTO} from '@modules/benchmarks/models/DTOs/TaskDTO';
-import {BenchmarkService} from '@shared/services/benchmark.service';
 import {ExcelService} from '@shared/services/excel.service';
+import {Task} from '@shared/models/Task';
+import {DialogService} from '@modules/api-benchmark/services/dialog.service';
+import {Timer} from '@shared/utils/timer';
+import {TaskDTO} from '@modules/api-benchmark/models/DTOs/TaskDTO';
+import {LocalRestApiService} from '@modules/api-benchmark/services/api/local-rest-api.service';
 
 @Component({
   selector: 'app-local-rest-api-server',

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {MatDrawerToggleResult, MatSidenav} from '@angular/material/sidenav';
-import {from, Observable, of} from 'rxjs';
+import {from, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

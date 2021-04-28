@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Post} from '@modules/benchmarks/models/Post';
+import {Post} from '@modules/api-benchmark/models/Post';
 
 @Component({
   selector: 'app-post-form',

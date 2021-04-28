@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as XLSX from 'xlsx';
-import {Timer} from '@modules/benchmarks/timer';
+import {Timer} from '@shared/utils/timer';
 
 export interface ExcelItem {
   lp: number | string;

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import {forkJoin, Observable} from 'rxjs';
-import {Album, Photo} from '@modules/benchmarks/models/Album';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
-import {Comment, Post} from '@modules/benchmarks/models/Post';
-import {PostDTO} from '@modules/benchmarks/models/DTOs/PostDTO';
+import {Post, Comment} from '@modules/api-benchmark/models/Post';
+import {Album, Photo} from '@modules/api-benchmark/models/Album';
+import {PostDTO} from '@modules/api-benchmark/models/DTOs/PostDTO';
 
 @Injectable({
   providedIn: 'root'

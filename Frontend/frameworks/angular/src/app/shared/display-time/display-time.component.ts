@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Timer} from '@modules/benchmarks/timer';
+import {Timer} from '@shared/utils/timer';
 
 @Component({
   selector: 'app-display-time',

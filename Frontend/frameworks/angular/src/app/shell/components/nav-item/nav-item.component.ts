@@ -26,7 +26,7 @@ export class NavItemComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.isSidenavOpen.subscribe(() => {
       if (this.navItem.children.length > 0) {
-        this.navItem.isSubMenuShowing = !!this.navItem.children.find(child => child.link === this.router.routerState.snapshot.url);
+        this.navItem.isSubMenuShowing = !!this.navItem.children.find(child => child.route === this.router.routerState.snapshot.url);
       }
     });
   }

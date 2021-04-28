@@ -1,8 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Post} from '@modules/benchmarks/models/Post';
-import {Task} from '@modules/benchmarks/models/Task';
+import { Task } from '@shared/models/Task';
 
 @Component({
   selector: 'app-task-form',
