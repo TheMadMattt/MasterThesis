@@ -6,7 +6,7 @@ import {NgxSpinnerService} from 'ngx-spinner';
 import {defer, EMPTY, Observable} from 'rxjs';
 import {ExcelService} from '@shared/services/excel.service';
 import {Task} from '@shared/models/Task';
-import {DialogService} from '@modules/api-benchmark/services/dialog.service';
+import {DialogService} from '@shared/services/dialog.service';
 import {Timer} from '@shared/utils/timer';
 import {TaskDTO} from '@modules/api-benchmark/models/DTOs/TaskDTO';
 import {LocalRestApiService} from '@modules/api-benchmark/services/api/local-rest-api.service';
@@ -95,8 +95,6 @@ export class LocalRestApiServerComponent implements AfterViewChecked {
     if (taskId > 0 && taskId <= +this.taskCount.value) {
       this.isIdCorrect = true;
       this.runGetTaskBenchmark(taskId).subscribe((task: Task) => {
-        this.renderTimer.startTimer();
-        this.isBenchmarkRunning = true;
         this.selectedTask = task;
       }, () => {
         this.idErrorMsg = 'Id was not found';
@@ -199,6 +197,7 @@ export class LocalRestApiServerComponent implements AfterViewChecked {
     this.localApiUrl.enable();
     this.taskCount.enable();
     this.connectionError = false;
+    this.tasks = [];
   }
 
   saveExcel(): void {

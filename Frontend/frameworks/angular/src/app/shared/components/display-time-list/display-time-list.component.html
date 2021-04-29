@@ -1,0 +1,20 @@
+<div mat-dialog-title>
+  <h1>{{ data.title }}</h1>
+</div>
+<div *ngIf="data.timer.times.length > 0; else noTimesAvailable" mat-dialog-content>
+  <div class="average-time">
+    <p><b>Average time:</b> {{ data.timer.averageTime > 0 ?
+      ((data.timer.averageTime | number:'.5-5') + ' ms') :
+      'Too few measurements' }}</p>
+  </div>
+  <ul class="dropdown-overlay">
+    <li *ngFor="let time of data.timer.times">
+      {{ time | number:'.5-5' }} ms
+    </li>
+  </ul>
+</div>
+<ng-template #noTimesAvailable>
+  <div class="dropdown-overlay">
+    No times to show.
+  </div>
+</ng-template>

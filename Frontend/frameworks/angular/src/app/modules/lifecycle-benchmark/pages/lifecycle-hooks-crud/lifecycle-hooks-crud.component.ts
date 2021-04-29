@@ -134,7 +134,7 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
 
   saveExcel(): void {
     const timers: Timer[] = [this.createTimer, this.readTimer, this.appendTimer,
-      this.updateTimer, this.deleteTimer];
+      this.updateTimer, this.updateAllRowsTimer, this.deleteTimer, this.deleteAllRowsTimer];
 
     this.excelService.saveTimersToExcel(timers, 'LIFECYCLE-HOOKS');
   }

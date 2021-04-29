@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Timer} from '@shared/utils/timer';
+import {DialogService} from '@shared/services/dialog.service';
 
 @Component({
   selector: 'app-display-time',
@@ -21,5 +22,9 @@ export class DisplayTimeComponent {
 
   showAllTimes = false;
 
-  constructor() { }
+  constructor(private dialogService: DialogService) { }
+
+  openTimeList(): void {
+    this.dialogService.openTimeList(this.title, this.timer);
+  }
 }

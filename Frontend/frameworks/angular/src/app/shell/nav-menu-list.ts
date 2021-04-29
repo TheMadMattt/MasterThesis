@@ -17,14 +17,6 @@ export const MenuList: MenuItem[] = [
     isSubMenuShowing: false,
     children: [
       {
-        title: 'Random User Generator',
-        route: '/api-benchmark/random-user-generator',
-        icon: 'person',
-        showSubMenu: false,
-        isSubMenuShowing: false,
-        children: []
-      },
-      {
         title: '{JSON} Placeholder',
         route: '/api-benchmark/json-placeholder',
         icon: 'public',

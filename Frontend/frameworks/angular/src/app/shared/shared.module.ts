@@ -8,16 +8,17 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import { DisplayTimeComponent } from './display-time/display-time.component';
+import { DisplayTimeComponent } from './components/display-time/display-time.component';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {OverlayModule} from '@angular/cdk/overlay';
 import {MatBadgeModule} from '@angular/material/badge';
+import { DisplayTimeListComponent } from './components/display-time-list/display-time-list.component';
 
 @NgModule({
-  declarations: [DisplayTimeComponent],
+  declarations: [DisplayTimeComponent, DisplayTimeListComponent],
   imports: [
     CommonModule,
     MatIconModule,

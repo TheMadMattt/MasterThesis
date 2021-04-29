@@ -5,7 +5,7 @@ import {NgxSpinnerService} from 'ngx-spinner';
 import {ExcelService} from '@shared/services/excel.service';
 import {Post} from '@modules/api-benchmark/models/Post';
 import { Timer } from '@shared/utils/timer';
-import {DialogService} from '@modules/api-benchmark/services/dialog.service';
+import {DialogService} from '@shared/services/dialog.service';
 import {JsonPlaceholderService} from '@modules/api-benchmark/services/api/json-placeholder.service';
 import {finalize, map, switchMap} from 'rxjs/operators';
 import {PostDTO} from '@modules/api-benchmark/models/DTOs/PostDTO';

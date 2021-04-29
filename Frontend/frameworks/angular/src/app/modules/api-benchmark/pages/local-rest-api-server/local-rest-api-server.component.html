@@ -32,7 +32,7 @@
           <input matInput [formControl]="selectedId">
           <mat-hint>Enter task id from 1 to {{ taskCount.value }}</mat-hint>
         </mat-form-field>
-        <mat-error *ngIf="!isIdCorrect"><p>{{ idErrorMsg }}</p></mat-error>
+        <mat-error *ngIf="!isIdCorrect" class="flex-center"><p>{{ idErrorMsg }}</p></mat-error>
       </div>
       <div class="operations">
         <button mat-raised-button
@@ -66,10 +66,10 @@
     </div>
   </div>
   <div class="result-container">
-    <app-display-time title="Adding task" [timer]="addTaskTimer"></app-display-time>
+    <app-display-time title="Adding 1 task" [timer]="addTaskTimer"></app-display-time>
     <app-display-time title="Getting 1 task" [timer]="getTaskTimer"></app-display-time>
-    <app-display-time title="Updating task" [timer]="updateTaskTimer"></app-display-time>
-    <app-display-time title="Deleting task" [timer]="deleteTaskTimer"></app-display-time>
+    <app-display-time title="Updating 1 task" [timer]="updateTaskTimer"></app-display-time>
+    <app-display-time title="Deleting 1 task" [timer]="deleteTaskTimer"></app-display-time>
     <app-display-time title="Getting {{ taskCount.value }} tasks" [timer]="getTasksTimer"></app-display-time>
     <app-display-time title="Render time" [timer]="renderTimer"></app-display-time>
   </div>
