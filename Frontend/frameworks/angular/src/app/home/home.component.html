@@ -1,12 +1,53 @@
-  <div class="flex-column flex-center">
+  <div class="home-container flex-column flex-center">
     <ul class="loading-metrics-box">
-      <li *ngIf="cls">{{ cls.name }} | {{ cls.value }} ms</li>
-      <li *ngIf="lcp">{{ lcp.name }} | {{ lcp.value }} ms</li>
-      <li *ngIf="fcp">{{ fcp.name }} | {{ fcp.value }} ms</li>
-      <li *ngIf="ttfb">{{ ttfb.name }} | {{ ttfb.value }} ms</li>
-      <li *ngIf="pageLoaded">Page loading time | {{ pageLoaded }} ms</li>
+      <li *ngIf="fcp"><b>First Contentful Paint (FCP)</b> | {{ fcp.value | number:'.5-5' }} ms</li>
+      <li *ngIf="lcp"><b>Largest Contentful Paint (LCP)</b> | {{ lcp.value | number:'.5-5' }} ms</li>
+      <li *ngIf="ttfb"><b>Time To First Byte (TTFB)</b> | {{ ttfb.value | number:'.5-5'}} ms</li>
+      <li *ngIf="pageLoaded"><b>Page loading time</b> | {{ pageLoaded | number:'.5-5' }} ms</li>
     </ul>
-    <button mat-raised-button color="primary" type="button" (click)="runBenchmark()">Run benchmark</button>
+    <div class="flex-row wrap-times" style="gap: 40px">
+      <div>
+        <p>First Contentful Paint (FCP)</p>
+        <ul class="loading-metrics-box">
+          <li *ngFor="let fcpTime of fcpList">
+            {{ fcpTime | number:'.5-5' }} ms
+          </li>
+        </ul>
+      </div>
+      <div>
+        <p>Largest Contentful Paint (LCP)</p>
+        <ul class="loading-metrics-box">
+          <li *ngFor="let lcpTime of lcpList">
+            {{ lcpTime | number:'.5-5' }} ms
+          </li>
+        </ul>
+      </div>
+      <div>
+        <p>Time To First Byte (TTFB)</p>
+        <ul class="loading-metrics-box">
+          <li *ngFor="let ttfbTime of ttfbList">
+            {{ ttfbTime | number:'.5-5' }} ms
+          </li>
+        </ul>
+      </div>
+      <div>
+        <p>Page loading time</p>
+        <ul class="loading-metrics-box">
+          <li *ngFor="let pageLoadingTime of pageLoadedList">
+            {{ pageLoadingTime | number:'.5-5' }} ms
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="flex-row" style="gap: 20px; margin-bottom: 25px">
+      <button mat-raised-button color="primary" type="button" (click)="runBenchmark()">Run benchmark</button>
+      <button mat-raised-button class="red-btn" type="button" (click)="clearLocalStorage()">Clear local storage</button>
+      <button mat-raised-button
+              type="button"
+              (click)="saveExcel()">
+        <mat-icon>file_download</mat-icon>Save times to excel
+      </button>
+    </div>
   </div>
 
 <!--<div class="home-container">-->

@@ -6,7 +6,7 @@ import { Task } from '@shared/models/Task';
 @Component({
   selector: 'app-task-form',
   templateUrl: './task-form.component.html',
-  styleUrls: ['./task-form.component.scss']
+  styleUrls: ['../form-styles.scss']
 })
 export class TaskFormComponent implements OnInit {
   taskForm!: FormGroup;
@@ -32,7 +32,6 @@ export class TaskFormComponent implements OnInit {
       this.taskForm.markAllAsTouched();
       return;
     }
-
 
     const taskRaw = this.taskForm.getRawValue();
     this.task.title = taskRaw.title;

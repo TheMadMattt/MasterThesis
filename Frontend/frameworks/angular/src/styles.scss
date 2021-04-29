@@ -37,6 +37,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
   align-items: center;
 }
 
+.flex-space_between-center {
+  justify-content: space-between;
+  align-items: center;
+}
+
 .flex-center {
   justify-content: center;
   align-items: center;
@@ -49,6 +54,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
   text-align: center;
   padding: 10px;
   margin: 0;
+}
+
+.red-btn {
+  background-color: red;
+  color: white;
+}
+
+.green-btn {
+  background-color: green;
+  color: white;
 }
 
 .dropdown-overlay > li {

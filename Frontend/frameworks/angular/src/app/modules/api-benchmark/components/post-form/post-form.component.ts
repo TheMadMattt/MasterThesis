@@ -6,7 +6,7 @@ import {Post} from '@modules/api-benchmark/models/Post';
 @Component({
   selector: 'app-post-form',
   templateUrl: './post-form.component.html',
-  styleUrls: ['./post-form.component.scss']
+  styleUrls: ['../form-styles.scss']
 })
 export class PostFormComponent implements OnInit {
   postForm!: FormGroup;
@@ -31,7 +31,6 @@ export class PostFormComponent implements OnInit {
       this.postForm.markAllAsTouched();
       return;
     }
-
 
     const postRaw = this.postForm.getRawValue();
     this.post.title = postRaw.title;

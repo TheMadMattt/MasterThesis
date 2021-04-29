@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, OnDestroy} from '@angular/core';
 import {getLCP, getCLS, getFCP, getTTFB, Metric} from 'web-vitals';
 import {BenchmarkService} from "@shared/services/benchmark.service";
+import {ExcelService} from '@shared/services/excel.service';
 
 @Component({
   selector: 'app-home',
@@ -17,12 +18,14 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   fcpList: number[] = [];
   lcpList: number[] = [];
   clsList: number[] = [];
+  ttfbList: number[] = [];
 
   showAllTimes = false;
   reloadsCount = 0;
   timer!: any;
 
-  constructor(private benchmarkService: BenchmarkService) {
+  constructor(private benchmarkService: BenchmarkService,
+              private excelService: ExcelService) {
     this.reloadsCount = +JSON.parse(JSON.stringify(localStorage.getItem('reloadsCounter')));
   }
 
@@ -30,15 +33,20 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     getTTFB(ttfb => {
       this.ttfb = ttfb;
       const perfData = ttfb.entries[0];
-      const pageLoadingTime = perfData.duration;
+      this.pageLoaded = perfData.duration;
       const pageLoadedTimeLocalStorage = localStorage.getItem('pageLoaded');
+      const ttfbTimeLocalStorage = localStorage.getItem('ttfb');
 
       if (pageLoadedTimeLocalStorage) {
         this.pageLoadedList = this.pageLoadedList.concat(JSON.parse(pageLoadedTimeLocalStorage));
       }
-      this.pageLoaded = pageLoadingTime;
+      if (ttfbTimeLocalStorage) {
+        this.ttfbList = this.ttfbList.concat(JSON.parse(ttfbTimeLocalStorage));
+      }
       this.pageLoadedList.push(this.pageLoaded);
+      this.ttfbList.push(this.ttfb.value);
       localStorage.setItem('pageLoaded', JSON.stringify(this.pageLoadedList));
+      localStorage.setItem('ttfb', JSON.stringify(this.ttfbList));
     });
     getFCP(fcp => {
       this.fcp = fcp;
@@ -58,24 +66,12 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
       this.lcpList.push(this.lcp.value);
       localStorage.setItem('lcp', JSON.stringify(this.lcpList));
     }, true);
-    getCLS(cls => {
-      this.cls = cls;
-      const clsLocalStorage = localStorage.getItem('cls');
-      if (clsLocalStorage) {
-        this.clsList = this.clsList.concat(JSON.parse(clsLocalStorage));
-      }
-      this.clsList.push(this.cls.value);
-      localStorage.setItem('cls', JSON.stringify(this.clsList));
-    });
     this.timer = setTimeout(() => this.reload(), 1000);
   }
 
   runBenchmark(): void {
+    this.clearLocalStorage();
     this.reloadsCount = this.benchmarkService.selectedNumberOfBenchmarks;
-    localStorage.removeItem('fcp');
-    localStorage.removeItem('lcp');
-    localStorage.removeItem('cls');
-    localStorage.removeItem('pageLoaded');
     this.reload();
   }
 
@@ -86,7 +82,38 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  clearLocalStorage(): void {
+    localStorage.clear();
+    this.ttfbList = [];
+    this.fcpList = [];
+    this.lcpList = [];
+    this.pageLoadedList = [];
+  }
+
   ngOnDestroy(): void {
     clearTimeout();
+  }
+
+  saveExcel(): void {
+    const times = [
+      {
+        title: 'fcp',
+        data: this.fcpList
+      },
+      {
+        title: 'lcp',
+        data: this.lcpList
+      },
+      {
+        title: 'ttfb',
+        data: this.ttfbList,
+      },
+      {
+        title: 'pageLoadingTime',
+        data: this.pageLoadedList
+      }
+    ];
+
+    this.excelService.savePageLoadingToExcel(times, 'PAGE_LOADING_TIMES');
   }
 }
