@@ -30,6 +30,15 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    getLCP(lcp => {
+      this.lcp = lcp;
+      const lcpLocalStorage = localStorage.getItem('lcp');
+      if (lcpLocalStorage) {
+        this.lcpList = this.lcpList.concat(JSON.parse(lcpLocalStorage));
+      }
+      this.lcpList.push(this.lcp.value);
+      localStorage.setItem('lcp', JSON.stringify(this.lcpList));
+    });
     getTTFB(ttfb => {
       this.ttfb = ttfb;
       const perfData = ttfb.entries[0];
@@ -56,15 +65,6 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
       }
       this.fcpList.push(this.fcp.value);
       localStorage.setItem('fcp', JSON.stringify(this.fcpList));
-    }, true);
-    getLCP(lcp => {
-      this.lcp = lcp;
-      const lcpLocalStorage = localStorage.getItem('lcp');
-      if (lcpLocalStorage) {
-        this.lcpList = this.lcpList.concat(JSON.parse(lcpLocalStorage));
-      }
-      this.lcpList.push(this.lcp.value);
-      localStorage.setItem('lcp', JSON.stringify(this.lcpList));
     }, true);
     this.timer = setTimeout(() => this.reload(), 1000);
   }
