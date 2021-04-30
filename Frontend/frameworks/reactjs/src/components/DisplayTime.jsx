@@ -1,6 +1,7 @@
 import {makeStyles} from "@material-ui/core/styles";
 import {Button, Dialog, DialogTitle, List, ListItem} from "@material-ui/core";
 import React, {useState} from "react";
+import {FormatNumber} from "../utils/FormatNumber";
 
 const useStyles = makeStyles({
     displayTimeContainer: {
@@ -10,6 +11,8 @@ const useStyles = makeStyles({
         margin: "5px"
     }
 });
+
+const decimalPlaces = 5;
 
 export const DisplayTime = ({title, timer}) => {
     const classes = useStyles();
@@ -27,16 +30,32 @@ export const DisplayTime = ({title, timer}) => {
         <div className={classes.displayTimeContainer}>
             <div>
                 <h3><strong>{title}</strong></h3>
-                {timer ? time : 0 } ms
+                {timer ? FormatNumber(time, decimalPlaces) : 0 } ms
             </div>
             <Button variant="outlined" color="primary" onClick={() => handleDialog(true)}>CLICK</Button>
-            <DisplayTimeList {...props}/>
+            <TimeListDialog {...props}/>
         </div>
     )
 }
 
-const DisplayTimeList = (props) => {
+const TimeList = ({times}) => (
+    <List>
+        {times.map((time, index) => (
+            <ListItem key={index}>{ FormatNumber(time, decimalPlaces) } ms</ListItem>
+        ))}
+    </List>
+)
+
+const usePadding = makeStyles({
+    padding: {
+        padding: "15px"
+    }
+})
+
+const TimeListDialog = (props) => {
     const { onClose, open, timer, title } = props;
+
+    const classes = usePadding();
 
     const handleClose = () => {
         onClose(false);
@@ -44,12 +63,13 @@ const DisplayTimeList = (props) => {
 
     return (
         <Dialog onClose={handleClose} open={open}>
-            <DialogTitle>{title}</DialogTitle>
-            <List>
-                {timer?.times.map((time, index) => (
-                    <ListItem key={index}>{time}</ListItem>
-                ))}
-            </List>
+            <div className={`flex-column flex-center ${classes.padding}`}>
+                <DialogTitle>{title}</DialogTitle>
+                <p><b>Average time: </b>{timer ? FormatNumber(timer.averageTime, decimalPlaces) : '0'} ms</p>
+                {
+                    timer ? <TimeList times={timer.times}/> : <p>No times to show.</p>
+                }
+            </div>
         </Dialog>
     );
 }
