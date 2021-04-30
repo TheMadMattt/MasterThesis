@@ -15,3 +15,12 @@
 .selected-dummy-item {
     text-align: center;
 }
+
+.data-table {
+    flex: 1;
+    overflow-x: auto;
+}
+
+.data-table table {
+    width: 100%
+}

@@ -75,6 +75,7 @@ export default class RandomUserGeneratorBenchmark extends Component {
     // 1
     addMap() {
         this.isBenchmarkRunning = true;
+        this.isCreating = true;
         this.renderCount = -1;
         operationStartTime = performance.now()
         this.setState({

@@ -52,3 +52,13 @@ code {
   justify-content: center;
   align-items: center;
 }
+
+.red-btn {
+  background-color: red !important;
+  color: white !important;
+}
+
+.green-btn {
+  background-color: green !important;
+  color: white !important;
+}

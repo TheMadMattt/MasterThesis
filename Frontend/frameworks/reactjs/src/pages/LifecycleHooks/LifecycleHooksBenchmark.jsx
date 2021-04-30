@@ -5,36 +5,26 @@ import {buildData} from "../../utils/DummyDataService";
 import {DummyDataDisplay} from "../../components/DummyDataDisplay";
 import "./LifecycleHooks.css";
 import {MatSelect} from "./components/MatSelect";
-
-const Profiler = React.Profiler;
+import {DisplayTime} from "../../components/DisplayTime";
 
 export default class LifecycleHooksBenchmark extends Component {
     isCreating = false;
-    isUpdating = false;
     isAppending = false;
-    isDeleting = false;
-    isReading = false;
     createTimer = new Timer('createDummyData');
-    updateTimer = new Timer('updateDummyData');
     appendTimer = new Timer('appendDummyData');
-    deleteTimer = new Timer('deleteDummyData');
-    readTimer = new Timer('readDummyData');
 
     state = {
         dummyData: [],
-        rowsNumber: 1000
+        rowsNumber: 1000,
+        createTimer: null,
+        appendTimer: null
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.isCreating) {
-            this.createTimer.stopTimer();
-            this.isCreating = false;
-        }
-        if(this.isUpdating) {
-            this.updateTime = performance.now() - this.startTime;
-            this.update.push(this.updateTime);
-            this.updateTime = 0;
-            this.isUpdating = false;
+        if(this.isAppending) {
+            this.appendTimer.stopTimer();
+            this.isAppending = false;
+            this.setState({appendTimer: this.appendTimer});
         }
         if(this.isRemoving) {
             this.removeTime = performance.now() - this.startTime;
@@ -44,27 +34,39 @@ export default class LifecycleHooksBenchmark extends Component {
         }
     }
 
-    createRows() {
-        this.isCreating = true;
+    async createRows() {
+        this.setState({dummyData: []});
+        await this.delay(0);
         this.createTimer.startTimer();
-        const dummyData = buildData(1000);
-        this.setState({dummyData});
+        this.setState({dummyData: buildData(this.state.rowsNumber)}, () => {
+            this.createTimer.stopTimer();
+            this.setState({createTimer: this.createTimer});
+        });
     }
 
-    callback(id, phase, actualTime, baseTime, startTime, commitTime, interactions) {
-        console.log(id, phase, actualTime, baseTime, interactions);
-        if (phase === "update") {
-            let rendering = JSON.parse(localStorage.getItem("render"));
-            if (rendering === null) {
-                rendering = [];
-            }
-            rendering.push(baseTime);
-            localStorage.setItem("render", JSON.stringify(rendering));
-        }
+    async appendRows() {
+        const appendData = buildData(this.state.rowsNumber);
+        this.setState({dummyData: appendData});
+        await this.delay(0);
+        this.appendTimer.startTimer();
+        this.setState(prevState => ({
+            dummyData: prevState.dummyData.concat(appendData)
+        }), () => {
+            this.appendTimer.stopTimer();
+            this.setState({appendTimer: this.appendTimer});
+        });
+    }
+
+    delay(ms) {
+        return new Promise( resolve => setTimeout(resolve, ms) );
     }
 
     handleRowsNumberChange(rowsNumber) {
         this.setState({rowsNumber});
+    }
+
+    clearDummyData() {
+        this.setState({dummyData: []});
     }
 
     render() {
@@ -78,17 +80,27 @@ export default class LifecycleHooksBenchmark extends Component {
                     <Button variant="contained" color="primary" className="ButtonMargin"
                             onClick={() => this.createRows()}>Create {this.state.rowsNumber} rows</Button>
                     <Button variant="contained" color="primary" className="ButtonMargin"
+                            onClick={() => this.appendRows()}>Append {this.state.rowsNumber} rows</Button>
+                    <Button variant="contained" color="primary" className="ButtonMargin"
                             onClick={() => this.createRows()}>Create rows</Button>
                     <Button variant="contained" color="primary"
-                            onClick={() => this.createRows()}>Create rows</Button>
+                            onClick={() => this.clearDummyData()}>Clear</Button>
                 </div>
-                <Profiler id="lifecycle" onRender={this.callback}>
+                <div className="result-container">
+                    <DisplayTime title={"Creating " + this.state.rowsNumber + " rows"}
+                                 timer={this.state.createTimer}/>
+                    <DisplayTime title={"Appending " + this.state.rowsNumber + " rows"}
+                                 timer={this.state.appendTimer}/>
+                </div>
+                <div className="data-table">
                     <table>
                         <tbody>
-                            {this.state.dummyData.map((data) => <DummyDataDisplay {...data} key={data.id} />)}
+                        {this.state.dummyData.map((data, index) =>
+                            <DummyDataDisplay {...data} key={index} />
+                        )}
                         </tbody>
                     </table>
-                </Profiler>
+                </div>
             </div>
         );
     }
