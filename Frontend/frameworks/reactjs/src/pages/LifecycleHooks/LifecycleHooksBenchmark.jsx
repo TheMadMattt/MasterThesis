@@ -67,7 +67,7 @@ export default class LifecycleHooksBenchmark extends Component {
         this.setState({dummyData: buildData(this.state.rowsNumber)}, () => {
             this.appendTimer.startTimer();
             this.setState(prevState => ({
-                dummyData: prevState.dummyData.concat(buildData(this.state.rowsNumber))
+                dummyData: prevState.dummyData.concat(buildData(1000))
             }), () => {
                 this.appendTimer.stopTimer();
                 this.setState({appendTimer: this.appendTimer});

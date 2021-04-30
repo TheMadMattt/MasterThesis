@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const MatSelect = ({rowsNumber, handleChange}) => {
     const classes = useStyles();
+    const rowsNumberList = [1000, 2000, 5000, 10000];
 
     return (
         <FormControl variant="outlined" className={classes.formControl}>
@@ -19,9 +20,9 @@ export const MatSelect = ({rowsNumber, handleChange}) => {
                 onChange={handleChange}
                 label="Row number"
             >
-                <MenuItem value={1000}>1000</MenuItem>
-                <MenuItem value={2000}>2000</MenuItem>
-                <MenuItem value={10000}>10000</MenuItem>
+                {rowsNumberList.map((rows, index) =>
+                    <MenuItem key={index} value={rows}>{rows}</MenuItem>
+                )}
             </Select>
         </FormControl>
     )
