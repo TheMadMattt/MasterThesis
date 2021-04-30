@@ -28,7 +28,7 @@
               id="delete-all"
               color="primary"
               type="button"
-              (click)="this.deleteAllRows()">Delete all rows</button>
+              (click)="this.deleteAllRows()">Remove all rows</button>
       <button mat-raised-button
               id="read"
               color="primary"
@@ -46,7 +46,7 @@
               color="primary"
               type="button"
               (click)="this.deleteRandomRow()"
-              [disabled]="dummyData.length <= 0">Delete random row</button>
+              [disabled]="dummyData.length <= 0">Remove random row</button>
     </div>
     <button mat-raised-button
             color="primary"
@@ -62,10 +62,10 @@
     <app-display-time title="Creating {{ rowsNumber.value }} rows" [timer]="createTimer"></app-display-time>
     <app-display-time title="Updating {{ rowsNumber.value }} rows" [timer]="updateAllRowsTimer"></app-display-time>
     <app-display-time title="Appending {{ rowsNumber.value }} rows" [timer]="appendTimer"></app-display-time>
-    <app-display-time title="Deleting all rows" [timer]="deleteAllRowsTimer"></app-display-time>
+    <app-display-time title="Removing all rows" [timer]="deleteAllRowsTimer"></app-display-time>
     <app-display-time title="Reading random row" [timer]="readTimer"></app-display-time>
     <app-display-time title="Updating random row" [timer]="updateTimer"></app-display-time>
-    <app-display-time title="Deleting 1 row" [timer]="deleteTimer"></app-display-time>
+    <app-display-time title="Removing 1 row" [timer]="deleteTimer"></app-display-time>
   </div>
   <div class="selected-dummy-item" *ngIf="selectedDummyItem">
     <h2><b>Selected item:</b> {{ selectedDummyItem.id }} | {{ selectedDummyItem.name }} | {{ selectedDummyItem.description }}</h2>

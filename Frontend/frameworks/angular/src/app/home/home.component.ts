@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnDestroy} from '@angular/core';
-import {getLCP, getCLS, getFCP, getTTFB, Metric} from 'web-vitals';
-import {BenchmarkService} from "@shared/services/benchmark.service";
+import {getLCP, getFCP, getTTFB, Metric} from 'web-vitals';
+import {BenchmarkService} from '@shared/services/benchmark.service';
 import {ExcelService} from '@shared/services/excel.service';
 
 @Component({
