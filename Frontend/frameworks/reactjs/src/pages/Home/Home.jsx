@@ -33,8 +33,8 @@ class Home extends Component {
         getTTFB(ttfb => {
             const perfData = ttfb.entries[0];
             const pageLoaded = perfData.duration;
-            let pageLoadedList = JSON.parse(localStorage.getItem("pageLoaded"));
-            let ttfbList = JSON.parse(localStorage.getItem("ttfb"));
+            let pageLoadedList = JSON.parse(localStorage.getItem("pageLoaded_react"));
+            let ttfbList = JSON.parse(localStorage.getItem("ttfb_react"));
             if (pageLoadedList === null) {
                 pageLoadedList = [];
             }
@@ -43,26 +43,26 @@ class Home extends Component {
             }
             pageLoadedList.push(pageLoaded);
             ttfbList.push(ttfb.value)
-            localStorage.setItem("pageLoaded", JSON.stringify(pageLoadedList));
-            localStorage.setItem("ttfb", JSON.stringify(ttfbList));
+            localStorage.setItem("pageLoaded_react", JSON.stringify(pageLoadedList));
+            localStorage.setItem("ttfb_react", JSON.stringify(ttfbList));
             this.setState({ttfb, pageLoaded, pageLoadedList, ttfbList});
         });
         getFCP(fcp => {
-            let fcpList = JSON.parse(localStorage.getItem("fcp"));
+            let fcpList = JSON.parse(localStorage.getItem("fcp_react"));
             if (fcpList === null) {
                 fcpList = [];
             }
             fcpList.push(fcp.value);
-            localStorage.setItem("fcp", JSON.stringify(fcpList));
+            localStorage.setItem("fcp_react", JSON.stringify(fcpList));
             this.setState({fcp, fcpList});
         }, true);
         getLCP(lcp => {
-            let lcpList = JSON.parse(localStorage.getItem("lcp"));
+            let lcpList = JSON.parse(localStorage.getItem("lcp_react"));
             if (lcpList === null) {
                 lcpList = [];
             }
             lcpList.push(lcp.value);
-            localStorage.setItem("lcp", JSON.stringify(lcpList));
+            localStorage.setItem("lcp_react", JSON.stringify(lcpList));
             this.setState({lcp, lcpList});
         }, true);
         this.timer = setTimeout(() => this.reload(), 1000);

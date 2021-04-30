@@ -1,5 +1,5 @@
 import {makeStyles} from "@material-ui/core/styles";
-import {Button, Dialog, DialogTitle, List, ListItem} from "@material-ui/core";
+import {Badge, Button, Dialog, DialogTitle, List, ListItem} from "@material-ui/core";
 import React, {useState} from "react";
 import {FormatNumber} from "../utils/FormatNumber";
 
@@ -9,6 +9,9 @@ const useStyles = makeStyles({
         textAlign: "center",
         border: "2px solid black",
         margin: "5px"
+    },
+    timeContainer: {
+        marginBottom: "15px"
     }
 });
 
@@ -28,11 +31,13 @@ export const DisplayTime = ({title, timer}) => {
 
     return (
         <div className={classes.displayTimeContainer}>
-            <div>
+            <div className={classes.timeContainer}>
                 <h3><strong>{title}</strong></h3>
                 {timer ? FormatNumber(time, decimalPlaces) : 0 } ms
             </div>
-            <Button variant="outlined" color="primary" onClick={() => handleDialog(true)}>CLICK</Button>
+            <Badge color="secondary" badgeContent={timer && timer.times.length}>
+                <Button variant="outlined" color="primary" onClick={() => handleDialog(true)}>CLICK</Button>
+            </Badge>
             <TimeListDialog {...props}/>
         </div>
     )

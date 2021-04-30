@@ -8,12 +8,28 @@ const DisplayTimeList = (props) => {
             timer: props.createTimer
         },
         {
-            title: "Appending " + props.rowsNumber + " rows",
+            title: "Update " + props.rowsNumber + " rows",
+            timer: props.updateAllTimer
+        },
+        {
+            title: "Appending 1000 rows",
             timer: props.appendTimer
         },
         {
-            title: "Removing all rows",
-            timer: props.deleteAllRowsTimer
+            title: "Removing " + props.rowsNumber + " rows",
+            timer: props.deleteAllTimer
+        },
+        {
+            title: "Selecting random row",
+            timer: props.selectRandomTimer
+        },
+        {
+            title: "Updating random row",
+            timer: props.updateRandomTimer
+        },
+        {
+            title: "Removing random row",
+            timer: props.removeRandomTimer
         }
     ];
 

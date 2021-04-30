@@ -1,7 +1,8 @@
 import HomeIcon from '@material-ui/icons/Home';
+import SpeedIcon from '@material-ui/icons/Speed';
+import PublicIcon from '@material-ui/icons/Public';
 import Home from "../pages/Home/Home";
 import LifecycleHooksBenchmark from "../pages/LifecycleHooks/LifecycleHooksBenchmark";
-import RandomUserGeneratorBenchmark from "../pages/RandomUserGeneratorBenchmark";
 import JSONPlaceholderBenchmark from "../pages/JSONPlaceholderBenchmark";
 import LocalApiBenchmark from "../pages/LocalApiBenchmark";
 
@@ -10,42 +11,35 @@ const Routes = [
         sidebarName: 'Home',
         component: Home,
         path: '/',
-        icon: HomeIcon,
+        icon: <HomeIcon/>,
         children: [],
     },
     {
         sidebarName: 'Lifecycle hooks benchmark',
         component: LifecycleHooksBenchmark,
         path: '/benchmarks/lifecycle-crud',
-        icon: '',
+        icon: <SpeedIcon/>,
         children: []
     },
     {
         sidebarName: 'REST API benchmark',
         component: null,
         path: '',
-        icon: '',
-        children: []
-    },
-    {
-        sidebarName: 'Random User Generator',
-        component: RandomUserGeneratorBenchmark,
-        path: '/benchmarks/random-user-generator',
-        icon: '',
+        icon: <SpeedIcon/>,
         children: []
     },
     {
         sidebarName: '{JSON} Placeholder',
         component: JSONPlaceholderBenchmark,
         path: '/benchmarks/json-placeholder',
-        icon: '',
+        icon: <PublicIcon/>,
         children: []
     },
     {
         sidebarName: 'Local API server',
         component: LocalApiBenchmark,
         path: '/benchmarks/local-rest-api',
-        icon: '',
+        icon: <PublicIcon/>,
         children: []
     }
 ];

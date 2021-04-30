@@ -4,7 +4,7 @@ import {
     Toolbar,
     Typography,
     IconButton,
-    Drawer, AppBar, MenuList, MenuItem, ListItemText
+    Drawer, AppBar, MenuList, MenuItem, ListItemText, ListItemIcon
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import Routes from "../routes/Routes";
@@ -75,6 +75,7 @@ const NavigationBar = (props) => {
                                          style={{ textDecoration: 'none', color: 'black' }}
                                          key={key}>
                                     <MenuItem selected={activeRoute(prop.path)}>
+                                        <ListItemIcon>{prop.icon}</ListItemIcon>
                                         <ListItemText primary={prop.sidebarName} />
                                     </MenuItem>
                                 </NavLink>

@@ -17,7 +17,7 @@ const nouns = [
   'student', 'study', 'system', 'thing', 'time', 'water', 'way', 'week', 'woman', 'word', 'work', 'world', 'year'
 ];
 
-const random = (max) => {
+export const random = (max) => {
   return Math.round(Math.random() * 1000) % max;
 }
 
