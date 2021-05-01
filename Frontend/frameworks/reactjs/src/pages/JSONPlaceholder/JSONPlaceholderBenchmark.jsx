@@ -16,26 +16,21 @@ export default class JSONPlaceholderBenchmark extends Component {
     getPostTimer = new Timer('getPostTimer');
     getPostsWithCommentsTimer = new Timer('getPostsWithCommentsTimer');
     deletePostTimer = new Timer('deletePostTimer');
-
+    renderTimer = new Timer('renderTimer');
 
     state = {
         posts: [],
         selectedPost: null,
-        rowsNumber: 1,
+        postId: 1,
         addPostTimer: null,
         updatePostTimer: null,
         getPostTimer: null,
         getPostsWithCommentsTimer: null,
         deletePostTimer: null,
+        renderTimer: null
     };
 
-    addPost(postForm) {
-        console.log(postForm);
-        const post = {
-            id: 101,
-            title: postForm.title,
-            body: postForm.body
-        }
+    addPost(post) {
         this.addPostTimer.startTimer();
         apiService.createPost(post).then(() => {
             this.addPostTimer.stopTimer();
@@ -51,16 +46,34 @@ export default class JSONPlaceholderBenchmark extends Component {
         });
     }
 
-    getPost() {
-
+    getSelectedPost() {
+        this.getPostTimer.startTimer();
+        apiService.getPost(this.state.postId).then(post => {
+            this.getPostTimer.stopTimer();
+            this.setState({selectedPost: post.data, getPostTimer: this.getPostTimer});
+        });
     }
 
     getPostsWithComments() {
-
+        this.setState({ posts: []}, () => {
+            this.getPostsWithCommentsTimer.startTimer();
+            apiService.getPostsWithComments().then(data => {
+                this.getPostsWithCommentsTimer.stopTimer();
+                this.renderTimer.startTimer();
+                this.setState({posts: data, getPostsWithCommentsTimer: this.getPostsWithCommentsTimer}, () => {
+                    this.renderTimer.stopTimer();
+                    this.setState({renderTimer: this.renderTimer});
+                });
+            })
+        })
     }
 
     deletePost() {
-
+        this.deletePostTimer.startTimer();
+        apiService.deletePost(this.state.postId).then(() => {
+            this.deletePostTimer.stopTimer();
+            this.setState({deletePostTimer: this.deletePostTimer});
+        });
     }
 
     handleRowsNumberChange(rowsNumber) {
@@ -78,19 +91,19 @@ export default class JSONPlaceholderBenchmark extends Component {
                 <div className="actions">
                     <div>
                         <MatSelect title="Choose post id"
-                                   initialValue={this.state.rowsNumber}
+                                   initialValue={this.state.postId}
                                    handleChange={(e) => this.handleRowsNumberChange(e.target.value)}
                                    selectDropdownList={arrayOfIds}/>
                     </div>
                     <div className="flex-row operations">
-                        <PostBtn cb={(post) => this.addPost(post)} isEditing={false}/>
-                        <PostBtn cb={(post) => this.updatePost(post)} isEditing={true}/>
+                        <PostBtn cb={(post) => this.addPost(post)}/>
+                        <PostBtn cb={(post) => this.updatePost(post)} isEditing postId={this.state.postId}/>
                         <Button variant="contained" color="primary" className="ButtonMargin"
-                                onClick={() => this.getPost()}>Get post</Button>
+                                onClick={() => this.getSelectedPost()}>Get post</Button>
                         <Button variant="contained" color="primary" className="ButtonMargin"
                                 onClick={() => this.deletePost()}>Delete post</Button>
                         <Button variant="contained" color="primary" className="ButtonMargin"
-                                onClick={() => this.getPostsWithComments()}>Get posts with comments</Button>
+                                onClick={() => this.getPostsWithComments()}>Get 100 posts with 500 comments</Button>
                         <Button variant="contained" color="primary"
                                 onClick={() => this.clear()}>Clear</Button>
                     </div>
@@ -100,7 +113,7 @@ export default class JSONPlaceholderBenchmark extends Component {
                 </div>
                 <div>
                     {selectedPost &&
-                    <p><b>Selected post:</b> {selectedPost.id} | {selectedPost.title} | {selectedPost.description}</p>}
+                    <p><b>Selected post:</b> {selectedPost.id} | {selectedPost.title} | {selectedPost.body}</p>}
                 </div>
                 <PostList posts={this.state.posts}/>
             </div>

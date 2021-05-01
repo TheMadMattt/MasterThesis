@@ -26,12 +26,12 @@ const PostItem = memo(({ title, body, comments }) => (
     </tr>
 ));
 
-const PostList = memo((props) => {
+const PostList = memo(({posts}) => {
     return (
         <div className="data-table">
             <table>
                 <tbody>
-                    {props.posts.map((data, index) =>
+                    {posts.map((data, index) =>
                         <PostItem {...data} key={index} />
                     )}
                 </tbody>

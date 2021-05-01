@@ -11,18 +11,18 @@ const DummyDataItem = memo(({ id, title, description, completed }) => (
         </tr>
 ));
 
-const DummyDataList = (props) => {
+const DummyDataList = memo(({dummyData}) => {
     return (
         <div className="data-table">
             <table>
                 <tbody>
-                {props.dummyData.map((data, index) =>
+                {dummyData.map((data, index) =>
                     <DummyDataItem {...data} key={index} />
                 )}
                 </tbody>
             </table>
         </div>
     )
-}
+});
 
 export default DummyDataList;

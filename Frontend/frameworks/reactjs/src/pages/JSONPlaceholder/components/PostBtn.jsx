@@ -1,9 +1,11 @@
 import React, {useState} from "react";
 import {Button} from "@material-ui/core";
 import {PostFormDialog} from "./PostForm";
+import apiService from '../../../api/JSONPlaceholder/json-placeholder.service';
 
-export const PostBtn = ({cb, isEditing}) => {
+export const PostBtn = ({cb, isEditing = false, postId}) => {
     const [open, setOpen] = useState(false);
+    const [selectedPost, setSelectedPost] = useState({});
 
     const handleDialogOpen = () => {
         setOpen(true);
@@ -16,12 +18,23 @@ export const PostBtn = ({cb, isEditing}) => {
         }
     }
 
-    const props = { onClose: handleDialogClose, open, isEditing}
+    const getPost = () => {
+        apiService.getPost(postId).then(post => {
+            setSelectedPost(post.data);
+            setOpen(true);
+        });
+    }
+
+    const props = { onClose: handleDialogClose, open, isEditing, selectedPost}
 
     return (
         <>
-            <Button variant="contained" color="primary" className="ButtonMargin"
-                    onClick={handleDialogOpen}>Edit post</Button>
+            <Button variant="contained"
+                    color="primary"
+                    className="ButtonMargin"
+                    onClick={isEditing ? getPost : handleDialogOpen}>
+                {isEditing ? 'Edit post' : 'Add post'}
+            </Button>
             <PostFormDialog {...props} />
         </>
     )

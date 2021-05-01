@@ -7,11 +7,15 @@ class JsonPlaceholderService {
     }
 
     updatePost(post) {
-        return http.put("posts/", post);
+        return http.put("posts/" + post.id, post);
     }
 
     getPost(id) {
         return http.get("posts/" + id);
+    }
+
+    deletePost(id) {
+        return http.delete("posts/" + id);
     }
 
     getPosts() {

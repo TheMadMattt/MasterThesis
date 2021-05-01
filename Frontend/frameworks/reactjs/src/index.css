@@ -53,6 +53,15 @@ code {
   align-items: center;
 }
 
+.data-table {
+  flex: 1;
+  overflow-x: auto;
+}
+
+.data-table table {
+  width: 100%;
+}
+
 .red-btn {
   background-color: red !important;
   color: white !important;

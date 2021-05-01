@@ -8,16 +8,24 @@ const DisplayTimesJSONPlaceholder = (props) => {
             timer: props.addPostTimer
         },
         {
+            title: "Updating post",
+            timer: props.updatePostTimer
+        },
+        {
             title: 'Getting post',
             timer: props.getPostTimer
         },
         {
-            title: "Updating post",
-            timer: props.updateAllTimer
+            title: "Removing post",
+            timer: props.deletePostTimer
         },
         {
-            title: "Removing " + props.rowsNumber + " rows",
-            timer: props.removeAllTimer
+            title: "Getting posts with comments",
+            timer: props.getPostsWithCommentsTimer
+        },
+        {
+            title: "Rendering 100 posts",
+            timer: props.renderTimer
         },
     ];
 

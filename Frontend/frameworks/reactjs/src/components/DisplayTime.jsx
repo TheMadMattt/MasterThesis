@@ -1,11 +1,12 @@
 import {makeStyles} from "@material-ui/core/styles";
-import {Badge, Button, Dialog, DialogTitle, List, ListItem} from "@material-ui/core";
+import {Badge, Dialog, DialogTitle, IconButton, List, ListItem} from "@material-ui/core";
 import React, {useState} from "react";
 import {FormatNumber} from "../utils/FormatNumber";
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles({
     displayTimeContainer: {
-        padding: "0 10px 10px 10px",
+        padding: "0 10px",
         textAlign: "center",
         border: "2px solid black",
         margin: "5px"
@@ -36,7 +37,9 @@ export const DisplayTime = ({title, timer}) => {
                 {timer ? FormatNumber(time, decimalPlaces) : 0 } ms
             </div>
             <Badge color="secondary" badgeContent={timer && timer.times.length}>
-                <Button variant="outlined" color="primary" onClick={() => handleDialog(true)}>CLICK</Button>
+                <IconButton variant="contained" color="primary" onClick={() => handleDialog(true)}>
+                    <ExpandMoreIcon/>
+                </IconButton>
             </Badge>
             <TimeListDialog {...props}/>
         </div>
