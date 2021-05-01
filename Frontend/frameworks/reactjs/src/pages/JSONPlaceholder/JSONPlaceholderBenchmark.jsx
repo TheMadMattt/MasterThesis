@@ -4,7 +4,7 @@ import {Button} from "@material-ui/core";
 import "./JSONPlaceholder.css";
 import {MatSelect} from "../../components/MatSelect";
 import DisplayTimesJSONPlaceholder from "./components/DisplayTimesJSONPlaceholder";
-import apiService from '../../api/JSONPlaceholder/json-placeholder.service';
+import apiService from '../../api/json-placeholder.service';
 import PostList from "./components/PostList";
 import {PostBtn} from "./components/PostBtn";
 
