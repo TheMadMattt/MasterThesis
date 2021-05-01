@@ -1,7 +1,7 @@
 import {DisplayTime} from "../../../components/DisplayTime";
 import React from "react";
 
-const DisplayTimeList = (props) => {
+const DisplayTimesLifecycle = (props) => {
     const displayTimeList = [
         {
             title: "Creating " + props.rowsNumber + " rows",
@@ -44,4 +44,4 @@ const DisplayTimeList = (props) => {
     )
 }
 
-export default DisplayTimeList;
+export default DisplayTimesLifecycle;

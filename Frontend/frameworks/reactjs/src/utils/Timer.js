@@ -10,11 +10,11 @@ export default class Timer {
     this.timerName = timerName;
   }
 
-  startTimer() {
+  startTimer = () => {
     this.startTime = performance.now();
   }
 
-  stopTimer() {
+  stopTimer = () => {
     if (this.startTime !== 0) {
       this.endTime = performance.now();
       this.totalTime = this.endTime - this.startTime;
@@ -25,13 +25,13 @@ export default class Timer {
     }
   }
 
-  getAverageTime() {
+  getAverageTime = () => {
     const sum = this.times.reduce((a, b) => a + b);
     this.averageTime = (sum / this.times.length);
     return this.averageTime;
   }
 
-  clear() {
+  clear = () => {
     this.startTime = 0;
     this.endTime = 0;
     this.totalTime = 0;

@@ -62,12 +62,8 @@ const TimeListDialog = (props) => {
 
     const classes = usePadding();
 
-    const handleClose = () => {
-        onClose(false);
-    };
-
     return (
-        <Dialog onClose={handleClose} open={open}>
+        <Dialog onClose={() => onClose(false)} open={open}>
             <div className={`flex-column flex-center ${classes.padding}`}>
                 <DialogTitle>{title}</DialogTitle>
                 <p><b>Average time: </b>{timer ? FormatNumber(timer.averageTime, decimalPlaces) : '0'} ms</p>

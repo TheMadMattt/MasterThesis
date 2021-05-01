@@ -3,8 +3,8 @@ import SpeedIcon from '@material-ui/icons/Speed';
 import PublicIcon from '@material-ui/icons/Public';
 import Home from "../pages/Home/Home";
 import LifecycleHooksBenchmark from "../pages/LifecycleHooks/LifecycleHooksBenchmark";
-import JSONPlaceholderBenchmark from "../pages/JSONPlaceholderBenchmark";
 import LocalApiBenchmark from "../pages/LocalApiBenchmark";
+import JSONPlaceholderBenchmark from "../pages/JSONPlaceholder/JSONPlaceholderBenchmark";
 
 const Routes = [
     {

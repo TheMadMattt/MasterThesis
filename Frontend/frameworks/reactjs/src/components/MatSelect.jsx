@@ -9,22 +9,21 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const MatSelect = ({rowsNumber, handleChange}) => {
+export const MatSelect = ({title, initialValue, selectDropdownList, handleChange}) => {
     const classes = useStyles();
-    const rowsNumberList = [1000, 2000, 5000, 10000];
 
     return (
         <FormControl variant="outlined" className={classes.formControl}>
-            <InputLabel>Row number</InputLabel>
+            <InputLabel>{title}</InputLabel>
             <Select
-                value={rowsNumber}
+                value={initialValue}
                 onChange={handleChange}
-                label="Row number"
                 MenuProps={{
                     disableScrollLock: true
                 }}
+                label={title}
             >
-                {rowsNumberList.map((rows, index) =>
+                {selectDropdownList.map((rows, index) =>
                     <MenuItem key={index} value={rows}>{rows}</MenuItem>
                 )}
             </Select>

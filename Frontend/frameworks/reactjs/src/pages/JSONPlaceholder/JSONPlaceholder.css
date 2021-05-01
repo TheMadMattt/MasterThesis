@@ -1,0 +1,33 @@
+.json-placeholder-container {
+    height: 100%;
+}
+
+.ButtonMargin {
+    margin-right: 20px !important;
+}
+
+.result-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+.result-container > * {
+    flex: 1 0 200px;
+}
+
+.selected-dummy-item {
+    text-align: center;
+}
+
+.data-table {
+    flex: 1;
+    overflow-x: auto;
+}
+
+.data-table table {
+    width: 100%
+}
+
+.operations {
+    flex-wrap: wrap;
+}

@@ -3,15 +3,15 @@ import Timer from "../../utils/Timer";
 import {Button} from "@material-ui/core";
 import {buildData, random} from "../../utils/DummyDataService";
 import "./LifecycleHooks.css";
-import {MatSelect} from "./components/MatSelect";
 import DummyDataList from "./components/DummyDataList";
-import DisplayTimeList from "./components/DisplayTimeList";
+import {MatSelect} from "../../components/MatSelect";
+import DisplayTimesLifecycle from "./components/DisplayTimesLifecycle";
+
+const rowsNumberList = [1000, 2000, 5000, 10000];
 
 export default class LifecycleHooksBenchmark extends Component {
-    isCreating = false;
-    isAppending = false;
     createTimer = new Timer('createTimer');
-    updateAllTimer = new Timer('updateAllRowsTimer')
+    updateAllTimer = new Timer('updateAllTimer')
     appendTimer = new Timer('appendTimer');
     removeAllTimer = new Timer('removeAllTimer');
     selectRandomTimer = new Timer('selectRandomTimer');
@@ -144,8 +144,10 @@ export default class LifecycleHooksBenchmark extends Component {
             <div>
                 <div className="actions">
                     <div>
-                        <MatSelect rowsNumber={this.state.rowsNumber}
-                                   handleChange={(e) => this.handleRowsNumberChange(e.target.value)}/>
+                        <MatSelect title="Row number"
+                                   initialValue={this.state.rowsNumber}
+                                   handleChange={(e) => this.handleRowsNumberChange(e.target.value)}
+                                   selectDropdownList={rowsNumberList}/>
                     </div>
                     <div className="flex-row operations">
                         <Button variant="contained" color="primary" className="ButtonMargin"
@@ -170,7 +172,7 @@ export default class LifecycleHooksBenchmark extends Component {
                     </div>
                 </div>
                 <div className="result-container">
-                    <DisplayTimeList {...this.state}/>
+                    <DisplayTimesLifecycle {...this.state}/>
                 </div>
                 <div>
                     {selectedItem &&
