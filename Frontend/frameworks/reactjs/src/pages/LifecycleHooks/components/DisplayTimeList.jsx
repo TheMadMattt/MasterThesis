@@ -17,7 +17,7 @@ const DisplayTimeList = (props) => {
         },
         {
             title: "Removing " + props.rowsNumber + " rows",
-            timer: props.deleteAllTimer
+            timer: props.removeAllTimer
         },
         {
             title: "Selecting random row",
