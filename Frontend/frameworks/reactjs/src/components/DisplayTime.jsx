@@ -5,7 +5,7 @@ import {FormatNumber} from "../utils/FormatNumber";
 
 const useStyles = makeStyles({
     displayTimeContainer: {
-        padding: "10px",
+        padding: "0 10px 10px 10px",
         textAlign: "center",
         border: "2px solid black",
         margin: "5px"
@@ -53,7 +53,7 @@ const TimeList = ({times}) => (
 
 const usePadding = makeStyles({
     padding: {
-        padding: "15px"
+        padding: "0 15px 15px 15px"
     }
 })
 

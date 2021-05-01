@@ -10,6 +10,8 @@ const lcpTitle = "Largest Contentful Paint (LCP)";
 const ttfbTitle = "Time To First Byte (TTFB)";
 const pageLoadingTitle = "Page loading time";
 
+const decimalPlaces = 5;
+
 class Home extends Component {
     reloadsCount = 0;
     timer = null;
@@ -95,10 +97,10 @@ class Home extends Component {
         return (
             <div className="Home flex-column">
                 <div>
-                    <p><b>{fcpTitle}:</b> {FormatNumber(this.state.fcp.value, 5)} ms</p>
-                    <p><b>{lcpTitle}:</b> {FormatNumber(this.state.lcp.value, 5)} ms</p>
-                    <p><b>{ttfbTitle}:</b> {FormatNumber(this.state.ttfb.value, 5)} ms</p>
-                    <p><b>{pageLoadingTitle}:</b> {FormatNumber(this.state.pageLoaded, 5) } ms</p>
+                    <p><b>{fcpTitle}:</b> {FormatNumber(this.state.fcp.value, decimalPlaces)} ms</p>
+                    <p><b>{lcpTitle}:</b> {FormatNumber(this.state.lcp.value, decimalPlaces)} ms</p>
+                    <p><b>{ttfbTitle}:</b> {FormatNumber(this.state.ttfb.value, decimalPlaces)} ms</p>
+                    <p><b>{pageLoadingTitle}:</b> {FormatNumber(this.state.pageLoaded, decimalPlaces) } ms</p>
                 </div>
                 <div className="flex-row flex-center">
                     <DisplayLoadingTimes title={fcpTitle} times={this.state.fcpList}/>

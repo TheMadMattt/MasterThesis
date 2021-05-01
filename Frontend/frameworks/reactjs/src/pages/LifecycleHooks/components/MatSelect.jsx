@@ -20,6 +20,9 @@ export const MatSelect = ({rowsNumber, handleChange}) => {
                 value={rowsNumber}
                 onChange={handleChange}
                 label="Row number"
+                MenuProps={{
+                    disableScrollLock: true
+                }}
             >
                 {rowsNumberList.map((rows, index) =>
                     <MenuItem key={index} value={rows}>{rows}</MenuItem>
