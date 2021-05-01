@@ -3,6 +3,7 @@ import "./Home.css"
 import { getFCP, getLCP, getTTFB } from 'web-vitals';
 import {Button} from "@material-ui/core";
 import {DisplayLoadingTimes} from "./components/DisplayLoadingTimes";
+import {FormatNumber} from "../../utils/FormatNumber";
 
 const fcpTitle = "First Contentful Paint (FCP)";
 const lcpTitle = "Largest Contentful Paint (LCP)";
@@ -94,10 +95,10 @@ class Home extends Component {
         return (
             <div className="Home flex-column">
                 <div>
-                    <p><b>{fcpTitle}:</b> {this.state.fcp.value} ms</p>
-                    <p><b>{lcpTitle}:</b> {this.state.lcp.value} ms</p>
-                    <p><b>{ttfbTitle}:</b> {this.state.ttfb.value} ms</p>
-                    <p><b>{pageLoadingTitle}:</b> {this.state.pageLoaded } ms</p>
+                    <p><b>{fcpTitle}:</b> {FormatNumber(this.state.fcp.value, 5)} ms</p>
+                    <p><b>{lcpTitle}:</b> {FormatNumber(this.state.lcp.value, 5)} ms</p>
+                    <p><b>{ttfbTitle}:</b> {FormatNumber(this.state.ttfb.value, 5)} ms</p>
+                    <p><b>{pageLoadingTitle}:</b> {FormatNumber(this.state.pageLoaded, 5) } ms</p>
                 </div>
                 <div className="flex-row flex-center">
                     <DisplayLoadingTimes title={fcpTitle} times={this.state.fcpList}/>

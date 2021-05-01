@@ -3,7 +3,7 @@
 }
 
 .ButtonMargin button {
-    margin-right: 15px;
+    margin: 15px;
 }
 
 .loading-metrics-box {
@@ -26,4 +26,5 @@ ul {
 
 .flex-row {
     gap: 40px;
+    flex-wrap: wrap;
 }

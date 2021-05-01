@@ -10,13 +10,13 @@ import DisplayTimeList from "./components/DisplayTimeList";
 export default class LifecycleHooksBenchmark extends Component {
     isCreating = false;
     isAppending = false;
-    createTimer = new Timer('createDummyData');
+    createTimer = new Timer('createTimer');
     updateAllTimer = new Timer('updateAllRowsTimer')
-    appendTimer = new Timer('appendDummyData');
-    deleteAllTimer = new Timer('deleteAllDummyData');
-    selectRandomTimer = new Timer('selectRandomRowTimer');
-    updateRandomTimer = new Timer('updateRandomRowTimer');
-    deleteRandomTimer = new Timer('deleteRandomTimer');
+    appendTimer = new Timer('appendTimer');
+    removeAllTimer = new Timer('removeAllTimer');
+    selectRandomTimer = new Timer('selectRandomTimer');
+    updateRandomTimer = new Timer('updateRandomTimer');
+    removeRandomTimer = new Timer('removeRandomTimer');
 
     state = {
         dummyData: [],
@@ -24,11 +24,11 @@ export default class LifecycleHooksBenchmark extends Component {
         rowsNumber: 1000,
         createTimer: null,
         appendTimer: null,
-        deleteAllTimer: null,
+        removeAllTimer: null,
         updateAllTimer: null,
         selectRandomTimer: null,
         updateRandomTimer: null,
-        deleteRandomTimer: null
+        removeRandomTimer: null
     };
 
     createRows() {
@@ -77,10 +77,10 @@ export default class LifecycleHooksBenchmark extends Component {
 
     removeAllRows() {
         this.setState({dummyData: buildData(this.state.rowsNumber)}, () => {
-            this.deleteAllTimer.startTimer();
+            this.removeAllTimer.startTimer();
             this.setState({dummyData: buildData(this.state.rowsNumber)}, () => {
-                this.deleteAllTimer.stopTimer();
-                this.setState({deleteAllTimer: this.deleteAllTimer});
+                this.removeAllTimer.stopTimer();
+                this.setState({removeAllTimer: this.removeAllTimer});
             });
         });
     }
@@ -119,13 +119,13 @@ export default class LifecycleHooksBenchmark extends Component {
     removeRandomRow() {
         this.setState({dummyData: buildData(this.state.rowsNumber)}, () => {
             const data = this.state.dummyData
-            this.deleteRandomTimer.startTimer();
+            this.removeRandomTimer.startTimer();
             const id = random(data.length);
 
 
             this.setState({ dummyData: [...data.slice(0, id), ...data.slice(id + 1)] }, () => {
-                this.deleteRandomTimer.stopTimer();
-                this.setState({updateRandomTimer: this.updateRandomTimer});
+                this.removeRandomTimer.stopTimer();
+                this.setState({removeRandomTimer: this.removeRandomTimer});
             });
         });
     }
