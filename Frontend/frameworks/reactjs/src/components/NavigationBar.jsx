@@ -4,11 +4,11 @@ import {
     Toolbar,
     Typography,
     IconButton,
-    Drawer, AppBar, MenuList, MenuItem, ListItemText, ListItemIcon
+    Drawer, AppBar
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import Routes from "../routes/Routes";
-import { NavLink, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import NavigationList from "../routes/Navigation";
 
 const useStyles = makeStyles(theme =>
     createStyles({
@@ -41,10 +41,6 @@ const NavigationBar = (props) => {
 
     const toggleDrawer = (drawerState) => setIsOpen(drawerState);
 
-    const activeRoute = (routeName) => {
-        return props.location.pathname === routeName ? true : false;
-    }
-
     return (
         <div>
             <div className={classes.root}>
@@ -66,22 +62,8 @@ const NavigationBar = (props) => {
                     open={isOpen}
                     onClose={() => toggleDrawer(false)}>
                 <div className={classes.fullList}
-                     role="presentation"
-                     onClick={() => toggleDrawer(false)}>
-                    <MenuList>
-                        {Routes.map((prop, key) => {
-                            return (
-                                <NavLink to={prop.path}
-                                         style={{ textDecoration: 'none', color: 'black' }}
-                                         key={key}>
-                                    <MenuItem selected={activeRoute(prop.path)}>
-                                        <ListItemIcon>{prop.icon}</ListItemIcon>
-                                        <ListItemText primary={prop.sidebarName} />
-                                    </MenuItem>
-                                </NavLink>
-                            );
-                        })}
-                    </MenuList>
+                     role="presentation">
+                    <NavigationList {...props} toggleDrawer={toggleDrawer}/>
                 </div>
             </Drawer>
         </div>

@@ -1,9 +1,9 @@
 import React, {Component} from "react"
 import './App.css';
 import NavigationBar from "./components/NavigationBar";
-import Routes from "./routes/Routes";
 import {Switch, Route} from "react-router-dom"
 import {createMuiTheme, MuiThemeProvider} from "@material-ui/core";
+import {RoutesForRouter} from "./routes/Routes";
 
 const theme = createMuiTheme({
     palette: {
@@ -23,9 +23,8 @@ class App extends Component {
                     <div className="App">
                         <NavigationBar/>
                         <Switch>
-                            {Routes.map(route => (
-                                route.component &&
-                                <Route exact path={route.path} key={route.path} component={route.component}/>
+                            {RoutesForRouter.map(route => (
+                                <Route exact path={route.route} key={route.route} component={route.component}/>
                             ))}
                         </Switch>
                     </div>

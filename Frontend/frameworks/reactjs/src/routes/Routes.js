@@ -1,47 +1,65 @@
-import HomeIcon from '@material-ui/icons/Home';
-import SpeedIcon from '@material-ui/icons/Speed';
-import PublicIcon from '@material-ui/icons/Public';
 import Home from "../pages/Home/Home";
+import HomeIcon from "@material-ui/icons/Home";
 import LifecycleHooksBenchmark from "../pages/LifecycleHooks/LifecycleHooksBenchmark";
-import LocalApiBenchmark from "../pages/LocalApiBenchmark";
+import SpeedIcon from "@material-ui/icons/Speed";
 import JSONPlaceholderBenchmark from "../pages/JSONPlaceholder/JSONPlaceholderBenchmark";
+import PublicIcon from "@material-ui/icons/Public";
+import LocalApiBenchmark from "../pages/LocalApiBenchmark";
+import React from "react";
 
-const Routes = [
+export const RoutesForRouter = [
     {
         sidebarName: 'Home',
         component: Home,
-        path: '/',
+        route: '/'
+    },
+    {
+        sidebarName: 'Lifecycle hooks benchmark',
+        component: LifecycleHooksBenchmark,
+        route: '/benchmarks/lifecycle-crud'
+    },
+    {
+        sidebarName: '{JSON} Placeholder',
+        component: JSONPlaceholderBenchmark,
+        route: '/benchmarks/json-placeholder'
+    },
+    {
+        sidebarName: 'Local API server',
+        component: LocalApiBenchmark,
+        route: '/benchmarks/local-rest-api'
+    }
+];
+
+export const Routes = [
+    {
+        sidebarName: 'Home',
+        route: '/',
         icon: <HomeIcon/>,
         children: [],
     },
     {
         sidebarName: 'Lifecycle hooks benchmark',
-        component: LifecycleHooksBenchmark,
-        path: '/benchmarks/lifecycle-crud',
+        route: '/benchmarks/lifecycle-crud',
         icon: <SpeedIcon/>,
         children: []
     },
     {
         sidebarName: 'REST API benchmark',
-        component: null,
-        path: '',
+        route: '',
         icon: <SpeedIcon/>,
-        children: []
-    },
-    {
-        sidebarName: '{JSON} Placeholder',
-        component: JSONPlaceholderBenchmark,
-        path: '/benchmarks/json-placeholder',
-        icon: <PublicIcon/>,
-        children: []
-    },
-    {
-        sidebarName: 'Local API server',
-        component: LocalApiBenchmark,
-        path: '/benchmarks/local-rest-api',
-        icon: <PublicIcon/>,
-        children: []
+        children: [
+            {
+                sidebarName: '{JSON} Placeholder',
+                route: '/benchmarks/json-placeholder',
+                icon: <PublicIcon/>,
+                children: []
+            },
+            {
+                sidebarName: 'Local API server',
+                route: '/benchmarks/local-rest-api',
+                icon: <PublicIcon/>,
+                children: []
+            }
+        ]
     }
 ];
-
-export default Routes;
