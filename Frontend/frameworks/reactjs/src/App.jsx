@@ -1,4 +1,4 @@
-import React, {Component} from "react"
+import React, {Component, Suspense} from "react"
 import './App.css';
 import NavigationBar from "./components/NavigationBar";
 import {Switch, Route} from "react-router-dom"
@@ -10,7 +10,6 @@ const theme = createMuiTheme({
         primary: {
             main: '#1e2438'
         },
-
     },
 });
 
@@ -22,11 +21,13 @@ class App extends Component {
                 <div className="App">
                     <div className="App">
                         <NavigationBar/>
-                        <Switch>
-                            {RoutesForRouter.map(route => (
-                                <Route exact path={route.route} key={route.route} component={route.component}/>
-                            ))}
-                        </Switch>
+                        <Suspense fallback={null}>
+                            <Switch>
+                                {RoutesForRouter.map(route => (
+                                    <Route exact path={route.route} key={route.route} component={route.component}/>
+                                ))}
+                            </Switch>
+                        </Suspense>
                     </div>
                 </div>
             </MuiThemeProvider>

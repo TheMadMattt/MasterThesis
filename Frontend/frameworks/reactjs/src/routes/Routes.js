@@ -1,11 +1,12 @@
 import Home from "../pages/Home/Home";
 import HomeIcon from "@material-ui/icons/Home";
-import LifecycleHooksBenchmark from "../pages/LifecycleHooks/LifecycleHooksBenchmark";
 import SpeedIcon from "@material-ui/icons/Speed";
-import JSONPlaceholderBenchmark from "../pages/JSONPlaceholder/JSONPlaceholderBenchmark";
 import PublicIcon from "@material-ui/icons/Public";
-import LocalApiBenchmark from "../pages/LocalApiBenchmark";
-import React from "react";
+import React, {lazy} from "react";
+
+const LifecycleHooks = lazy(() => import('../pages/LifecycleHooks/LifecycleHooksBenchmark'));
+const JSONPlaceholder = lazy(() => import('../pages/JSONPlaceholder/JSONPlaceholderBenchmark'));
+const LocalApi = lazy(() => import('../pages/LocalApi/LocalApiBenchmark'));
 
 export const RoutesForRouter = [
     {
@@ -15,22 +16,22 @@ export const RoutesForRouter = [
     },
     {
         sidebarName: 'Lifecycle hooks benchmark',
-        component: LifecycleHooksBenchmark,
+        component: LifecycleHooks,
         route: '/benchmarks/lifecycle-crud'
     },
     {
         sidebarName: '{JSON} Placeholder',
-        component: JSONPlaceholderBenchmark,
+        component: JSONPlaceholder,
         route: '/benchmarks/json-placeholder'
     },
     {
         sidebarName: 'Local API server',
-        component: LocalApiBenchmark,
+        component: LocalApi,
         route: '/benchmarks/local-rest-api'
     }
 ];
 
-export const Routes = [
+export const RoutesForDrawer = [
     {
         sidebarName: 'Home',
         route: '/',

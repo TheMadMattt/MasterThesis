@@ -1,7 +1,7 @@
 import {NavLink} from "react-router-dom";
 import {Collapse, ListItemIcon, ListItemText, MenuItem, MenuList} from "@material-ui/core";
 import React, {useState} from "react";
-import {Routes} from "./Routes";
+import {RoutesForDrawer} from "./Routes";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import {makeStyles} from "@material-ui/core/styles";
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MenuItemCollapse = (prop) => {
     const checkRouteActive = () => {
-        const isActive = prop.children.find(child => prop.currentRoute === child.route);
+        const isActive = prop.children.find(child => prop.activeRoute(child.route));
         return !!isActive;
     }
     const [open, setIsOpen] = useState(checkRouteActive);
@@ -64,11 +64,10 @@ export const NavigationList = (props) => {
     return (
         <MenuList>
             {
-                Routes.map((prop, key) => {
+                RoutesForDrawer.map((prop, key) => {
                     return (prop.children.length > 0 ?
                             <MenuItemCollapse key={key}
                                               {...prop}
-                                              currentRoute={props.location.pathname}
                                               activeRoute={activeRoute}
                                               closeDrawer={closeDrawer}/> :
                             <MenuItemLink key={key}
