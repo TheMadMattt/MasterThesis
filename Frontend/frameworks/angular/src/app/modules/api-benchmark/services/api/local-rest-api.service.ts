@@ -26,7 +26,6 @@ export class LocalRestApiService {
   }
 
   createNewTask(task: TaskDTO): Observable<Task> {
-    console.log(task);
     return this.httpClient.post<Task>(this.API_URL + 'task/', task);
   }
 
