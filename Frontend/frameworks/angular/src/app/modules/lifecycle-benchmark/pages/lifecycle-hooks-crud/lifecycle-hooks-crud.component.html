@@ -25,6 +25,11 @@
               type="button"
               (click)="this.appendRows()">Append {{ rowsNumber.value }} rows</button>
       <button mat-raised-button
+              id="swap"
+              color="primary"
+              type="button"
+              (click)="this.swapRows()">Swap first and last row</button>
+      <button mat-raised-button
               id="delete-all"
               color="primary"
               type="button"
@@ -62,6 +67,7 @@
     <app-display-time title="Creating {{ rowsNumber.value }} rows" [timer]="createTimer"></app-display-time>
     <app-display-time title="Updating {{ rowsNumber.value }} rows" [timer]="updateAllRowsTimer"></app-display-time>
     <app-display-time title="Appending {{ rowsNumber.value }} rows" [timer]="appendTimer"></app-display-time>
+    <app-display-time title="Swapping first and last row" [timer]="swapTimer"></app-display-time>
     <app-display-time title="Removing all rows" [timer]="deleteAllRowsTimer"></app-display-time>
     <app-display-time title="Reading random row" [timer]="readTimer"></app-display-time>
     <app-display-time title="Updating random row" [timer]="updateTimer"></app-display-time>

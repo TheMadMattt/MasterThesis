@@ -29,6 +29,7 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
   private isUpdating = false;
   private isUpdatingAllRows = false;
   private isAppending = false;
+  private isSwapping = false;
   private isDeleting = false;
   private isDeletingAllRows = false;
   private isReading = false;
@@ -36,6 +37,7 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
   updateTimer = new Timer('updateDummyData');
   updateAllRowsTimer = new Timer('updateAllRowsDummyData');
   appendTimer = new Timer('appendDummyData');
+  swapTimer = new Timer('swapDummyData');
   deleteTimer = new Timer('deleteDummyData');
   deleteAllRowsTimer = new Timer('deleteAllDummyData');
   readTimer = new Timer('readDummyData');
@@ -75,7 +77,16 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
     this.appendTimer.startTimer();
     this.isAppending = true;
     this.dummyData = this.dummyData.concat(this.dummyDataService.buildData(1000));
+  }
 
+  swapRows = async () => {
+    this.dummyData = this.dummyDataService.buildData(this.rowsNumber.value);
+    await this.delay(0);
+    this.swapTimer.startTimer();
+    this.isSwapping = true;
+    const temp = this.dummyData[0];
+    this.dummyData[0] = this.dummyData[this.dummyData.length - 1];
+    this.dummyData[this.dummyData.length - 1] = temp;
   }
 
   readRandomRow(): void {
@@ -113,6 +124,9 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
     } else if (this.isAppending) {
       this.appendTimer.stopTimer();
       this.isAppending = false;
+    } else if (this.isSwapping) {
+      this.swapTimer.stopTimer();
+      this.isSwapping = false;
     } else if (this.isDeleting) {
       this.deleteTimer.stopTimer();
       this.isDeleting = false;
@@ -136,14 +150,14 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
 
   saveExcel(): void {
     const timers: Timer[] = [this.createTimer, this.readTimer, this.appendTimer,
-      this.updateTimer, this.updateAllRowsTimer, this.deleteTimer, this.deleteAllRowsTimer];
+      this.updateTimer, this.updateAllRowsTimer, this.deleteTimer, this.deleteAllRowsTimer, this.swapTimer];
 
     this.excelService.saveTimersToExcel(timers, 'LIFECYCLE-HOOKS');
   }
 
   setRowsCountInTimers(rowsCount: number): void {
     const timers: Timer[] = [this.readTimer, this.createTimer, this.appendTimer,
-      this.updateTimer, this.updateAllRowsTimer, this.deleteTimer, this.deleteAllRowsTimer];
+      this.updateTimer, this.updateAllRowsTimer, this.deleteTimer, this.deleteAllRowsTimer, this.swapTimer];
 
     timers.forEach(timer => {
       timer.setRowsNumber(rowsCount);
