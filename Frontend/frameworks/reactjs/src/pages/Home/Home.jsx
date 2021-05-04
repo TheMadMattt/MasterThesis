@@ -114,7 +114,7 @@ class Home extends Component {
                             onClick={() => this.runBenchmark()}>Run benchmark</Button>
 
                     <Button variant="contained"
-                            className="red-btn"
+                            color="secondary"
                             onClick={() => this.clearLocalStorage()}>Clear local storage</Button>
 
                     <Button variant="contained"

@@ -90,7 +90,7 @@ export default class JSONPlaceholderBenchmark extends Component {
             <div className="json-placeholder-container">
                 <div className="actions">
                     <div>
-                        <MatSelect title="Choose post id"
+                        <MatSelect name="postId" title="Choose post id"
                                    initialValue={this.state.postId}
                                    handleChange={(e) => this.handleRowsNumberChange(e.target.value)}
                                    selectDropdownList={arrayOfIds}/>

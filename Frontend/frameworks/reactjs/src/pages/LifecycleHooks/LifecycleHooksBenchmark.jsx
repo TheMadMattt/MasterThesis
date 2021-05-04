@@ -144,7 +144,7 @@ export default class LifecycleHooksBenchmark extends Component {
             <div>
                 <div className="actions">
                     <div>
-                        <MatSelect title="Row number"
+                        <MatSelect name="rowNumber" title="Row number"
                                    initialValue={this.state.rowsNumber}
                                    handleChange={(e) => this.handleRowsNumberChange(e.target.value)}
                                    selectDropdownList={rowsNumberList}/>

@@ -1,0 +1,44 @@
+.local-api-container {
+    height: 100%;
+}
+
+.ButtonMargin {
+    margin-right: 20px !important;
+}
+
+.result-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.result-container > * {
+    flex: 1 0 200px;
+}
+
+.data-table {
+    flex: 1;
+    overflow-x: auto;
+}
+
+.data-table table {
+    width: 100%
+}
+
+.operations {
+    flex-wrap: wrap;
+}
+
+@media (max-width: 599px) {
+    .operations {
+        margin-top: 20px;
+    }
+    .operations button {
+        margin-right: 0 !important;
+    }
+}
+
+.actions {
+    flex-direction: column !important;
+    align-items: start;
+}

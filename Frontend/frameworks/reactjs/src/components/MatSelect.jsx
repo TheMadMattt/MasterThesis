@@ -4,18 +4,19 @@ import {makeStyles} from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(1),
-        minWidth: 120,
+        minWidth: 150,
         marginBottom: "20px"
     },
 }));
 
-export const MatSelect = ({title, initialValue, selectDropdownList, handleChange}) => {
+export const MatSelect = ({name, title, initialValue, selectDropdownList, handleChange}) => {
     const classes = useStyles();
 
     return (
         <FormControl variant="outlined" className={classes.formControl}>
             <InputLabel>{title}</InputLabel>
             <Select
+                name={name}
                 value={initialValue}
                 onChange={handleChange}
                 MenuProps={{
