@@ -21,7 +21,7 @@ ul {
   border-bottom: none;
 }
 
-.wrap-times {
+.flex-row {
   margin-top: 20px;
   p {
     font-weight: bold;
@@ -30,7 +30,7 @@ ul {
 
 
 @media (max-width: 1000px) {
-  .wrap-times {
+  .flex-row {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;

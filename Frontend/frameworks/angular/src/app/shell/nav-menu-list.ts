@@ -2,6 +2,14 @@ import {MenuItem} from '@shell/models/menu-item';
 
 export const MenuList: MenuItem[] = [
   {
+    title: 'Home',
+    route: '/',
+    icon: 'home',
+    showSubMenu: false,
+    isSubMenuShowing: false,
+    children: []
+  },
+  {
     title: 'Lifecycle hooks benchmark',
     route: '/lifecycle-benchmark/lifecycle-hooks',
     icon: 'speed',

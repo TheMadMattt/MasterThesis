@@ -1,11 +1,11 @@
   <div class="home-container flex-column flex-center">
-    <ul class="loading-metrics-box">
+    <ul class="loading-metrics-box" #metrics>
       <li *ngIf="fcp"><b>First Contentful Paint (FCP)</b> | {{ fcp.value | number:'.5-5' }} ms</li>
       <li *ngIf="lcp"><b>Largest Contentful Paint (LCP)</b> | {{ lcp.value | number:'.5-5' }} ms</li>
       <li *ngIf="ttfb"><b>Time To First Byte (TTFB)</b> | {{ ttfb.value | number:'.5-5'}} ms</li>
       <li *ngIf="pageLoaded"><b>Page loading time</b> | {{ pageLoaded | number:'.5-5' }} ms</li>
     </ul>
-    <div class="flex-row wrap-times" style="gap: 40px">
+    <div class="flex-row" style="gap: 40px">
       <div>
         <p>First Contentful Paint (FCP)</p>
         <ul class="loading-metrics-box">

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
 import {getLCP, getFCP, getTTFB, Metric} from 'web-vitals';
 import {BenchmarkService} from '@shared/services/benchmark.service';
 import {ExcelService} from '@shared/services/excel.service';
@@ -23,6 +23,8 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   showAllTimes = false;
   reloadsCount = 0;
   timer!: any;
+
+  @ViewChild('metrics') metricsDiv!: ElementRef<HTMLElement>;
 
   constructor(private benchmarkService: BenchmarkService,
               private excelService: ExcelService) {
