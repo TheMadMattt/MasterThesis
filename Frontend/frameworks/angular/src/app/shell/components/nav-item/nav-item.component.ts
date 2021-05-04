@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {MenuItem} from '@shell/models/menu-item';
 import {SidenavService} from '@shell/services/sidenav.service';
 import {Router} from '@angular/router';
@@ -17,7 +17,7 @@ export class NavItemComponent implements AfterViewInit {
   isSidenavOpen!: Observable<any>;
 
   constructor(public sidenavService: SidenavService,
-              private router: Router) { }
+              public router: Router) { }
 
   close(): void {
     this.sidenavService.closeSidenav();

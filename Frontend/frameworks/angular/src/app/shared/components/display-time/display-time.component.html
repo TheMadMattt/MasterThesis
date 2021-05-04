@@ -1,12 +1,14 @@
 <div class="display-time-container">
   <h3><strong>{{ title }}</strong></h3>
   <div *ngIf="!isError; else noError">
-    <h3>{{  timer.averageTime > 0 ?
-      (timer.averageTime | number:'.5-5') :
-      (timer.totalTime | number:'.5-5') }} ms</h3>
+    <h3>{{ timer.timesList[timer.rowsNumber].averageTime > 0 ?
+      (timer.timesList[timer.rowsNumber].averageTime | number:'.5-5') :
+      (timer.timesList[timer.rowsNumber].totalTime | number:'.5-5') }} ms</h3>
   </div>
   <button mat-flat-button type="button"
-          [matBadge]="timer.times.length" matBadgePosition="after" matBadgeColor="accent">
+          [matBadge]="timer.timesList[timer.rowsNumber].times.length"
+          matBadgePosition="after"
+          matBadgeColor="accent">
     <mat-icon (click)="openTimeList()">expand_more</mat-icon>
   </button>
 </div>

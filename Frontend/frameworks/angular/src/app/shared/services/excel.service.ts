@@ -2,11 +2,6 @@ import {Injectable} from '@angular/core';
 import * as XLSX from 'xlsx';
 import {Timer} from '@shared/utils/timer';
 
-export interface ExcelItem {
-  lp: number | string;
-  time: number;
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -17,15 +12,14 @@ export class ExcelService {
   saveTimersToExcel(timers: Timer[], workBookTitle: string): void {
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     timers.forEach(timer => {
-      const timerExcel: ExcelItem[] = timer.times.map((item, index) => {
-        return {
-          lp: index + 1,
-          time: item
-        };
+      const rowsNumberStringList: string[] = timer.rowsNumberList.map(value => String(value));
+      const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet([{}], {header: rowsNumberStringList});
+      timer.rowsNumberList.forEach((rowsNumber, x) => {
+        timer.timesList[rowsNumber].times.forEach((time, y) => {
+          XLSX.utils.sheet_add_json(ws, [{ rowsNumber: time }],
+            { skipHeader: true, origin: { r: y + 1 , c: x} });
+        });
       });
-      timerExcel.push({ lp: 'average', time: timer.getAverageTime()});
-      const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(timerExcel);
-
       XLSX.utils.book_append_sheet(wb, ws, timer.timerName);
     });
 
@@ -36,7 +30,7 @@ export class ExcelService {
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
 
     loadingTimes.forEach(times => {
-      const timerExcel: ExcelItem[] = times.data.map((item: number, index: number) => {
+      const timerExcel = times.data.map((item: number, index: number) => {
         return {
           lp: index + 1,
           time: item

@@ -21,6 +21,8 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
               private spinner: NgxSpinnerService,
               private cdr: ChangeDetectorRef,
               private excelService: ExcelService) {
+    this.setRowsCountInTimers(this.ROWS_NUMBER[0]);
+    this.rowsNumber.valueChanges.subscribe(value => this.setRowsCountInTimers(value));
   }
 
   private isCreating = false;
@@ -72,7 +74,7 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
     await this.delay(0);
     this.appendTimer.startTimer();
     this.isAppending = true;
-    this.dummyData = this.dummyData.concat(this.dummyDataService.buildData(this.rowsNumber.value));
+    this.dummyData = this.dummyData.concat(this.dummyDataService.buildData(1000));
 
   }
 
@@ -137,5 +139,14 @@ export class LifecycleHooksCrudComponent implements AfterViewChecked {
       this.updateTimer, this.updateAllRowsTimer, this.deleteTimer, this.deleteAllRowsTimer];
 
     this.excelService.saveTimersToExcel(timers, 'LIFECYCLE-HOOKS');
+  }
+
+  setRowsCountInTimers(rowsCount: number): void {
+    const timers: Timer[] = [this.readTimer, this.createTimer, this.appendTimer,
+      this.updateTimer, this.updateAllRowsTimer, this.deleteTimer, this.deleteAllRowsTimer];
+
+    timers.forEach(timer => {
+      timer.setRowsNumber(rowsCount);
+    });
   }
 }

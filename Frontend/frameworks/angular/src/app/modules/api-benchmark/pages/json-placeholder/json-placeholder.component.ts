@@ -33,6 +33,7 @@ export class JsonPlaceholderComponent implements AfterViewChecked {
               private dialogService: DialogService,
               private spinner: NgxSpinnerService,
               private excelService: ExcelService) {
+    this.setRowsCountInTimers(0);
   }
 
   ngAfterViewChecked(): void {
@@ -148,6 +149,15 @@ export class JsonPlaceholderComponent implements AfterViewChecked {
       this.updatePostTimer, this.deletePostTimer, this.renderTimer];
 
     this.excelService.saveTimersToExcel(timers, 'JSON-PLACEHOLDER');
+  }
+
+  setRowsCountInTimers(rowsCount: number): void {
+    const timers: Timer[] = [this.addPostTimer, this.getPostTimer, this.getPostsTimer,
+      this.updatePostTimer, this.deletePostTimer, this.renderTimer];
+
+    timers.forEach(timer => {
+      timer.setRowsNumber(rowsCount);
+    });
   }
 
   clear(): void {

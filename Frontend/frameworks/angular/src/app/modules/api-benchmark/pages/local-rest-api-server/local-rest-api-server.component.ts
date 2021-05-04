@@ -19,10 +19,10 @@ import {LocalRestApiService} from '@modules/api-benchmark/services/api/local-res
 export class LocalRestApiServerComponent implements AfterViewChecked {
   tasks: Task[] = [];
   selectedTask = new Task();
-  taskCount = new FormControl(1000);
+  TASK_COUNT: number[] = [1000, 2000, 5000, 10000];
+  taskCount = new FormControl(this.TASK_COUNT[0]);
   selectedId = new FormControl(1);
   localApiUrl = new FormControl('https://localhost:44306/');
-  TASK_COUNT: number[] = [1000, 2000, 5000, 10000];
   isConnected = false;
   isBenchmarkRunning = false;
 
@@ -45,6 +45,8 @@ export class LocalRestApiServerComponent implements AfterViewChecked {
               private dialogService: DialogService,
               private spinner: NgxSpinnerService,
               private excelService: ExcelService) {
+    this.setRowsCountInTimers(this.TASK_COUNT[0]);
+    this.taskCount.valueChanges.subscribe(value => this.setRowsCountInTimers(value));
   }
 
   ngAfterViewChecked(): void {
@@ -205,5 +207,14 @@ export class LocalRestApiServerComponent implements AfterViewChecked {
       this.updateTaskTimer, this.deleteTaskTimer, this.renderTimer];
 
     this.excelService.saveTimersToExcel(timers, 'JSON-PLACEHOLDER');
+  }
+
+  setRowsCountInTimers(rowsCount: number): void {
+    const timers: Timer[] = [this.addTaskTimer, this.getTaskTimer, this.getTasksTimer,
+      this.updateTaskTimer, this.deleteTaskTimer, this.renderTimer];
+
+    timers.forEach(timer => {
+      timer.setRowsNumber(rowsCount);
+    });
   }
 }
