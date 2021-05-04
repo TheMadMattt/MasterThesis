@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Button} from "@material-ui/core";
 import {PostFormDialog} from "./PostForm";
-import apiService from '../../../api/json-placeholder.service';
+import apiService from '../../../api/JSONPlaceholderApi';
 
 export const PostBtn = ({cb, isEditing = false, postId}) => {
     const [open, setOpen] = useState(false);

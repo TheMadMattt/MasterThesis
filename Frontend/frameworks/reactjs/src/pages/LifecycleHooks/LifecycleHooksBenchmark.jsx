@@ -6,6 +6,8 @@ import "./LifecycleHooks.css";
 import DummyDataList from "./components/DummyDataList";
 import {MatSelect} from "../../components/MatSelect";
 import DisplayTimesLifecycle from "./components/DisplayTimesLifecycle";
+import excelService from "../../utils/ExcelService";
+import GetAppIcon from '@material-ui/icons/GetApp';
 
 const rowsNumberList = [1000, 2000, 5000, 10000];
 
@@ -17,6 +19,7 @@ export default class LifecycleHooksBenchmark extends Component {
     selectRandomTimer = new Timer('selectRandomTimer');
     updateRandomTimer = new Timer('updateRandomTimer');
     removeRandomTimer = new Timer('removeRandomTimer');
+    swapTimer = new Timer('swapTimer');
 
     state = {
         dummyData: [],
@@ -28,8 +31,13 @@ export default class LifecycleHooksBenchmark extends Component {
         updateAllTimer: null,
         selectRandomTimer: null,
         updateRandomTimer: null,
-        removeRandomTimer: null
+        removeRandomTimer: null,
+        swapTimer: null
     };
+
+    componentDidMount() {
+        this.setTimersRowsNumber(this.state.rowsNumber);
+    }
 
     createRows() {
         this.setState({dummyData: []}, () => {
@@ -71,6 +79,19 @@ export default class LifecycleHooksBenchmark extends Component {
             }), () => {
                 this.appendTimer.stopTimer();
                 this.setState({appendTimer: this.appendTimer});
+            });
+        });
+    }
+
+
+    swapRows() {
+        this.setState({dummyData: buildData(this.state.rowsNumber)}, () => {
+            this.swapTimer.startTimer();
+            const dummyData = this.state.dummyData;
+            this.setState({ dummyData: [dummyData[dummyData.length-1], ...dummyData.slice(1, dummyData.length-1),
+                    dummyData[0]] }, () => {
+                this.swapTimer.stopTimer();
+                this.setState({swapTimer: this.swapTimer});
             });
         });
     }
@@ -131,11 +152,28 @@ export default class LifecycleHooksBenchmark extends Component {
     }
 
     handleRowsNumberChange(rowsNumber) {
+        this.setTimersRowsNumber(rowsNumber);
         this.setState({rowsNumber});
     }
 
     clear() {
         window.location.reload();
+    }
+
+    setTimersRowsNumber(rowsNumber) {
+        const timers = [this.createTimer, this.updateAllTimer, this.appendTimer, this.removeAllTimer,
+            this.selectRandomTimer, this.removeRandomTimer, this.updateRandomTimer, this.swapTimer];
+
+        timers.forEach(timer => {
+            timer.setRowsNumber(rowsNumber);
+        })
+    }
+
+    saveTimesToExcel() {
+        const timers = [this.createTimer, this.updateAllTimer, this.appendTimer, this.removeAllTimer,
+            this.selectRandomTimer, this.removeRandomTimer, this.updateRandomTimer, this.swapTimer];
+
+        excelService.saveTimersToExcel(timers, "LIFECYCLE-HOOKS-REACT");
     }
 
     render() {
@@ -157,6 +195,8 @@ export default class LifecycleHooksBenchmark extends Component {
                         <Button variant="contained" color="primary" className="ButtonMargin"
                                 onClick={() => this.appendRows()}>Append 1000 rows</Button>
                         <Button variant="contained" color="primary" className="ButtonMargin"
+                                onClick={() => this.swapRows()}>Swap first and last row</Button>
+                        <Button variant="contained" color="primary" className="ButtonMargin"
                                 onClick={() => this.removeAllRows()}>Remove all rows</Button>
                         <Button variant="contained" color="primary" className="ButtonMargin"
                                 onClick={() => this.selectRandomRow()}
@@ -167,8 +207,12 @@ export default class LifecycleHooksBenchmark extends Component {
                         <Button variant="contained" color="primary" className="ButtonMargin"
                                 onClick={() => this.removeRandomRow()}
                                 disabled={this.state.dummyData.length <= 0}>Remove random row</Button>
-                        <Button variant="contained" color="primary"
+                        <Button variant="contained" color="primary" className="ButtonMargin"
                                 onClick={() => this.clear()}>Clear</Button>
+                        <Button variant="contained" color="default" startIcon={<GetAppIcon />}
+                                onClick={() => this.saveTimesToExcel()}>
+                            Save times to excel
+                        </Button>
                     </div>
                 </div>
                 <div className="result-container">

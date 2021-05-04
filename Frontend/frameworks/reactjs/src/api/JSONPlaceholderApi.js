@@ -7,7 +7,7 @@ const http = axios.create({
     }
 });
 
-class JsonPlaceholderService {
+class JSONPlaceholderApi {
     createPost(post) {
         return http.post("posts", post);
     }
@@ -46,4 +46,4 @@ class JsonPlaceholderService {
     }
 }
 
-export default new JsonPlaceholderService();
+export default new JSONPlaceholderApi();

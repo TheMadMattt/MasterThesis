@@ -1,13 +1,14 @@
 import React, {Component} from "react";
 import Timer from "../../utils/Timer";
 import "./LocalApi.css";
-import apiService from '../../api/local-api.service';
+import apiService from '../../api/LocalServerApi';
 import TaskList from "./components/TaskList";
 import DisplayTimesLocalApi from "./components/DisplayTimesLocalApi";
 import TaskOperations from "./components/TaskOperations";
 import {Button, createMuiTheme, MuiThemeProvider, TextField} from "@material-ui/core";
 import {MatSelect} from "../../components/MatSelect";
 import {green} from "@material-ui/core/colors";
+import excelService from "../../utils/ExcelService";
 
 const greenBtn = createMuiTheme({
     palette: {
@@ -27,7 +28,6 @@ export default class LocalApiBenchmark extends Component {
 
     state = {
         tasks: [],
-        taskId: 1,
         localApiUrl: "https://localhost:44306/",
         taskCount: 1000,
         selectedTask: null,
@@ -42,14 +42,22 @@ export default class LocalApiBenchmark extends Component {
             error: false,
             message: ""
         },
+        getTaskError: {
+            error: false,
+            message: ""
+        }
     };
+
+    componentDidMount() {
+        this.setTimersRowsNumber(this.state.taskCount);
+    }
 
     connect = () => {
         apiService.connect(this.state.localApiUrl, this.state.taskCount).then(response => {
             if (response.status === 200) {
                 this.setState({isConnected: true, connectionError: { error: false }});
             }
-        }).catch(error => {
+        }).catch(() => {
             this.setState({ connectionError: { error: true, message: "Error connecting to api"}})
         });
     }
@@ -59,6 +67,7 @@ export default class LocalApiBenchmark extends Component {
     }
 
     addTask = (task) => {
+        this.setState({ getTaskError: { error: false}})
         this.addTaskTimer.startTimer();
         apiService.createTask(task).then(() => {
             this.addTaskTimer.stopTimer();
@@ -67,6 +76,7 @@ export default class LocalApiBenchmark extends Component {
     }
 
     updateTask = (task) => {
+        this.setState({ getTaskError: { error: false}})
         this.updateTaskTimer.startTimer();
         apiService.updateTask(task).then(() => {
             this.updateTaskTimer.stopTimer();
@@ -74,19 +84,23 @@ export default class LocalApiBenchmark extends Component {
         });
     }
 
-    getSelectedTask = () => {
+    getSelectedTask = (taskId) => {
+        this.setState({ getTaskError: { error: false}})
         this.getTaskTimer.startTimer();
-        apiService.getTask(this.state.taskId).then(task => {
+        apiService.getTask(taskId).then(task => {
             this.getTaskTimer.stopTimer();
             this.setState({selectedTask: task.data, getTaskTimer: this.getTaskTimer});
         });
     }
 
-    deleteTask = () => {
+    deleteTask = (taskId) => {
+        this.setState({ getTaskError: { error: false}})
         this.deleteTaskTimer.startTimer();
-        apiService.deleteTask(this.state.taskId).then(() => {
+        apiService.deleteTask(taskId).then(() => {
             this.deleteTaskTimer.stopTimer();
             this.setState({deleteTaskTimer: this.deleteTaskTimer});
+        }).catch(() => {
+            this.setState({ getTaskError: { error: true, message: "Task id not found"}})
         });
     }
 
@@ -116,12 +130,28 @@ export default class LocalApiBenchmark extends Component {
         });
     }
 
+    setTimersRowsNumber(rowsNumber) {
+        const timers = [this.addTaskTimer, this.updateTaskTimer, this.getTaskTimer,
+            this.deleteTaskTimer, this.getTasksTimer, this.renderTimer];
+
+        timers.forEach(timer => {
+            timer.setRowsNumber(rowsNumber);
+        })
+    }
+
+    saveTimesToExcel() {
+        const timers = [this.addTaskTimer, this.updateTaskTimer, this.getTaskTimer,
+            this.deleteTaskTimer, this.getTasksTimer, this.renderTimer];
+
+        excelService.saveTimersToExcel(timers, "LOCAL-API-REACT");
+    }
+
     render() {
         const selectedTask = this.state.selectedTask;
         const isConnected = this.state.isConnected;
         const connectionError = this.state.connectionError;
         return (
-            <div className="json-placeholder-container">
+            <div className="local-api-container">
                 <div className="actions">
                     <div className="flex-row flex-center">
                         <TextField
@@ -149,13 +179,14 @@ export default class LocalApiBenchmark extends Component {
                                 onClick={() => this.clear()}>Clear</Button>
                     </div>
                     {
-                        isConnected && <TaskOperations taskId={this.state.taskId}
-                                                       taskCount={this.state.taskCount}
+                        isConnected && <TaskOperations taskCount={this.state.taskCount}
                                                        addTask={this.addTask}
                                                        updateTask={this.updateTask}
                                                        getSelectedTask={this.getSelectedTask}
                                                        deleteTask={this.deleteTask}
-                                                       getTasks={this.getTasks}/>
+                                                       getTasks={this.getTasks}
+                                                       saveTimesToExcel={this.saveTimesToExcel}
+                                                       getTaskError={this.state.getTaskError}/>
                     }
                 </div>
                 <div className="result-container">

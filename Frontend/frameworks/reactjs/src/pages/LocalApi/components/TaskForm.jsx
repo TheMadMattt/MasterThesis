@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const TaskForm = ({onDialogClose, isEditing, selectedPost: selectedTask}) => {
+const TaskForm = ({onDialogClose, isEditing, selectedTask}) => {
     const classes = useStyles();
     const initialFormValues = {
         id: isEditing? selectedTask.id : null,
@@ -126,7 +126,7 @@ const useDialogStyles = makeStyles({
 })
 
 export const TaskFormDialog = (props) => {
-    const { onClose, open, isEditing, selectedPost } = props;
+    const { onClose, open, isEditing, selectedTask } = props;
 
     const classes = useDialogStyles();
 
@@ -135,7 +135,7 @@ export const TaskFormDialog = (props) => {
                 open={open}>
             <DialogTitle>{isEditing ? 'Edit post' : 'Add post'}</DialogTitle>
             <div className={`flex-column flex-center ${classes.padding}`}>
-                <TaskForm onDialogClose={(task) => onClose(task)} isEditing={isEditing} selectedPost={selectedPost}/>
+                <TaskForm onDialogClose={(task) => onClose(task)} isEditing={isEditing} selectedTask={selectedTask}/>
             </div>
         </Dialog>
     );

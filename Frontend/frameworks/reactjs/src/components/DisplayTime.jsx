@@ -22,7 +22,9 @@ export const DisplayTime = ({title, timer}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
 
-    const time = timer && (timer.averageTime > 0 ? timer.averageTime : timer.totalTime);
+    const time = timer && (timer.timesList[timer.rowsNumber].averageTime > 0 ?
+        timer.timesList[timer.rowsNumber].averageTime :
+        timer.timesList[timer.rowsNumber].totalTime);
 
     const handleDialog = (value) => {
         setOpen(value);
@@ -36,7 +38,7 @@ export const DisplayTime = ({title, timer}) => {
                 <h3><strong>{title}</strong></h3>
                 {timer ? FormatNumber(time, decimalPlaces) : 0 } ms
             </div>
-            <Badge color="secondary" badgeContent={timer && timer.times.length}>
+            <Badge color="secondary" badgeContent={timer && timer.timesList[timer.rowsNumber].times.length}>
                 <IconButton variant="contained" color="primary" onClick={() => handleDialog(true)}>
                     <ExpandMoreIcon/>
                 </IconButton>
@@ -69,9 +71,9 @@ const TimeListDialog = (props) => {
         <Dialog onClose={() => onClose(false)} open={open}>
             <div className={`flex-column flex-center ${classes.padding}`}>
                 <DialogTitle>{title}</DialogTitle>
-                <p><b>Average time: </b>{timer ? FormatNumber(timer.averageTime, decimalPlaces) : '0'} ms</p>
+                <p><b>Average time: </b>{timer ? FormatNumber(timer.timesList[timer.rowsNumber].averageTime, decimalPlaces) : '0'} ms</p>
                 {
-                    timer ? <TimeList times={timer.times}/> : <p>No times to show.</p>
+                    timer ? <TimeList times={timer.timesList[timer.rowsNumber].times}/> : <p>No times to show.</p>
                 }
             </div>
         </Dialog>

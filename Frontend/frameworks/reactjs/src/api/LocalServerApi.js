@@ -7,7 +7,7 @@ let http = axios.create({
     }
 });
 
-class LocalApiService {
+class LocalServerApi {
     connect(apiUrl, taskCount) {
         http = axios.create({
             baseURL: apiUrl,
@@ -41,4 +41,4 @@ class LocalApiService {
     }
 }
 
-export default new LocalApiService();
+export default new LocalServerApi();

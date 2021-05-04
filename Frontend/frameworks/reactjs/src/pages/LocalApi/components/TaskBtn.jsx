@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Button} from "@material-ui/core";
-import apiService from '../../../api/local-api.service';
+import apiService from '../../../api/LocalServerApi';
 import {TaskFormDialog} from "./TaskForm";
 
 export const TaskBtn = ({cb, isEditing = false, taskId}) => {

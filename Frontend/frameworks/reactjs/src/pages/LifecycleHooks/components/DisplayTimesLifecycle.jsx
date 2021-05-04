@@ -16,6 +16,10 @@ const DisplayTimesLifecycle = (props) => {
             timer: props.appendTimer
         },
         {
+            title: "Swapping first and last row",
+            timer: props.swapTimer
+        },
+        {
             title: "Removing " + props.rowsNumber + " rows",
             timer: props.removeAllTimer
         },

@@ -1,21 +1,44 @@
 import {TaskBtn} from "./TaskBtn";
-import {Button} from "@material-ui/core";
-import React from "react";
+import {Button, TextField} from "@material-ui/core";
+import React, {useState} from "react";
+import GetAppIcon from "@material-ui/icons/GetApp";
 
 const TaskOperations = (props) => {
+    const [taskId, setTaskId] = useState(1);
+
+    const handleInputValue = (e) => {
+        setTaskId(e.target.value);
+    }
+
     return (
-        <>
-            <div className="flex-row operations">
+        <div className="operations">
+            <div className="flex-row">
+                <TextField
+                    name="taskId"
+                    label="Enter taskId"
+                    variant="outlined"
+                    value={taskId}
+                    onChange={handleInputValue}
+                    style={{marginBottom: "15px"}}
+                    error={props.getTaskError.error}
+                    helperText={props.getTaskError.error ? props.getTaskError.message : ""}
+                />
+            </div>
+            <div className="flex-row">
                 <TaskBtn cb={(task) => props.addTask(task)}/>
-                <TaskBtn cb={(task) => props.updateTask(task)} isEditing taskId={props.taskId}/>
+                <TaskBtn cb={(task) => props.updateTask(task)} isEditing taskId={taskId}/>
                 <Button variant="contained" color="primary" className="ButtonMargin"
-                        onClick={() => props.getSelectedTask()}>Get task</Button>
+                        onClick={() => props.getSelectedTask(taskId)}>Get task</Button>
                 <Button variant="contained" color="primary" className="ButtonMargin"
-                        onClick={() => props.deleteTask()}>Delete task</Button>
+                        onClick={() => props.deleteTask(taskId)}>Delete task</Button>
                 <Button variant="contained" color="primary"
                         onClick={() => props.getTasks()}>Get {props.taskCount} tasks</Button>
+                <Button variant="contained" color="default" startIcon={<GetAppIcon />}
+                        onClick={() => props.saveTimesToExcel()}>
+                    Save times to excel
+                </Button>
             </div>
-        </>
+        </div>
     )
 }
 

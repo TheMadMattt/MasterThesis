@@ -4,9 +4,11 @@ import {Button} from "@material-ui/core";
 import "./JSONPlaceholder.css";
 import {MatSelect} from "../../components/MatSelect";
 import DisplayTimesJSONPlaceholder from "./components/DisplayTimesJSONPlaceholder";
-import apiService from '../../api/json-placeholder.service';
+import apiService from '../../api/JSONPlaceholderApi';
 import PostList from "./components/PostList";
 import {PostBtn} from "./components/PostBtn";
+import GetAppIcon from "@material-ui/icons/GetApp";
+import excelService from "../../utils/ExcelService";
 
 const arrayOfIds = Array.from({length: 100}, (_, i) => i + 1);
 
@@ -29,6 +31,10 @@ export default class JSONPlaceholderBenchmark extends Component {
         deletePostTimer: null,
         renderTimer: null
     };
+
+    componentDidMount() {
+        this.setTimersRowsNumber(0);
+    }
 
     addPost(post) {
         this.addPostTimer.startTimer();
@@ -77,11 +83,28 @@ export default class JSONPlaceholderBenchmark extends Component {
     }
 
     handleRowsNumberChange(rowsNumber) {
+        this.setTimersRowsNumber(rowsNumber);
         this.setState({rowsNumber});
     }
 
     clear() {
         window.location.reload();
+    }
+
+    setTimersRowsNumber(rowsNumber) {
+        const timers = [this.addPostTimer, this.updatePostTimer, this.renderTimer, this.deletePostTimer,
+            this.getPostTimer, this.getPostsWithCommentsTimer];
+
+        timers.forEach(timer => {
+            timer.setRowsNumber(rowsNumber);
+        })
+    }
+
+    saveTimesToExcel() {
+        const timers = [this.addPostTimer, this.updatePostTimer, this.renderTimer, this.deletePostTimer,
+            this.getPostTimer, this.getPostsWithCommentsTimer];
+
+        excelService.saveTimersToExcel(timers, "JSON-PLACEHOLDER-REACT");
     }
 
     render() {
@@ -106,6 +129,10 @@ export default class JSONPlaceholderBenchmark extends Component {
                                 onClick={() => this.getPostsWithComments()}>Get 100 posts with 500 comments</Button>
                         <Button variant="contained" color="primary"
                                 onClick={() => this.clear()}>Clear</Button>
+                        <Button variant="contained" color="default" startIcon={<GetAppIcon />}
+                                onClick={() => this.saveTimesToExcel()}>
+                            Save times to excel
+                        </Button>
                     </div>
                 </div>
                 <div className="result-container">
