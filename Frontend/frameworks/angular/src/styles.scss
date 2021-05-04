@@ -57,13 +57,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 }
 
 .red-btn {
-  background-color: #f44336;
-  color: white;
+  background-color: #f44336 !important;
+  color: white !important;
 }
 
 .green-btn {
-  background-color: green;
-  color: white;
+  background-color: green !important;
+  color: white !important;
 }
 
 .dropdown-overlay > li {
