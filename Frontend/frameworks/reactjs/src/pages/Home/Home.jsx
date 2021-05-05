@@ -4,6 +4,8 @@ import { getFCP, getLCP, getTTFB } from 'web-vitals';
 import {Button} from "@material-ui/core";
 import {DisplayLoadingTimes} from "./components/DisplayLoadingTimes";
 import {FormatNumber} from "../../utils/FormatNumber";
+import excelService from "../../utils/ExcelService";
+import GetAppIcon from "@material-ui/icons/GetApp";
 
 const fcpTitle = "First Contentful Paint (FCP)";
 const lcpTitle = "Largest Contentful Paint (LCP)";
@@ -86,6 +88,29 @@ class Home extends Component {
         this.setState({ fcpList: [], lcpList: [], ttfbList: [], pageLoadedList: []});
     }
 
+    saveTimesToExcel() {
+        const times = [
+            {
+                title: 'fcp',
+                data: this.state.fcpList
+            },
+            {
+                title: 'lcp',
+                data: this.state.lcpList
+            },
+            {
+                title: 'ttfb',
+                data: this.state.ttfbList,
+            },
+            {
+                title: 'pageLoadingTime',
+                data: this.state.pageLoadedList
+            }
+        ];
+
+        excelService.savePageLoadingToExcel(times, "PAGE-LOADING-TIMES-REACT");
+    }
+
     reload() {
         if(this.reloadsCount > 0) {
             localStorage.setItem("reloadsCounter", (--this.reloadsCount).toString());
@@ -117,9 +142,10 @@ class Home extends Component {
                             color="secondary"
                             onClick={() => this.clearLocalStorage()}>Clear local storage</Button>
 
-                    <Button variant="contained"
-                            color="primary"
-                            onClick={() => this.runBenchmark()}>Save to excel</Button>
+                    <Button variant="contained" color="default" startIcon={<GetAppIcon />}
+                            onClick={() => this.saveTimesToExcel()}>
+                        Save times to excel
+                    </Button>
                 </div>
             </div>
         )
