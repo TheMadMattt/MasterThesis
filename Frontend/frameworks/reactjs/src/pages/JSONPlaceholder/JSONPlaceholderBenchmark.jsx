@@ -82,9 +82,8 @@ export default class JSONPlaceholderBenchmark extends Component {
         });
     }
 
-    handleRowsNumberChange(rowsNumber) {
-        this.setTimersRowsNumber(rowsNumber);
-        this.setState({rowsNumber});
+    handleRowsNumberChange(postId) {
+        this.setState({postId});
     }
 
     clear() {
