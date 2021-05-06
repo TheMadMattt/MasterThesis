@@ -125,6 +125,9 @@ export default class LocalApiBenchmark extends Component {
     handleInputValue = (e) => {
         const control = e.target;
         const { name, value } = control;
+        if (name === "taskCount") {
+            this.setTimersRowsNumber(value);
+        }
         this.setState({
             [name]: value
         });
