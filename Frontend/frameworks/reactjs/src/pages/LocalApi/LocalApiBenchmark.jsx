@@ -9,6 +9,7 @@ import {Button, createMuiTheme, MuiThemeProvider, TextField} from "@material-ui/
 import {MatSelect} from "../../components/MatSelect";
 import {green} from "@material-ui/core/colors";
 import excelService from "../../utils/ExcelService";
+import GetAppIcon from "@material-ui/icons/GetApp";
 
 const greenBtn = createMuiTheme({
     palette: {
@@ -180,6 +181,10 @@ export default class LocalApiBenchmark extends Component {
                                 onClick={this.disconnect}>Disconnect</Button>
                         <Button variant="contained" color="primary"
                                 onClick={() => this.clear()}>Clear</Button>
+                        <Button variant="contained" color="default" startIcon={<GetAppIcon />}
+                                onClick={() => this.saveTimesToExcel()}>
+                            Save times to excel
+                        </Button>
                     </div>
                     {
                         isConnected && <TaskOperations taskCount={this.state.taskCount}
@@ -188,7 +193,6 @@ export default class LocalApiBenchmark extends Component {
                                                        getSelectedTask={this.getSelectedTask}
                                                        deleteTask={this.deleteTask}
                                                        getTasks={this.getTasks}
-                                                       saveTimesToExcel={this.saveTimesToExcel}
                                                        getTaskError={this.state.getTaskError}/>
                     }
                 </div>

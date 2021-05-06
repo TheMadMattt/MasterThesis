@@ -1,7 +1,6 @@
 import {TaskBtn} from "./TaskBtn";
 import {Button, TextField} from "@material-ui/core";
 import React, {useState} from "react";
-import GetAppIcon from "@material-ui/icons/GetApp";
 
 const TaskOperations = (props) => {
     const [taskId, setTaskId] = useState(1);
@@ -33,10 +32,6 @@ const TaskOperations = (props) => {
                         onClick={() => props.deleteTask(taskId)}>Delete task</Button>
                 <Button variant="contained" color="primary"
                         onClick={() => props.getTasks()}>Get {props.taskCount} tasks</Button>
-                <Button variant="contained" color="default" startIcon={<GetAppIcon />}
-                        onClick={() => props.saveTimesToExcel()}>
-                    Save times to excel
-                </Button>
             </div>
         </div>
     )
