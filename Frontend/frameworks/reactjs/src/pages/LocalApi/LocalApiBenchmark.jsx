@@ -64,7 +64,7 @@ export default class LocalApiBenchmark extends Component {
     }
 
     disconnect = () => {
-        this.setState({isConnected: false, connectionError: { error: false }});
+        this.setState({isConnected: false, connectionError: { error: false }, tasks: []});
     }
 
     addTask = (task) => {
